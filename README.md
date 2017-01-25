@@ -1,3 +1,7 @@
+1- Terminal 
+2- cd directory/project 
+3- composer install 
+
 Symfony Standard Edition
 ========================
 
