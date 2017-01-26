@@ -1,0 +1,16 @@
+/* Component.html.twig stylesheet */ 
+
+/*:::::::::::::::::::::::::: Global ::::::::*/
+#component li {
+    list-style: none;
+}
+/*:::::::::::::::::::::::::: Db list :::::::*/
+/*:::::::::::::::::::::::::: Form ::::::::::*/
+/*:::::::::::::::::::::::::: Charts choise :*/
+.charts_choise li{
+    display: inline-block;
+}
+/*:::::::::::::::::::::::::: Chart view ::::*/
+/*:::::::::::::::::::::::::: Button ::::::::*/
+
+
