@@ -26,7 +26,7 @@ class AppController extends Controller
         $ob = new Highchart();
         $ob->chart->renderTo('linechart');  // The #id of the div where to render the chart
         $ob->title->text('');
-        $ob->chart->type('pie');
+        $ob->chart->type('bar');
         $ob->xAxis->title(array('text'  => "Horizontal axis title"));
         $ob->yAxis->title(array('text'  => "Vertical axis title"));
         $ob->series($series);
