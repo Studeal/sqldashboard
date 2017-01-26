@@ -62,7 +62,18 @@
                     <li><i class="fa fa-bar-chart" aria-hidden="true"></i></li>
                 </ul>
             </div>
+            <div class="row">
+                <div class="col-xs-8" id="linechart" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+            </div>
 
+            <div class="row">
+                <div class="col-xs-3 col-xs-offset-5">
+                    <div class="btn-group" role="group" aria-label="...">
+                        <a href="" class="btn btn-default">Submit</a>
+                        <a href="" class="btn btn-default">Cancel</a>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>
@@ -72,4 +83,13 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{asset('assets/vendor/fontawesome/css/font-awesome.min.css')}}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="//code.highcharts.com/4.1.8/highcharts.js"></script>
+    <script src="//code.highcharts.com/4.1.8/modules/exporting.js"></script>
+    <script type="text/javascript">
+        {{ chart(chart) }}
+    </script>
 {% endblock %}
