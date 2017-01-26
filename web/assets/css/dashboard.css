@@ -1,0 +1,45 @@
+.float_right
+{
+    float:right;
+}
+.align_center{
+    text-align: center;
+}
+.right{
+    text-align: right;
+}
+
+.menu_pos
+{
+    position:relative;
+}
+
+.component
+{
+    margin-bottom:10px;
+    margin-top:10px;
+    padding:15px;
+    border: 2px solid grey;
+    min-width: 450px;
+    box-sizing: border-box;
+}
+.component_sm
+{
+box-sizing: border-box;
+}
+
+.cascade_menu
+{
+    display:none;
+}
+
+.show_menu:hover .cascade_menu
+{
+    display:block;
+    list-style: none;
+}
+
+.highcharts-button
+{
+    display:none;
+}
