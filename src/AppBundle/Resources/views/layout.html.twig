@@ -1,12 +1,13 @@
 {% extends "::layout.html.twig" %}
 
-{% block title %}Home - {{ parent() }}{% endblock %}
+{% block title %} Home - {{ parent() }}{% endblock %}
 
 {% block body %}<!--TODO: code navbar + sidebar-->
 
     <!-- Include NavBar & SideBar-->
-    {% block nav %}{% include "::navbar.html.twig"%}{% endblock %}
+    {% block nav %}{% include "::navbar.html.twig"%}
 
+    {% endblock %}
     {% block app_body %}<!--Ne rien mettre ici-->
     {% endblock %}
 

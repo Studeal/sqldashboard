@@ -1,12 +1,20 @@
 #sidebar{
     position: absolute;
-    top:0px;
+    top:50px;
     left:0px;
-    height: 100%;
-
+    height:100%;
+    height: calc(100% - 50px);
+    border-right: solid 1px black;
+}
+.nave{
 }
 .createdashboard{
     position: absolute;
     top:95%;
     left: 0px;
 }
+
+.contenu{
+    float: right;
+}
+
