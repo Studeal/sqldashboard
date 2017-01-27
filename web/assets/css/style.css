@@ -1,0 +1,12 @@
+#sidebar{
+    position: absolute;
+    top:0px;
+    left:0px;
+    height: 100%;
+
+}
+.createdashboard{
+    position: absolute;
+    top:95%;
+    left: 0px;
+}

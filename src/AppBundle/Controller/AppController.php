@@ -10,4 +10,7 @@ class AppController extends Controller
     {
         return $this->render('AppBundle::layout.html.twig');
     }
+    public function loginAction(){
+        return $this->render('AppBundle::login.html.twig');
+    }
 }
