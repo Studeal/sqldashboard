@@ -19,7 +19,7 @@
             <div id="userInfo" class="container-fluid">
                 <div class="row">
                     <div class="col-md-2 col-xs-4">
-                        <img src=""{{ asset('assets/img/personal_icon.png') }}" width="100px" height="100px" alt="Profile image"">
+                        <img src="{{ asset('assets/img/user_img.png') }}" width="100px" height="100px" alt="Profile image"">
                     </div>
 
                     <div class="col-md-2 col-xs-2">
@@ -58,7 +58,7 @@
                         <div class="tab-content">
                             <div id="usersAll" class="tab-pane fade in active">
                                 <div class="table-responsive">
-                                    <h3>All Users <button type="button" class="btn btn-default" data-toggle="modal" data-target="#addUser">Add new</button></h3>
+                                    <h3>All Users <button type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#addUser">Add new</button></h3>
 
                                     {# START Add New User Modal #}
                                     <!-- Modal -->
@@ -108,29 +108,94 @@
                                     {# END Add New User Modal #}
 
                                     {# START User Table Data #}
-                                    <table class="table table-striped">
+                                    <table id="userTable" class="table table-striped">
                                         <tr>
                                             <th>User</th>
-                                            <th></th>
                                             <th></th>
                                             <th></th>
                                         </tr>
 
                                         <tr>
                                             <td>User 1</td>
-                                            <td></td>
-                                            <td><a>Edit</a></td>
-                                            <td><a>Delete</a></td>
+                                            <td><a data-toggle="modal" data-target="#editUser">Edit</a></td>
+                                            <td><a data-toggle="modal" data-target="#deleteUser">Delete</a></td>
                                         </tr>
 
                                         <tr>
                                             <td>User 2</td>
-                                            <td></td>
-                                            <td><a>Edit</a></td>
-                                            <td><a>Delete</a></td>
+                                            <td><a data-toggle="modal" data-target="#editUser">Edit</a></td>
+                                            <td><a data-toggle="modal" data-target="#deleteUser">Delete</a></td>
                                         </tr>
                                     </table>
                                     {# END User Table Data #}
+
+                                    {# START Edit User Modal #}
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="editUser" role="dialog">
+                                        <div class="modal-dialog">
+
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <h4 class="modal-title">Edit user</h4>
+                                                </div>
+
+                                                {# START Edit User Form #}
+                                                <div class="modal-body">
+                                                    <form>
+                                                        <div class="form-group">
+                                                            <label for="newFirstName">First Name</label>
+                                                            <input type="text" class="form-control" id="newFirstName" placeholder="Michael">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="newLastName">Last Name</label>
+                                                            <input type="text" class="form-control" id="newLastName" placeholder="Jackson">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="newEmail1">Email address</label>
+                                                            <input type="email" class="form-control" id="newEmail1" placeholder="Email">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="newPassword">Password</label>
+                                                            <input type="password" class="form-control" id="newPassword" placeholder="Password">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="newFile">Profile Photo</label>
+                                                            <input type="file" id="newFile">
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-default">Submit</button>
+                                                </div>
+                                                {# END Edit User Form #}
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    {# END Edit User Modal #}
+
+                                    {# START Delete User Modal #}
+                                    <div class="container">
+                                        <div class="modal fade" id="deleteUser" role="dialog">
+                                            <div class="modal-dialog modal-sm">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        <h4 class="modal-title">Delete User</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p class="text-danger">Are you sure you want to delete this user?</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-default">Submit</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {# END Delete User Modal #}
 
                                 </div>
                                 <div class="col-md-4 col-xs-0"></div>
@@ -173,24 +238,42 @@
                                             <th>Dashboard Name</th>
                                             <th>Creator</th>
                                             <th></th>
-                                            <th></th>
                                         </tr>
 
                                         <tr>
                                             <td>Dashboard 1</td>
                                             <td>Cool User 1</td>
-                                            <td><a>Edit</a></td>
-                                            <td><a>Delete</a></td>
+                                            <td><a data-toggle="modal" data-target="#delDash">Delete</a></td>
                                         </tr>
 
                                         <tr>
                                             <td>Dashboard 2</td>
                                             <td>Cool User 2</td>
-                                            <td><a>Edit</a></td>
-                                            <td><a>Delete</a></td>
+                                            <td><a data-toggle="modal" data-target="#delDash">Delete</a></td>
                                         </tr>
                                     </table>
                                     {# END Dashboard Table Data #}
+
+                                    {# START Delete Dashboard Modal #}
+                                    <div class="container">
+                                        <div class="modal fade" id="delDash" role="dialog">
+                                            <div class="modal-dialog modal-sm">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        <h4 class="modal-title">Delete Dashboard</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p class="text-danger">Are you sure you want to delete this Dashboard?</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-default">Submit</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {# END Delete Dashboard Modal #}
 
                                 </div>
                                 <div class="col-md-4 col-xs-0"></div>
