@@ -35,6 +35,10 @@
     text-align: center;
 }
 
+#mySettingsForm {
+    margin: 0px 150px;
+}
+
 .pagination {
     position: absolute;
     top: 50%;

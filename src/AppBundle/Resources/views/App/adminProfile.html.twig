@@ -13,7 +13,9 @@
                 {% endblock %}
                 <title>{% block title %}Profile Admin{% endblock %}</title>
             </head>
+
         <body>
+            {# START Logged-in User Info #}
             <div id="userInfo" class="container-fluid">
                 <div class="row">
                     <div class="col-md-2 col-xs-4">
@@ -32,29 +34,80 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4 col-xs-2">
-                        <a class="btn btn-default" href="#" role="button">Edit Info</a>
-                    </div>
+                    <div class="col-md-4 col-xs-2"></div>
                     <div class="col-md-4 col-xs-0"></div>
                 </div>
             </div>
-
             <br>
+            {# END Logged-in User Info #}
 
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
+
+                        {# START Tab Pane List #}
                         <div id="tabbed-pane">
                             <ul class="nav nav-tabs">
                                 <li class="active"><a data-toggle="tab" href="#usersAll">All Users</a></li>
                                 <li><a data-toggle="tab" href="#dashsAll">All Dashboards</a></li>
+                                <li><a data-toggle="tab" href="#mySettings">My Settings</a></li>
                             </ul>
                         </div>
+                        {# END Tab Pane List #}
 
                         <div class="tab-content">
                             <div id="usersAll" class="tab-pane fade in active">
                                 <div class="table-responsive">
-                                    <h3>All Users</h3>
+                                    <h3>All Users <button type="button" class="btn btn-default" data-toggle="modal" data-target="#addUser">Add new</button></h3>
+
+                                    {# START Add New User Modal #}
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="addUser" role="dialog">
+                                        <div class="modal-dialog">
+
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <h4 class="modal-title">Add a new user</h4>
+                                                </div>
+
+                                                {# START New User Form #}
+                                                <div class="modal-body">
+                                                    <form>
+                                                        <div class="form-group">
+                                                            <label for="newFirstName">First Name</label>
+                                                            <input type="text" class="form-control" id="newFirstName" placeholder="Michael">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="newLastName">Last Name</label>
+                                                            <input type="text" class="form-control" id="newLastName" placeholder="Jackson">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="newEmail1">Email address</label>
+                                                            <input type="email" class="form-control" id="newEmail1" placeholder="Email">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="newPassword">Password</label>
+                                                            <input type="password" class="form-control" id="newPassword" placeholder="Password">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="newFile">Profile Photo</label>
+                                                            <input type="file" id="newFile">
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-default">Submit</button>
+                                                </div>
+                                                {# END New User Form #}
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    {# END Add New User Modal #}
+
+                                    {# START User Table Data #}
                                     <table class="table table-striped">
                                         <tr>
                                             <th>User</th>
@@ -77,11 +130,44 @@
                                             <td><a>Delete</a></td>
                                         </tr>
                                     </table>
+                                    {# END User Table Data #}
+
                                 </div>
+                                <div class="col-md-4 col-xs-0"></div>
+                                <div class="col-md-4 col-xs-12" align="center">
+
+                                    {# START User Pagination #}
+                                    <nav class="navbar" aria-label="Page navigation">
+                                        <div class="container-fluid">
+                                            <ul class="pagination">
+                                                <li>
+                                                    <a href="#" aria-label="Previous">
+                                                        <span aria-hidden="true">&laquo;</span>
+                                                    </a>
+                                                </li>
+                                                <li><a href="#">1</a></li>
+                                                <li><a href="#">2</a></li>
+                                                <li><a href="#">3</a></li>
+                                                <li><a href="#">4</a></li>
+                                                <li><a href="#">5</a></li>
+                                                <li>
+                                                    <a href="#" aria-label="Next">
+                                                        <span aria-hidden="true">&raquo;</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </nav>
+                                    {# END User Pagination #}
+
+                                </div>
+                                <div class="col-md-4 col-xs-0"></div>
                             </div>
                             <div id="dashsAll" class="tab-pane fade">
                                 <div class="table-responsive">
                                     <h3>All Dashboards</h3>
+
+                                    {# START Dashboard Table Data #}
                                     <table class="table table-striped">
                                         <tr>
                                             <th>Dashboard Name</th>
@@ -104,6 +190,69 @@
                                             <td><a>Delete</a></td>
                                         </tr>
                                     </table>
+                                    {# END Dashboard Table Data #}
+
+                                </div>
+                                <div class="col-md-4 col-xs-0"></div>
+                                <div class="col-md-4 col-xs-12" align="center">
+                                    <nav class="navbar" aria-label="Page navigation">
+                                        <div class="container-fluid">
+
+                                            {# START Dashboard Pagination #}
+                                            <ul class="pagination">
+                                                <li>
+                                                    <a href="#" aria-label="Previous">
+                                                        <span aria-hidden="true">&laquo;</span>
+                                                    </a>
+                                                </li>
+                                                <li><a href="#">1</a></li>
+                                                <li><a href="#">2</a></li>
+                                                <li><a href="#">3</a></li>
+                                                <li><a href="#">4</a></li>
+                                                <li><a href="#">5</a></li>
+                                                <li>
+                                                    <a href="#" aria-label="Next">
+                                                        <span aria-hidden="true">&raquo;</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                            {# END Dashboard Pagination #}
+
+                                        </div>
+                                    </nav>
+                                </div>
+                                <div class="col-md-4 col-xs-0"></div>
+                            </div>
+                            <div id="mySettings" class="tab-pane fade">
+                                <div class="table-responsive">
+
+                                    {# START User Settings #}
+                                    <form id="mySettingsForm">
+                                        <h3>My Settings</h3>
+                                        <div class="form-group">
+                                            <label for="newFirstName">First Name</label>
+                                            <input type="text" class="form-control" id="newFirstName" placeholder="Michael">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="newLastName">Last Name</label>
+                                            <input type="text" class="form-control" id="newLastName" placeholder="Jackson">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="newEmail1">Email address</label>
+                                            <input type="email" class="form-control" id="newEmail1" placeholder="Email">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="newPassword">Password</label>
+                                            <input type="password" class="form-control" id="newPassword" placeholder="Password">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="newFile">Profile Photo</label>
+                                            <input type="file" id="newFile">
+                                        </div>
+                                        <button type="submit" class="btn btn-default pull-right">Submit</button>
+                                    </form>
+                                    {# END User Settings #}
+
                                 </div>
                             </div>
                         </div>
@@ -111,32 +260,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-4 col-xs-0"></div>
-            <div class="col-md-4 col-xs-12" align="center">
-                    <nav class="navbar" aria-label="Page navigation">
-                        <div class="container-fluid">
-                            <ul class="pagination">
-                                <li>
-                                    <a href="#" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                    </a>
-                                </li>
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li>
-                                    <a href="#" aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </nav>
-                </div>
-            <div class="col-md-4 col-xs-0"></div>
         </body>
     </html>
 {% endblock %}

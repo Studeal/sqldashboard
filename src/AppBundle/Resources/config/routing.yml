@@ -3,5 +3,9 @@ app_homepage:
     defaults: { _controller: AppBundle:App:index }
 
 app_admin_dahboards:
-    path:     /admin_dash
-    defaults: { _controller: AppBundle:App:adminDash }
+    path:     /admin_dash_main
+    defaults: { _controller: AppBundle:App:adminDashMain }
+
+app_all_users:
+    path:     /admin_dash/all_users
+    defaults: { _controller: AppBundle:App: }
