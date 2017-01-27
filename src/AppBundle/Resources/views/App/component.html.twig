@@ -6,41 +6,66 @@
 
 {% block app_body %}
 
+<div id="component">
+
 <div class="col-xs-2 sidebar">
     {# TODO: générer la liste de façon automatique #}
-    <h3>My database</h3>
+    <h2>My database</h2>
 
-    <ul>
-        <li>Table 1</li>
-        <ul>
-            <li>Field 1</li>
-            <li>Field 2</li>
-            <li>Field 3</li>
-        </ul>
-        <li>Table 2</li>
-        <ul>
-            <li>Field 1</li>
-            <li>Field 2</li>
-            <li>Field 3</li>
-        </ul>
-        <li>Table 3</li>
-        <ul>
-            <li>Field 1</li>
-            <li>Field 2</li>
-            <li>Field 3</li>
-        </ul>
-    </ul>
+    <div class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4><a data-toggle="collapse" href="#collapse1">Table 1</a></h4>
+            </div>
+            <div id="collapse1" class="panel-collapse collapse">
+                <ul class="list-group" >
+                    <li class="list-group-item">Field 1</li>
+                    <li class="list-group-item">Field 2</li>
+                    <li class="list-group-item">Field 3</li>
+                </ul>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4><a data-toggle="collapse" href="#collapse2">Table 2</a></h4>
+            </div>
+            <div id="collapse2" class="panel-collapse collapse">
+                <ul class="list-group" >
+                    <li class="list-group-item">Field 1</li>
+                    <li class="list-group-item">Field 2</li>
+                    <li class="list-group-item">Field 3</li>
+                </ul>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4><a data-toggle="collapse" href="#collapse3">Table 3</a></h4>
+            </div>
+            <div id="collapse3" class="panel-collapse collapse">
+                <ul class="list-group" >
+                    <li class="list-group-item">Field 1</li>
+                    <li class="list-group-item">Field 2</li>
+                    <li class="list-group-item">Field 3</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
 
 </div>
 
-<div class="col-xs-8 sidebar">
+<div class="col-xs-8 sidebar" id="main_component">
     <div class="row">
-        {# TODO: Modifier le form pour l'adapter à Docrtine et Symfony #}
+        <h1>{{ mainTitle }}</h1>
+    </div>
+
+    <div class="row">
+        {# TODO: Form temporaire, à changer pour l'adapter à Docrtine et Symfony #}
         <form class="form-horizontal">
             <div class="form-group">
                 <label for="component_name" class="col-xs-3 control-label">Component name:</label>
                 <div class="col-xs-7">
-                    <input type="text" class="form-control" id="component_name">
+                    <input type="text" class="form-control" id="component_name" value="{{ componentName }}">
                 </div>
                 <div class="col-xs-2">
                     <button type="submit" class="btn btn-default">Execute</button>
@@ -60,11 +85,11 @@
             <li><i class="fa fa-bar-chart" aria-hidden="true"></i></li>
         </ul>
     </div>
-    <div class="row">
+    <div class="row charts">
         <div class="col-xs-12" id="linechart" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
     </div>
 
-    <div class="row">
+    <div class="row button">
         <div class="col-xs-3 col-xs-offset-9">
             <div class="btn-group" role="group" aria-label="...">
                 <a href="" class="btn btn-default">Submit</a>
@@ -72,6 +97,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 {% endblock %}
 

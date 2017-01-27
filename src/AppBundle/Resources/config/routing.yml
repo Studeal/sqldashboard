@@ -5,3 +5,7 @@ app_homepage:
 app_add_component:
     path:     /add_component
     defaults: { _controller: AppBundle:App:addComponent }
+
+app_edit_component:
+    path:     /edit_component
+    defaults: { _controller: AppBundle:App:editComponent }
