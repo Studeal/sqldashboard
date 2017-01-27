@@ -2,13 +2,10 @@
 {
     float:right;
 }
-.align_center{
+.align_center
+{
     text-align: center;
 }
-.right{
-    text-align: right;
-}
-
 .menu_pos
 {
     position:relative;
@@ -42,4 +39,21 @@ box-sizing: border-box;
 .highcharts-button
 {
     display:none;
+}
+
+.change_width
+{
+    width:100px;
+    float: right;
+}
+
+.search_user
+{
+    padding: 10px;
+}
+
+.checkbox-info
+{
+    background-color: red;
+    box-shadow: 1px 1px 1px grey;
 }

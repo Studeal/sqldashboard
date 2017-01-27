@@ -45,6 +45,10 @@ class AppController extends Controller
         $ob2->yAxis->title(array('text'  => "Vertical axis title"));
         $ob2->series($series2);
 
+        $data=$ob->chart->type;
+        $request = $this->container->get('request');
+        $data1 = $request->query->get('data');
+
         return $this->render('AppBundle:App:dashboard.html.twig', array(
             'chart1' => $ob,
             'chart2' => $ob1,
@@ -52,5 +56,8 @@ class AppController extends Controller
         ));
     }
 
-
+public function shareAction()
+{
+    return $this->render('AppBundle:App:shareD.html.twig');
+}
 }

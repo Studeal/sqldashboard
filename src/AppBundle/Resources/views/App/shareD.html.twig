@@ -1,0 +1,101 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block title %} Share Dashboard {% endblock %}
+{% block app_body %}
+    <div class="col-xs-2"></div> <!-- Aside -->
+
+
+    <div class="col-xs-8">
+        <!-- Search bar -->
+        <div class="row search_user">
+            <div class="col-xs-3">
+                <h4>Add users to dashboard</h4>
+            </div>
+            <div class="col-xs-6 col-xs-offset-6 input-group">
+                <input type="text" class="form-control" placeholder="Search for...">
+                <span class="input-group-btn">
+        <button class="btn btn-default" type="button">Go!</button>
+      </span>
+            </div>
+        </div>
+        <!-- Users table -->
+        <form role="form">
+            <table class="table table-striped text-center table_users">
+                <tr>
+                    <td>
+                        <input type="checkbox" class="checkbox-info">
+                    </td>
+                    <td><i class="fa fa-user-o fa-2x" aria-hidden="true"></i></td>
+                    <td> User1</td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" class="checkbox-info">
+                    </td>
+                    <td><i class="fa fa-user-o fa-2x" aria-hidden="true"></i></td>
+                    <td> User2</td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" class="checkbox-info">
+                    </td>
+                    <td><i class="fa fa-user-o fa-2x" aria-hidden="true"></i></td>
+                    <td> User3</td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" class="checkbox-info">
+                    </td>
+                    <td><i class="fa fa-user-o fa-2x" aria-hidden="true"></i></td>
+                    <td> User4</td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" class="checkbox-info" >
+                    </td>
+                    <td><i class="fa fa-user-o fa-2x" aria-hidden="true"></i></td>
+                    <td> User5</td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" class="checkbox-info">
+                    </td>
+                    <td><i class="fa fa-user-o fa-2x" aria-hidden="true"></i></td>
+                    <td> User6</td>
+                </tr>
+
+            </table>
+            <button class="btn btn-default"> Add</button>
+            <button class="btn btn-default"> Remove</button>
+        </form>
+        <!-- Pagination -->
+        <nav aria-label="Page navigation example" class="text-center">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="//code.highcharts.com/4.1.8/highcharts.js"></script>
+    <script src="//code.highcharts.com/4.1.8/modules/exporting.js"></script>
+    <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/fontawesome/css/font-awesome.min.css') }}">
+{% endblock %}

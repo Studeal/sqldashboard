@@ -2,3 +2,6 @@ app_home:
     path:     /
     defaults: { _controller: AppBundle:App:view }
 
+app_share_dashboard:
+    path:     /share
+    defaults: { _controller: AppBundle:App:share }
