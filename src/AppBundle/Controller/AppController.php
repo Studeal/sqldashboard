@@ -10,4 +10,9 @@ class AppController extends Controller
     {
         return $this->render('AppBundle::layout.html.twig');
     }
+
+    public function adminDashAction()
+    {
+        return $this->render('AppBundle:App:adminProfile.html.twig');
+    }
 }

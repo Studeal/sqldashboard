@@ -1,0 +1,142 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block app_body %}
+    <!DOCTYPE html>
+    <html lang="en">
+            <head>
+                <meta charset="utf-8">
+                <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                {% block stylesheets %}
+                    {{ parent() }}
+                    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" />
+                {% endblock %}
+                <title>{% block title %}Profile Admin{% endblock %}</title>
+            </head>
+        <body>
+            <div id="userInfo" class="container-fluid">
+                <div class="row">
+                    <div class="col-md-2 col-xs-4">
+                        <img src=""{{ asset('assets/img/personal_icon.png') }}" width="100px" height="100px" alt="Profile image"">
+                    </div>
+
+                    <div class="col-md-2 col-xs-2">
+                        <div class="row">
+                            <p>First Name</p>
+                        </div>
+                        <div class="row">
+                            <p>Last Name</p>
+                        </div>
+                        <div class="row">
+                            <p>Email</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-xs-2">
+                        <a class="btn btn-default" href="#" role="button">Edit Info</a>
+                    </div>
+                    <div class="col-md-4 col-xs-0"></div>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="tabbed-pane">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a data-toggle="tab" href="#usersAll">All Users</a></li>
+                                <li><a data-toggle="tab" href="#dashsAll">All Dashboards</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="tab-content">
+                            <div id="usersAll" class="tab-pane fade in active">
+                                <div class="table-responsive">
+                                    <h3>All Users</h3>
+                                    <table class="table table-striped">
+                                        <tr>
+                                            <th>User</th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+
+                                        <tr>
+                                            <td>User 1</td>
+                                            <td></td>
+                                            <td><a>Edit</a></td>
+                                            <td><a>Delete</a></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>User 2</td>
+                                            <td></td>
+                                            <td><a>Edit</a></td>
+                                            <td><a>Delete</a></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div id="dashsAll" class="tab-pane fade">
+                                <div class="table-responsive">
+                                    <h3>All Dashboards</h3>
+                                    <table class="table table-striped">
+                                        <tr>
+                                            <th>Dashboard Name</th>
+                                            <th>Creator</th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Dashboard 1</td>
+                                            <td>Cool User 1</td>
+                                            <td><a>Edit</a></td>
+                                            <td><a>Delete</a></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Dashboard 2</td>
+                                            <td>Cool User 2</td>
+                                            <td><a>Edit</a></td>
+                                            <td><a>Delete</a></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-xs-0"></div>
+            <div class="col-md-4 col-xs-12" align="center">
+                    <nav class="navbar" aria-label="Page navigation">
+                        <div class="container-fluid">
+                            <ul class="pagination">
+                                <li>
+                                    <a href="#" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <li><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li>
+                                    <a href="#" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            <div class="col-md-4 col-xs-0"></div>
+        </body>
+    </html>
+{% endblock %}
