@@ -24,7 +24,7 @@ class AppController extends Controller
         );
 
         $ob = new Highchart();
-        $ob->chart->renderTo('linechart');  // The #id of the div where to render the chart
+        $ob->chart->renderTo('linechart0');  // The #id of the div where to render the chart
         $ob->title->text('');
         $ob->chart->type('bar');
         $ob->xAxis->title(array('text'  => "Horizontal axis title"));
@@ -32,14 +32,14 @@ class AppController extends Controller
         $ob->series($series);
 
         $ob1 = new Highchart();
-        $ob1->chart->renderTo('linechart2');  // The #id of the div where to render the chart
+        $ob1->chart->renderTo('linechart1');  // The #id of the div where to render the chart
         $ob1->title->text('');
         $ob1->xAxis->title(array('text'  => "Horizontal axis title"));
         $ob1->yAxis->title(array('text'  => "Vertical axis title"));
         $ob1->series($series1);
 
         $ob2 = new Highchart();
-        $ob2->chart->renderTo('linechart3');  // The #id of the div where to render the chart
+        $ob2->chart->renderTo('linechart2');  // The #id of the div where to render the chart
         $ob2->title->text('');
         $ob2->xAxis->title(array('text'  => "Horizontal axis title"));
         $ob2->yAxis->title(array('text'  => "Vertical axis title"));
@@ -50,9 +50,11 @@ class AppController extends Controller
         $data1 = $request->query->get('data');
 
         return $this->render('AppBundle:App:dashboard.html.twig', array(
-            'chart1' => $ob,
-            'chart2' => $ob1,
-            'chart3' => $ob2
+            'allCharts' => array(
+            $ob,
+            $ob1,
+            $ob2
+        )
         ));
     }
 
