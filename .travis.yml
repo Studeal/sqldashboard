@@ -11,7 +11,6 @@ before_script:
   - composer install
   - php app/console doctrine:database:create --env=test
   - php app/console doctrine:schema:create --env=test
-  - php app/console doctrine:fixtures:load -n --env=test
 
 script:
   - phpunit -c app
