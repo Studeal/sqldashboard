@@ -11,7 +11,7 @@
                     {{ parent() }}
                     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" />
                 {% endblock %}
-                <title>{% block title %}Profile Admin{% endblock %}</title>
+                <title>{% block title %}Admin Profile {% endblock %}</title>
             </head>
 
         <body>
@@ -19,7 +19,7 @@
             <div id="userInfo" class="container-fluid">
                 <div class="row">
                     <div class="col-md-2 col-xs-4">
-                        <img src="{{ asset('assets/img/user_img.png') }}" width="100px" height="100px" alt="Profile image"">
+                        <img src="{{ asset('assets/img/user_img.png') }}" width="100px" height="100px" alt="Profile image">
                     </div>
 
                     <div class="col-md-2 col-xs-2">
@@ -322,6 +322,7 @@
                                     {# START User Settings #}
                                     <form id="mySettingsForm">
                                         <h3>My Settings</h3>
+                                        <br>
                                         <div class="form-group">
                                             <label for="newFirstName">First Name</label>
                                             <input type="text" class="form-control" id="newFirstName" placeholder="Michael">

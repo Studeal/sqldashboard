@@ -11,13 +11,13 @@ class AppController extends Controller
         return $this->render('AppBundle::layout.html.twig');
     }
 
-    public function adminDashMainAction()
+    public function adminProfileAction()
     {
         return $this->render('AppBundle:App:adminProfile.html.twig');
     }
 
-    public function paginationAction()
+    public function userProfileAction()
     {
-        return $this->container;
+        return $this->render('AppBundle:App:userProfile.html.twig');
     }
 }

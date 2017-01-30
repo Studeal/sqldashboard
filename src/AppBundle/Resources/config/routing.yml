@@ -2,10 +2,10 @@ app_homepage:
     path:     /
     defaults: { _controller: AppBundle:App:index }
 
-app_admin_dahboards:
-    path:     /admin_dash_main
-    defaults: { _controller: AppBundle:App:adminDashMain }
+app_admin_profile:
+    path:     /admin_profile
+    defaults: { _controller: AppBundle:App:adminProfile }
 
-app_all_users:
-    path:     /admin_dash/all_users
-    defaults: { _controller: AppBundle:App: }
+app_user_profile:
+    path:     /user_profile
+    defaults: { _controller: AppBundle:App:userProfile }
