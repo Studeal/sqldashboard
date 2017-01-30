@@ -1,4 +1,6 @@
-#sidebar{
+
+/*********************** SideBar & NavBar ***********************/
+#sidebar{/*SideBar position*/
     position: absolute;
     top:50px;
     left:0px;
@@ -6,15 +8,14 @@
     height: calc(100% - 50px);
     border-right: solid 1px black;
 }
-.nave{
-}
-.createdashboard{
+
+.createdashboard{ /*button create dashboard position*/
     position: absolute;
     top:95%;
     left: 0px;
 }
 
-.contenu{
+.contenu{ /*Work space*/
     float: right;
 }
 

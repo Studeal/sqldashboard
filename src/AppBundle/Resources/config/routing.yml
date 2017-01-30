@@ -3,4 +3,4 @@ app_homepage:
     defaults: { _controller: AppBundle:App:index }
 app_login:
     path:     /login
-    defaults: {_controller: AppBundle:App:login}
+    defaults: {_controller: AppBundle:App:login }
