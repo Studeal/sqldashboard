@@ -17,7 +17,7 @@ class AppController extends Controller
             array( "name" => "Data Serie Name",    "data" => array(1,2,4,5,6,3,8))
         );
         $series1 = array(
-            array("name" => "Data Serie Name",    "data" => array(1,2,4,5,6,3,8))
+            array("type"=>"area", "name" => "Data Serie Name",    "data" => array(1,2,4,5,6,3,8))
         );
         $series2 = array(
             array("type"=>"pie", "name" => "Data Serie Name",    "data" => array(1,2,4,5,6,3,8))
@@ -26,7 +26,7 @@ class AppController extends Controller
         $ob = new Highchart();
         $ob->chart->renderTo('linechart0');  // The #id of the div where to render the chart
         $ob->title->text('');
-        $ob->chart->type('bar');
+        $ob->chart->type('pie');
         $ob->xAxis->title(array('text'  => "Horizontal axis title"));
         $ob->yAxis->title(array('text'  => "Vertical axis title"));
         $ob->series($series);
