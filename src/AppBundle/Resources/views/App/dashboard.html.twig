@@ -2,7 +2,7 @@
 
 {% block title %} Dashboard {% endblock %}
 {% block app_body %}
-  
+
 
     <!-- Dashboard content -->
     <div class="col-xs-10">
@@ -248,10 +248,10 @@
         var type = {{( allCharts[0].chart.type|json_encode|raw )}} ;
         console.log(type);
         function change_chart_type(type_select) {
-for (var i in allCharts){
-            var x = {{(allCharts[i].series|json_encode|raw)}};
-            var render ={{(allCharts[i].chart|json_encode|raw)}};
-            var type = {{( allCharts[i].chart.type|json_encode|raw )}} ;
+//for (var i in allCharts){
+            var x = {{(allCharts[0].series|json_encode|raw)}};
+            var render ={{(allCharts[0].chart|json_encode|raw)}};
+            var type = {{( allCharts[0].chart.type|json_encode|raw )}} ;
             console.log(type);
             console.log(cId);
             type.chart = type_select;
@@ -263,7 +263,7 @@ for (var i in allCharts){
                 xAxis: {"title":{"text":"Horizontal axis title"}},
                 yAxis: {"title":{"text":"Vertical axis title"}}
             });
-}
+//}
         }
 
     </script>
