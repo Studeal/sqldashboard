@@ -14,19 +14,19 @@ class AppController extends Controller
 
     public function viewAction(){
         $series = array(
-            array( "name" => "Data Serie Name",    "data" => array(1,2,4,5,6,3,8))
+            array("name" => "Data Serie Name",    "data" => array(1,2,4,5,6,3,8))
         );
         $series1 = array(
-            array("type"=>"area", "name" => "Data Serie Name",    "data" => array(1,2,4,5,6,3,8))
+            array("name" => "Data Serie Name",    "data" => array(1,6,4,22,3,5,8,8,11))
         );
         $series2 = array(
-            array("type"=>"pie", "name" => "Data Serie Name",    "data" => array(1,2,4,5,6,3,8))
+            array("name" => "Data Serie Name",    "data" => array(19,2,4,5,6,22,8))
         );
 
         $ob = new Highchart();
         $ob->chart->renderTo('linechart0');  // The #id of the div where to render the chart
         $ob->title->text('');
-        $ob->chart->type('pie');
+        $ob->chart->type('');
         $ob->xAxis->title(array('text'  => "Horizontal axis title"));
         $ob->yAxis->title(array('text'  => "Vertical axis title"));
         $ob->series($series);
@@ -45,15 +45,11 @@ class AppController extends Controller
         $ob2->yAxis->title(array('text'  => "Vertical axis title"));
         $ob2->series($series2);
 
-        $data=$ob->chart->type;
-        $request = $this->container->get('request');
-        $data1 = $request->query->get('data');
-
         return $this->render('AppBundle:App:dashboard.html.twig', array(
             'allCharts' => array(
-            $ob,
-            $ob1,
-            $ob2
+                $ob,
+                $ob1,
+                $ob2
         )
         ));
     }
