@@ -6,17 +6,6 @@ php:
 services:
   - mysql
 
-env:
-  - SYMFONY_ENV=test
-  - SYMFONY__DATABASE__HOST=localhost
-  - SYMFONY__DATABASE__PORT=3306
-  - SYMFONY__DATABASE__USER=root
-  - SYMFONY__DATABASE__NAME=sqldashboard_test
-  - SYMFONY__DATABASE__PASSWORD=''
-  - SYMFONY__MAILER__HOST=127.0.0.1
-  - SYMFONY__MAILER__USER=null
-  - SYMFONY__MAILER__PASSWORD=null
-
 before_script:
   - composer self-update
   - composer install
