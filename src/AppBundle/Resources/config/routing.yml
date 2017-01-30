@@ -1,7 +1,3 @@
-app_homepage:
-    path:     /
-    defaults: { _controller: AppBundle:App:index }
-
 app_add_component:
     path:     /add_component
     defaults: { _controller: AppBundle:App:addComponent }
