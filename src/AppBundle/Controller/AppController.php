@@ -29,7 +29,7 @@ class AppController extends Controller
         $ob->yAxis->title(array('text'  => "Vertical axis title"));
         $ob->series($series);
 
-
+        
         return $this->render('AppBundle:App:component.html.twig', array(
             'chart' => $ob,
             'componentName' => "",
