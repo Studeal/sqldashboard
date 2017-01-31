@@ -61,6 +61,6 @@
 /bin/
 /composer.phar
 
-.idea/
+/.idea/
 
-web/assets/vendor
+/web/assets/vendor
