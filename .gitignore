@@ -47,6 +47,7 @@
 # Backup entities generated with doctrine:generate:entities command
 */Entity/*~
 
+/.idea
 
 /web/bundles/
 /app/bootstrap.php.cache
@@ -61,6 +62,8 @@
 /bin/
 /composer.phar
 
-/.idea/
+
 
 /web/assets/vendor
+/.idea/
+sqldashboard2/

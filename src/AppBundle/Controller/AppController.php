@@ -12,6 +12,7 @@ class AppController extends Controller
         return $this->render('AppBundle::layout.html.twig');
     }
 
+
     public function viewAction(){
         $series = array(
             array("name" => "Data Serie Name",    "data" => array(1,2,4,5,6,3,8))
@@ -58,4 +59,14 @@ public function shareAction()
 {
     return $this->render('AppBundle:App:shareD.html.twig');
 }
+    public function adminProfileAction()
+    {
+        return $this->render('AppBundle:App:adminProfile.html.twig');
+    }
+
+    public function userProfileAction()
+    {
+        return $this->render('AppBundle:App:userProfile.html.twig');
+    }
+
 }
