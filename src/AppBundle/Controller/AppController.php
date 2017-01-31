@@ -10,4 +10,14 @@ class AppController extends Controller
     {
         return $this->render('AppBundle::layout.html.twig');
     }
+
+    public function adminProfileAction()
+    {
+        return $this->render('AppBundle:App:adminProfile.html.twig');
+    }
+
+    public function userProfileAction()
+    {
+        return $this->render('AppBundle:App:userProfile.html.twig');
+    }
 }
