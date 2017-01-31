@@ -1,12 +1,11 @@
-
 /*********************** SideBar & NavBar ***********************/
 #sidebar{/*SideBar position*/
-    position: absolute;
+    position: fixed;
     top:50px;
     left:0px;
-    height:100%;
-    height: calc(100% - 50px);
-    border-right: solid 1px black;
+    height:100vh;
+    height: calc(100vh - 50px);
+    z-index: 99999;
 }
 
 .createdashboard{ /*button create dashboard position*/
@@ -15,7 +14,12 @@
     left: 0px;
 }
 
-.contenu{ /*Work space*/
-    float: right;
+.popup{
+    z-index: 9999;
 }
 
+.contenu{ /*Work space*/
+    float: right;
+    border-left: solid 1px grey;
+    height: 100vh;
+}

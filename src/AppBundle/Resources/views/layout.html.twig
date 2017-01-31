@@ -1,14 +1,18 @@
 {% extends "::layout.html.twig" %}
 
-{% block title %} Home - {{ parent() }}{% endblock %}
+{% block title %} {{ parent() }}{% endblock %}
 
-{% block body %}<!--TODO: code navbar + sidebar-->
+{% block body %}
 
     <!-- Include NavBar & SideBar-->
-    {% block nav %}{% include "::navbar.html.twig"%}
-
+    {% block nav %}
+        {% include "::navbar.html.twig"%}
     {% endblock %}
-    {% block app_body %}<!--Ne rien mettre ici-->
-    {% endblock %}
+    
+    <div class="col-xs-10 contenu contenudash">
+        {% block app_body %}
+            
+        {% endblock %}
+    </div>
 
 {% endblock %}
