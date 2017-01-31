@@ -1,19 +1,8 @@
 {% extends "AppBundle::layout.html.twig" %}
 
-{% block app_body %}
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        {% block stylesheets %}
-            {{ parent() }}
-            <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" />
-        {% endblock %}
-        <title>{% block title %}Profile Admin{% endblock %}</title>
-    </head>
+<title>{% block title %}Profile Admin{% endblock %}</title>
 
+{% block app_body %}
     <body>
     {# START Logged-in User Info #}
     <div id="userInfo" class="container-fluid">
