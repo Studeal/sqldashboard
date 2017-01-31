@@ -58,3 +58,10 @@ box-sizing: border-box;
 .contenushare{
     height:100vh;
 }
+.dropdown-menu{
+    min-width: 65px;
+}
+
+.dropdown-menu li a{
+    padding: 3px 3px;
+}
