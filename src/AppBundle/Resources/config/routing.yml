@@ -1,7 +1,9 @@
 app_add_component:
-    path:     /add_component
+    path:     /components/add
     defaults: { _controller: AppBundle:App:addComponent }
 
 app_edit_component:
-    path:     /edit_component
+    path:     /components/{componentId}/edit
     defaults: { _controller: AppBundle:App:editComponent }
+    requirements:
+        componentId: \d+
