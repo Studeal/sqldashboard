@@ -2,15 +2,10 @@
 {
     float:right;
 }
-.align_center
-{
-    text-align: center;
-}
 .menu_pos
 {
     position:relative;
 }
-
 .component
 {
     margin-bottom:10px;
@@ -55,4 +50,12 @@ box-sizing: border-box;
 {
     background-color: red;
     box-shadow: 1px 1px 1px grey;
+}
+
+.contenudash{
+    height:100% !important;
+}
+
+.contenushare{
+    height:100vh;
 }
