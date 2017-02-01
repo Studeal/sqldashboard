@@ -1,14 +1,21 @@
 {% extends "::layout.html.twig" %}
 
-{% block title %}
+{% block title %} {{ parent() }}{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="" href="{{ asset('assets/css/style.css')}}">
 {% endblock %}
 
 {% block body %}
-
+    
+    {% block nav %}
+        {% include "::navbar.html.twig"%}
+    {% endblock %}
+  
 
     {% block app_body %}
-
+        
     {% endblock %}
 
 {% endblock %}
