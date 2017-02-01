@@ -1,4 +1,4 @@
-<?php
+  <?php
 
 namespace AppBundle\Controller;
 
@@ -10,7 +10,9 @@ class AppController extends Controller
     {
         return $this->render('AppBundle::layout.html.twig');
     }
-
+    public function loginAction(){
+        return $this->render('AppBundle:App:login.html.twig');
+    }
     public function adminProfileAction()
     {
         return $this->render('AppBundle:App:adminProfile.html.twig');

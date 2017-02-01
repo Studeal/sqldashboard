@@ -1,6 +1,7 @@
-app_homepage:
-    path:     /
-    defaults: { _controller: AppBundle:App:index }
+
+app_login:
+    path:     /login
+    defaults: {_controller: AppBundle:App:login }
 
 app_admin_profile:
     path:     /admin_profile
