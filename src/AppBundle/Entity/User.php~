@@ -3,20 +3,21 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Users
+ * User
  *
- * @ORM\Table(name="fos_user")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\UsersRepository")
+ * @ORM\Table(name="user")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
-class Users
+class User extends BaseUser
 {
     /**
-     * @ORM\ManytoMany(targetEntity="AppBundle\Entity\Dashboards", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Dashboards", cascade={"persist"})
      */
-     private $dashboards;
+    protected $dashboards;
 
     /**
      * @var int
@@ -25,59 +26,59 @@ class Users
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="firstName", type="string", length=255)
      */
-    private $firstName;
+    protected $firstName;
 
     /**
      * @var string
      *
      * @ORM\Column(name="lastName", type="string", length=255)
      */
-    private $lastName;
+    protected $lastName;
 
     /**
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255)
      */
-    private $email;
+    protected $email;
 
     /**
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=255)
      */
-    private $password;
+    protected $password;
 
     /**
      * @var string
      *
      * @ORM\Column(name="image", type="string", length=255)
      */
-    private $image;
+    protected $image;
 
     /**
      * @var int
      *
      * @ORM\Column(name="rights", type="smallint")
      */
-    private $rights;
+    protected $rights;
 
     /**
      * @var bool
      *
      * @ORM\Column(name="status", type="boolean")
      */
-    private $status;
+    protected $status;
 
-    public function __construct()
-    {
+    public function __construct(){
+        parent::__construct;
         $this->dashboards = new ArrayCollection();
     }
 
@@ -96,7 +97,7 @@ class Users
      *
      * @param string $firstName
      *
-     * @return Users
+     * @return User
      */
     public function setFirstName($firstName)
     {
@@ -120,7 +121,7 @@ class Users
      *
      * @param string $lastName
      *
-     * @return Users
+     * @return User
      */
     public function setLastName($lastName)
     {
@@ -144,7 +145,7 @@ class Users
      *
      * @param string $email
      *
-     * @return Users
+     * @return User
      */
     public function setEmail($email)
     {
@@ -168,7 +169,7 @@ class Users
      *
      * @param string $password
      *
-     * @return Users
+     * @return User
      */
     public function setPassword($password)
     {
@@ -192,7 +193,7 @@ class Users
      *
      * @param string $image
      *
-     * @return Users
+     * @return User
      */
     public function setImage($image)
     {
@@ -216,7 +217,7 @@ class Users
      *
      * @param integer $rights
      *
-     * @return Users
+     * @return User
      */
     public function setRights($rights)
     {
@@ -240,7 +241,7 @@ class Users
      *
      * @param boolean $status
      *
-     * @return Users
+     * @return User
      */
     public function setStatus($status)
     {

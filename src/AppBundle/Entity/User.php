@@ -12,10 +12,10 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
-class Users extends BaseUser
+class User extends BaseUser
 {
     /**
-     * @ORM\ManytoMany(targetEntity="AppBundle\Entity\Dashboards", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Dashboards", cascade={"persist"})
      */
     protected $dashboards;
 
@@ -77,9 +77,8 @@ class Users extends BaseUser
      */
     protected $status;
 
-    public function __construct()
-    {
-        parent::__construct();
+    public function __construct(){
+        parent::__construct;
         $this->dashboards = new ArrayCollection();
     }
 
@@ -98,7 +97,7 @@ class Users extends BaseUser
      *
      * @param string $firstName
      *
-     * @return Users
+     * @return User
      */
     public function setFirstName($firstName)
     {
@@ -122,7 +121,7 @@ class Users extends BaseUser
      *
      * @param string $lastName
      *
-     * @return Users
+     * @return User
      */
     public function setLastName($lastName)
     {
@@ -146,7 +145,7 @@ class Users extends BaseUser
      *
      * @param string $email
      *
-     * @return Users
+     * @return User
      */
     public function setEmail($email)
     {
@@ -170,7 +169,7 @@ class Users extends BaseUser
      *
      * @param string $password
      *
-     * @return Users
+     * @return User
      */
     public function setPassword($password)
     {
@@ -194,7 +193,7 @@ class Users extends BaseUser
      *
      * @param string $image
      *
-     * @return Users
+     * @return User
      */
     public function setImage($image)
     {
@@ -218,7 +217,7 @@ class Users extends BaseUser
      *
      * @param integer $rights
      *
-     * @return Users
+     * @return User
      */
     public function setRights($rights)
     {
@@ -242,7 +241,7 @@ class Users extends BaseUser
      *
      * @param boolean $status
      *
-     * @return Users
+     * @return User
      */
     public function setStatus($status)
     {
@@ -266,7 +265,7 @@ class Users extends BaseUser
      *
      * @param \AppBundle\Entity\Dashboards $dashboard
      *
-     * @return Users
+     * @return User
      */
     public function addDashboard(\AppBundle\Entity\Dashboards $dashboard)
     {
