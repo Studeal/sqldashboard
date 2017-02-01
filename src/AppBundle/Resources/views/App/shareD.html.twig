@@ -20,13 +20,15 @@
         <!-- Users table -->
         <form role="form">
             <table class="table table-striped text-center table_users">
+                {% for user in users %}
                 <tr>
                     <td>
-                        <input type="checkbox" class="checkbox-info">
+                        <input type="checkbox" class="checkbox-info" {% if user.checked == 1 %}checked="checked"{% endif %}>
                     </td>
                     <td><i class="fa fa-user-o fa-2x" aria-hidden="true"></i></td>
-                    <td> User1</td>
+                    <td> {{ user.name }}</td>
                 </tr>
+                {% endfor %}
                 <tr>
                     <td>
                         <input type="checkbox" class="checkbox-info">
@@ -36,14 +38,14 @@
                 </tr>
                 <tr>
                     <td>
-                        <input type="checkbox" class="checkbox-info">
+                        <input type="checkbox" class="checkbox-info" checked=0>
                     </td>
                     <td><i class="fa fa-user-o fa-2x" aria-hidden="true"></i></td>
                     <td> User3</td>
                 </tr>
                 <tr>
                     <td>
-                        <input type="checkbox" class="checkbox-info">
+                        <input type="checkbox" class="checkbox-info" value="checked">
                     </td>
                     <td><i class="fa fa-user-o fa-2x" aria-hidden="true"></i></td>
                     <td> User4</td>
@@ -64,8 +66,7 @@
                 </tr>
 
             </table>
-            <button class="btn btn-default"> Add</button>
-            <button class="btn btn-default"> Remove</button>
+            <button class="btn btn-default"> Save</button>
         </form>
         <!-- Pagination -->
         <nav aria-label="Page navigation example" class="text-center">

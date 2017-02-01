@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use Ob\HighchartsBundle\Highcharts\Highchart;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+
 class AppController extends Controller
 {
     public function indexAction()
@@ -56,6 +57,22 @@ class AppController extends Controller
 
 public function shareAction()
 {
-    return $this->render('AppBundle:App:shareD.html.twig');
+    $user1 = new User();
+    $user1->name="Test";
+    $user1->checked=1;
+    $user2 = new User();
+    $user2->name="Test2";
+    $user2->checked=1;
+    $user3 = new User();
+    $user3->name="User";
+    $user3->checked=0;
+    $user4 = new User();
+    $user4->name="Use";
+    $user4->checked=1;
+    return $this->render('AppBundle:App:shareD.html.twig', array('users' => array($user1,
+        $user2,
+        $user3,
+        $user4)));
+
 }
 }
