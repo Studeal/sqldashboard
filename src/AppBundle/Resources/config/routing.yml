@@ -1,3 +1,21 @@
-app_homepage:
-    path:     /
-    defaults: { _controller: AppBundle:App:index }
+app_add_component:
+    path:     /components/add
+    defaults: { _controller: AppBundle:App:addComponent }
+
+app_edit_component:
+    path:     /components/{componentId}/edit
+    defaults: { _controller: AppBundle:App:editComponent }
+    requirements:
+        componentId: \d+
+
+app_login:
+    path:     /login
+    defaults: {_controller: AppBundle:App:login }
+
+app_admin_profile:
+    path:     /admin_profile
+    defaults: { _controller: AppBundle:App:adminProfile }
+
+app_user_profile:
+    path:     /user_profile
+    defaults: { _controller: AppBundle:App:userProfile }

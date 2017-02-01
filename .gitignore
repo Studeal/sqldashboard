@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Created by .ignore support plugin (hsz.mobi)
 ### Symfony template
 # Cache and logs (Symfony2)
@@ -33,6 +32,7 @@
 # Assets and user uploads
 /web/bundles/
 /web/uploads/
+/web/assets/vendor/
 
 # PHPUnit
 /app/phpunit.xml
@@ -48,4 +48,3 @@
 */Entity/*~
 
 /.idea
-/web/assets/vendor/
