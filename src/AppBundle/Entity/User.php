@@ -6,17 +6,17 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Users
+ * User
  *
- * @ORM\Table(name="users")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\UsersRepository")
+ * @ORM\Table(name="user")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
-class Users
+class User
 {
     /**
      * @ORM\ManytoMany(targetEntity="AppBundle\Entity\Dashboards", cascade={"persist"})
      */
-     private $dashboards;
+     protected $dashboards;
 
     /**
      * @var int
@@ -25,56 +25,56 @@ class Users
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="firstName", type="string", length=255)
      */
-    private $firstName;
+    protected $firstName;
 
     /**
      * @var string
      *
      * @ORM\Column(name="lastName", type="string", length=255)
      */
-    private $lastName;
+    protected $lastName;
 
     /**
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255)
      */
-    private $email;
+    protected $email;
 
     /**
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=255)
      */
-    private $password;
+    protected $password;
 
     /**
      * @var string
      *
      * @ORM\Column(name="image", type="string", length=255)
      */
-    private $image;
+    protected $image;
 
     /**
      * @var int
      *
      * @ORM\Column(name="rights", type="smallint")
      */
-    private $rights;
+    protected $rights;
 
     /**
      * @var bool
      *
      * @ORM\Column(name="status", type="boolean")
      */
-    private $status;
+    protected $status;
 
     public function __construct()
     {
