@@ -60,4 +60,134 @@ class User extends BaseUser
         parent::__construct;
         $this->dashboards = new ArrayCollection();
     }
+
+    /**
+     * Set firstName
+     *
+     * @param string $firstName
+     *
+     * @return User
+     */
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    /**
+     * Get firstName
+     *
+     * @return string
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * Set lastName
+     *
+     * @param string $lastName
+     *
+     * @return User
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    /**
+     * Get lastName
+     *
+     * @return string
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     *
+     * @return User
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Set status
+     *
+     * @param boolean $status
+     *
+     * @return User
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return boolean
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Add dashboard
+     *
+     * @param \AppBundle\Entity\Dashboards $dashboard
+     *
+     * @return User
+     */
+    public function addDashboard(\AppBundle\Entity\Dashboards $dashboard)
+    {
+        $this->dashboards[] = $dashboard;
+
+        return $this;
+    }
+
+    /**
+     * Remove dashboard
+     *
+     * @param \AppBundle\Entity\Dashboards $dashboard
+     */
+    public function removeDashboard(\AppBundle\Entity\Dashboards $dashboard)
+    {
+        $this->dashboards->removeElement($dashboard);
+    }
+
+    /**
+     * Get dashboards
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDashboards()
+    {
+        return $this->dashboards;
+    }
 }
