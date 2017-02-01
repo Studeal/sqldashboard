@@ -12,7 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
-class Users extends BaseUser
+class User extends BaseUser
 {
     /**
      * @ORM\ManytoMany(targetEntity="AppBundle\Entity\Dashboards", cascade={"persist"})
