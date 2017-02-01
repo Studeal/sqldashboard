@@ -2,17 +2,21 @@
 
 {% block title %} {{ parent() }}{% endblock %}
 
-{% block body %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="" href="{{ asset('assets/css/style.css')}}">
+{% endblock %}
 
+{% block body %}
     <!-- Include NavBar & SideBar-->
     {% block nav %}
         {% include "::navbar.html.twig"%}
     {% endblock %}
     
-    <div class="col-xs-10 contenu contenudash">
-        {% block app_body %}
-            
-        {% endblock %}
-    </div>
+<!--TODO: code navbar + sidebar-->
+
+    {% block app_body %}
+        <!--Ne rien mettre ici-->
+    {% endblock %}
+
 
 {% endblock %}
