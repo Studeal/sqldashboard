@@ -5,3 +5,12 @@ app_home:
 app_share_dashboard:
     path:     /share
     defaults: { _controller: AppBundle:App:share }
+
+app_admin_profile:
+    path:     /admin_profile
+    defaults: { _controller: AppBundle:App:adminProfile }
+
+app_user_profile:
+    path:     /user_profile
+    defaults: { _controller: AppBundle:App:userProfile }
+
