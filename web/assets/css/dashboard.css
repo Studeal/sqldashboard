@@ -1,0 +1,67 @@
+.float_right
+{
+    float:right;
+}
+.menu_pos
+{
+    position:relative;
+}
+.component
+{
+    margin-bottom:10px;
+    margin-top:10px;
+    padding:15px;
+    border: 2px solid grey;
+    box-sizing: border-box;
+}
+.component_sm
+{
+box-sizing: border-box;
+}
+
+.cascade_menu
+{
+    display:none;
+}
+
+.show_menu:hover .cascade_menu
+{
+    display:block;
+    list-style: none;
+}
+
+.highcharts-button
+{
+    display:none;
+}
+
+.change_width
+{
+    width:100px;
+    float: right;
+}
+
+.search_user
+{
+    padding: 10px;
+}
+
+.checkbox-info
+{
+    box-shadow: 1px 1px 1px grey;
+}
+
+.contenudash{
+    height:100% !important;
+}
+
+.contenushare{
+    height:100vh;
+}
+.dropdown-menu{
+    min-width: 65px;
+}
+
+.dropdown-menu li a{
+    padding: 3px 8px;
+}

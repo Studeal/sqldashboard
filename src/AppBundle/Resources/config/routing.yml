@@ -1,3 +1,4 @@
+
 app_add_component:
     path:     /components/add
     defaults: { _controller: AppBundle:App:addComponent }
@@ -11,6 +12,14 @@ app_edit_component:
 app_login:
     path:     /login
     defaults: {_controller: AppBundle:App:login }
+
+app_home:
+    path:     /
+    defaults: { _controller: AppBundle:App:view }
+
+app_share_dashboard:
+    path:     /share
+    defaults: { _controller: AppBundle:App:share }
 
 app_admin_profile:
     path:     /admin_profile
