@@ -1,6 +1,6 @@
 {
-    "name": "ashleyberthon/studealproject",
-    "license": "proprietary",
+    "name": "studeal/sqldashboard",
+    "license": "MIT",
     "type": "project",
     "autoload": {
         "psr-4": {
