@@ -33,6 +33,7 @@
 # Assets and user uploads
 /web/bundles/
 /web/uploads/
+/web/assets/vendor/
 
 # PHPUnit
 /app/phpunit.xml
@@ -47,20 +48,5 @@
 # Backup entities generated with doctrine:generate:entities command
 */Entity/*~
 
+/.idea
 
-/web/bundles/
-/app/bootstrap.php.cache
-/app/cache/*
-/app/config/parameters.yml
-/app/logs/*
-!app/cache/.gitkeep
-!app/logs/.gitkeep
-/app/phpunit.xml
-/build/
-/vendor/
-/bin/
-/composer.phar
-
-/.idea/
-
-/web/assets/vendor/
