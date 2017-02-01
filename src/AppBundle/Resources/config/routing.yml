@@ -1,3 +1,7 @@
+app_homepage:
+    path:      /
+    defaults: { _controller: AppBundle:App:index }
+
 app_home:
     path:     /
     defaults: { _controller: AppBundle:App:view }
