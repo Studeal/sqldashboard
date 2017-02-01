@@ -1,5 +1,10 @@
 {% extends 'AppBundle::layout.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}"/>
+{% endblock %}
+
 {% block title %} Share Dashboard {% endblock %}
 {% block app_body %}
 
@@ -96,6 +101,4 @@
     {{ parent() }}
     <script src="//code.highcharts.com/4.1.8/highcharts.js"></script>
     <script src="//code.highcharts.com/4.1.8/modules/exporting.js"></script>
-    <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/vendor/fontawesome/css/font-awesome.min.css') }}">
 {% endblock %}
