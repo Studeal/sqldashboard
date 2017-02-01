@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\Users as BaseUser;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -11,7 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UsersRepository")
  */
-class Users
+class Users extends BaseUser
 {
     /**
      * @ORM\ManytoMany(targetEntity="AppBundle\Entity\Dashboards", cascade={"persist"})
@@ -25,7 +26,7 @@ class Users
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
@@ -78,6 +79,7 @@ class Users
 
     public function __construct()
     {
+        parent::__construct();
         $this->dashboards = new ArrayCollection();
     }
 
