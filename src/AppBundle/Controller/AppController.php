@@ -79,7 +79,7 @@ public function shareAction()
   
   public function loginAction(){
         return $this->render('AppBundle:App:login.html.twig');
-    }
+}
 
     public function adminProfileAction()
     {
@@ -118,7 +118,7 @@ public function shareAction()
     }
 
     //Method for edit a component
-    public function editComponentAction($ComponentId)
+    public function editComponentAction($componentId)
     {
         //Change the head title
         $mainTitle = "Component edition";
