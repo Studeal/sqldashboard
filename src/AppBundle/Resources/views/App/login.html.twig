@@ -1,5 +1,6 @@
-{% extends "::base.html.twig" %}
+{% extends "::layout.html.twig" %}
 {% block body %}
+    {% block fos_user_content %}
     {#****************Form login****************#}
 <div class="container">
     <div class="row">
@@ -22,4 +23,5 @@
         <div class="col-md-4 col-xs-0"></div>
     </div>
 </div>
+        {% endblock %}
 {% endblock %}
