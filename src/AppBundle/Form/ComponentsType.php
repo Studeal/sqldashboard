@@ -13,7 +13,10 @@ class ComponentsType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nameComp')->add('requestSQL')->add('typeGraph')->add('sizeComponent')->add('dashboards')        ;
+        $builder
+            ->add('nameComp',   'text')
+            ->add('requestSQL', 'textarea')
+            ->add('Execute',    'submit');
     }
     
     /**

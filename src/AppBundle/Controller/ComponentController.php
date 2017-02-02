@@ -3,11 +3,11 @@
 namespace AppBundle\Controller;
 
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Ob\HighchartsBundle\Highcharts\Highchart;
 use AppBundle\Entity\Components;
-use AppBundle\Entity\Dashboards;
+use AppBundle\Form\ComponentsType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Ob\HighchartsBundle\Highcharts\Highchart;
 
 
 class ComponentController extends Controller
@@ -24,21 +24,21 @@ class ComponentController extends Controller
 		//Change the head title
 		$mainTitle = "Component creation";
 
-		$dashboards = new Dashboards();
-        $components = new Components();
+		
+		
+		//Return table liste
+		//TODO: Faire la liste des champs avec la fonction sql: DESCRIBE <nom_de_la_table>
+		$conn = $this->get('database_connection');
+		$listTables = $conn->fetchall('SHOW TABLES');
 
-        $form = $this->get('form.factory')->createBuilder('form', $components)
-            ->add('nameComp', 'text')
-            ->add('Execute', 'submit')
-            ->add('requestSQL', 'textarea')
-            ->getForm();
 
-        $form->handleRequest($request);
+		//Generate form
+		$components = new Components();
 
-        if($form->isValid())
+		$form = $this->get('form.factory')->create(new ComponentsType, $components);
+
+        if($form->handleRequest($request)->isValid())
         {
-			$components->setDashboards($dashboards);
-
             $em = $this->getDoctrine()->getManager();
             $em->persist($components);
 			$em->flush();
@@ -66,10 +66,11 @@ class ComponentController extends Controller
 		
 
 		return $this->render('AppBundle:App:component.html.twig', array(
-		'chart' => $ob,
+		'chart'         => $ob,
 		'componentName' => "",
-		'mainTitle' => $mainTitle,
-        'form' => $form->createView()
+		'mainTitle'     => $mainTitle,
+        'form'          => $form->createView(),
+		'tables'         => $listTables
 		));
 		
 	}
