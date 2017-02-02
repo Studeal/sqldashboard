@@ -46,14 +46,14 @@ class Components
      *
      * @ORM\Column(name="typeGraph", type="string", length=15)
      */
-    private $typeGraph;
+    private $typeGraph = "linecharts";
 
     /**
      * @var string
      *
      * @ORM\Column(name="sizeComponent", type="string", length=10)
      */
-    private $sizeComponent;
+    private $sizeComponent = "3";
 
 
     /**

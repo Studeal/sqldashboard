@@ -22,10 +22,10 @@ app_user_profile:
 
 app_add_component:
     path:     /components/add
-    defaults: { _controller: AppBundle:App:addComponent }
+    defaults: { _controller: AppBundle:Component:addComponent }
 
 app_edit_component:
     path:     /components/{componentId}/edit
-    defaults: { _controller: AppBundle:App:editComponent }
+    defaults: { _controller: AppBundle:Component:editComponent }
     requirements:
         componentId: \d+

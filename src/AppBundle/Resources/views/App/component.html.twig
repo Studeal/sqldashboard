@@ -22,22 +22,36 @@
         <h1>{{ mainTitle }}</h1>
     </div>
 
+    {# Create form with Twig and Doctrine #}
     <div class="row">
-        {# TODO: Form temporaire, à changer pour l'adapter à Docrtine et Symfony #}
-        <form class="form-horizontal">
+        {#Form start and display error#}
+        {{ form_start(form,{'attr': {'class': 'form-horizontal'}}) }}
+            {{ form_errors(form) }}
+            
             <div class="form-group">
-                <label for="component_name" class="col-xs-3 control-label">Component name:</label>
+                {#Display error + label + input for Component Name#}
+                {{ form_label(form.nameComp, "Component name:", {'label_attr': {'class': 'col-xs-3 control-label'}}) }}
+                {{ form_errors(form.nameComp) }}
                 <div class="col-xs-7">
-                    <input type="text" class="form-control" id="component_name" value="{{ componentName }}">
+                    {{ form_widget(form.nameComp, {'attr': {'class': 'form-control'}}) }}
                 </div>
+                {#Display button execute#}
                 <div class="col-xs-2">
-                    <button type="submit" class="btn btn-default">Execute</button>
+                    {{ form_widget(form.Execute, {'attr': {'class': 'btn btn-default'}}) }}
                 </div>
             </div>
             <div class="col-xs-12">
-                <textarea class="form-control" rows="4" placeholder="SQL Request"></textarea>
+                {# Display textarea for request SQL #}
+                {{ form_errors(form.requestSQL) }}
+                {{ form_widget(form.requestSQL, {'attr': {'class':       'form-control',
+                                                          'rows':         8,
+                                                          'placeholder': 'SQL Request'}}) 
+                }}
             </div>
-        </form>
+
+            {# Display the rest of the form #}
+            {{form_rest(form)}}
+        {{form_end(form)}}
     </div>
 
     <!-- Charts choise -->
