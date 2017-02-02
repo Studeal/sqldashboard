@@ -10,4 +10,5 @@ namespace AppBundle\Repository;
  */
 class DashboardsRepository extends \Doctrine\ORM\EntityRepository
 {
+
 }

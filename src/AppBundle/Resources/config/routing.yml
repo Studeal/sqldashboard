@@ -1,7 +1,7 @@
 
 app_home:
     path:     /
-    defaults: { _controller: AppBundle:App:view }
+    defaults: { _controller: AppBundle:Dashboard:view }
 
 app_login:
     path:     /login
@@ -9,8 +9,8 @@ app_login:
 
 
 app_share_dashboard:
-    path:     /share
-    defaults: { _controller: AppBundle:App:share }
+    path:     /share/{id}
+    defaults: { _controller: AppBundle:Dashboard:share }
 
 app_admin_profile:
     path:     /admin_profile

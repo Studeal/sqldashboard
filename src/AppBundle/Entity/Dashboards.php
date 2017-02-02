@@ -19,14 +19,14 @@ class Dashboards
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="nameDash", type="string", length=255)
      */
-    private $nameDash;
+    protected $nameDash;
 
     /**
      * @var int
