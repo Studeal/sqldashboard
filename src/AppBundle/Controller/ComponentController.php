@@ -24,12 +24,18 @@ class ComponentController extends Controller
 		//Change the head title
 		$mainTitle = "Component creation";
 
-		
-		
-		//Return table liste
-		//TODO: Faire la liste des champs avec la fonction sql: DESCRIBE <nom_de_la_table>
+		//Return table and field list (bypass doctrine)
 		$conn = $this->get('database_connection');
-		$listTables = $conn->fetchall('SHOW TABLES');
+		$tables = $conn->fetchall('SHOW TABLES');
+		foreach($tables as $table)
+		{
+			foreach($table as $key => $tab)
+			{
+				// $listTables = $tab;
+				$field = $conn->fetchall('DESCRIBE '.$tab);
+				$listTables[$tab] = $field;
+			}
+		}
 
 
 		//Generate form
@@ -70,7 +76,7 @@ class ComponentController extends Controller
 		'componentName' => "",
 		'mainTitle'     => $mainTitle,
         'form'          => $form->createView(),
-		'tables'         => $listTables
+		'tables'        => $listTables
 		));
 		
 	}
