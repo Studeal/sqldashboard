@@ -13,8 +13,13 @@
             <li><a href="{{ path('app_home') }}">Dashboard <span class="sr-only"></span></a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="{{ path('app_admin_profile') }}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a></li>
-            <li><a href="#"><span class="glyphicon glyphicon-off" aria-hidden="true"></span></a></li>
+            <li>{% if is_granted('ROLE_ADMIN')  %}
+                    <a href="{{ path('app_admin_profile') }}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+                {% elseif is_granted('ROLE_USER') %}
+                    <a href="{{ path('app_user_profile') }}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+                {% endif %}
+            </li>
+            <li><a href="{{  path('fos_user_security_logout') }}"><span class="glyphicon glyphicon-off" aria-hidden="true"></span></a></li>
         </ul>
     </div><!-- /.navbar-collapse -->
 </nav>
