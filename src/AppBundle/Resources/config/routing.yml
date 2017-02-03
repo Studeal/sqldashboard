@@ -3,9 +3,9 @@ app_home:
     path:     /
     defaults: { _controller: AppBundle:App:view }
 
-app_login:
-    path:     /login
-    defaults: {_controller: AppBundle:App:login }
+#app_login:
+#    path:     /login
+#    defaults: {_controller: AppBundle:App:login }
 
 
 app_share_dashboard:
@@ -29,3 +29,23 @@ app_edit_component:
     defaults: { _controller: AppBundle:App:editComponent }
     requirements:
         componentId: \d+
+#Route configuration FosUserBundle
+
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+fos_user_profile:
+    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /profile
+
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /register
+
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /resetting
+
+fos_user_change_password:
+    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
+    prefix: /profile

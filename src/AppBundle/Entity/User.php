@@ -17,7 +17,7 @@ class User extends BaseUser
     /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Dashboards", cascade={"persist"})
      */
-    protected $dashboards;
+    protected $dashboards = null;
 
     /**
      * @var int
@@ -31,30 +31,30 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="firstName", type="string", length=255)
+     * @ORM\Column(name="firstName", type="string", length=255, nullable=true)
      */
-    protected $firstName;
+    protected $firstName = null;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="lastName", type="string", length=255)
+     * @ORM\Column(name="lastName", type="string", length=255, nullable=true)
      */
-    protected $lastName;
+    protected $lastName = null;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="image", type="string", length=255)
+     * @ORM\Column(name="image", type="string", length=255, nullable=true)
      */
-    protected $image;
+    protected $image = null;
 
     /**
      * @var bool
      *
      * @ORM\Column(name="status", type="boolean")
      */
-    protected $status;
+    protected $status = false;
 
     public function __construct(){
         parent::__construct();
