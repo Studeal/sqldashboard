@@ -25,9 +25,9 @@ public function load(ObjectManager $manager){
         ),
         array('nameDash' => 'second_dash',
             'idUsersCreator' => 2
-
         )
         );
+
     foreach ($dashboards as $dash){
         $dashboard = new Dashboards();
         $dashboard->setNameDash($dash['nameDash']);

@@ -15,7 +15,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 class User extends BaseUser
 {
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Dashboards", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Dashboards", inversedBy="user")
      */
     protected $dashboards;
 

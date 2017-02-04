@@ -1,7 +1,6 @@
 <?php
 
 namespace AppBundle\DataFixtures\ORM;
-
 use AppBundle\Entity\Dashboards;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;

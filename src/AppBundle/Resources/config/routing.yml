@@ -7,7 +7,6 @@ app_login:
     path:     /login
     defaults: {_controller: AppBundle:App:login }
 
-
 app_share_dashboard:
     path:     /share/{id}
     defaults: { _controller: AppBundle:Dashboard:share }
