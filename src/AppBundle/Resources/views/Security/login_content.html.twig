@@ -12,10 +12,10 @@
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
                 {% endif %}
                 <h2 class="form-signin-heading">Please sign in</h2>
-                <label class="sr-only" for="username">{{ 'security.login.username'|trans }}</label>
+                <label class="sr-only" for="username" >{{ 'security.login.username'|trans }}</label>Email
                 <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
                     <br>
-                <label class="sr-only" for="password">{{ 'security.login.password'|trans }}</label>
+                <label class="sr-only" for="password">{{ 'security.login.password'|trans }}</label>Password
                 <input class="form-control" type="password" id="password" name="_password" required="required" />
                     <br>
                 <div class="checkbox">
@@ -23,7 +23,7 @@
                     <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
                 </div>
                     <br>
-                <input class="btn btn-lg btn-primary btn-block" type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+                <input class="btn btn-lg btn-black btn-block" type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
             </form>
         </div>
         <div class="col-md-4 col-xs-0"></div>

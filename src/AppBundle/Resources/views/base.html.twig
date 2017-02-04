@@ -1,0 +1,27 @@
+{% extends "::base.html.twig" %}
+
+{% block title %} {{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="" href="{{ asset('assets/css/style.css')}}">
+    <link rel="stylesheet" type="" href="{{ asset('assets/css/user.css')}}">
+{% endblock %}
+
+{% block body %}
+
+
+        {% block app_body %}
+        {#On affiche les messages flash que définissent les contrôleurs du bundle#}
+        {% for key, message in app.session.flashbag.all() %}
+        <div class="alert alert-{{ key }}">
+        {{ message|trans({}, 'FOSUserBundle') }}
+        </div>
+        {% endfor %}
+
+        {#On définit ce block, dans lequel vont venir s'insérer les autres vues du bundle#}
+        {% block fos_user_content %}
+        {% endblock fos_user_content %}
+        {% endblock %}
+
+{% endblock %}
