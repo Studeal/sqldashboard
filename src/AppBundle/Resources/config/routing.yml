@@ -1,6 +1,6 @@
 
 app_home:
-    path:     /
+    path:     /{id}
     defaults: { _controller: AppBundle:Dashboard:view }
 
 app_login:
@@ -10,6 +10,10 @@ app_login:
 app_share_dashboard:
     path:     /share/{id}
     defaults: { _controller: AppBundle:Dashboard:share }
+
+app_delete_dashboard:
+    path:     /delete/{id}
+    defaults: { _controller: AppBundle:Dashboard:deleteDash }
 
 app_admin_profile:
     path:     /admin_profile

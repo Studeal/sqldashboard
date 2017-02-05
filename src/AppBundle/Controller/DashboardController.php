@@ -2,6 +2,9 @@
 
 namespace AppBundle\Controller;
 
+
+use Doctrine\DBAL\Query\QueryBuilder;
+use Knp\Bundle\PaginatorBundle\KnpPaginatorBundle;
 use AppBundle\Entity\Dashboards;
 use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -17,7 +20,7 @@ class DashboardController extends Controller
     }
 
 
-    public function viewAction()
+    public function viewAction($id)
     {
 //
         $series = array(
@@ -27,7 +30,8 @@ class DashboardController extends Controller
             array("name" => "Data Serie Name", "data" => array(1, 6, 4, 22, 3, 5, 8, 8, 11))
         );
         $series2 = array(
-            array("name" => "Data Serie Name", "data" => array(19, 2, 4, 5, 6, 22, 8))
+            array("name" => "Data Serie Name", "data" => array(19, 2, 4, 5, 6, 22, 8)),
+            array("name" => "Data Serie Name2", "data" => array(19, 2, 4, 5, 6, 22, 8))
         );
 
         $ob = new Highchart();
@@ -52,7 +56,7 @@ class DashboardController extends Controller
         $ob2->yAxis->title(array('text' => "Vertical axis title"));
         $ob2->series($series2);
 
-        $dashboards = $this->getDoctrine()->getRepository('AppBundle:Dashboards')->findAll();
+        $dashboards = $this->getDoctrine()->getRepository('AppBundle:Dashboards')->find($id);
         dump($dashboards);
 
         return $this->render('AppBundle:App:dashboard.html.twig', array(
@@ -73,9 +77,24 @@ class DashboardController extends Controller
             ->getRepository('AppBundle:Dashboards')
             ->find($id);
 
+//        $findUsers = $em->getRepository('AppBundle:User')->byCategorie($username);
+//        $listUsers = $em
+//            ->getRepository('AppBundle:User')
+//            ->findAll();
+
+
+        $parameter = $request->get('search');
         $listUsers = $em
-            ->getRepository('AppBundle:User')
-            ->findAll();
+            ->getRepository('AppBundle:User')->createQueryBuilder('u')
+            ->where('u.username LIKE :usern')
+            ->setParameter('usern', '%'.$parameter.'%')
+            ->getQuery()
+            ->getResult();
+
+
+
+
+
 
 //        if form has been submited removes all users from dashboard, adds the checked ones and saves them in the database
 
@@ -97,12 +116,31 @@ class DashboardController extends Controller
             $em->flush();
             return $this->redirectToRoute('app_home');
         }
+        $users  = $this->get('knp_paginator')->paginate($listUsers,
+            $this->get('request')->query->get('page',1), 1/*limit per page*/
+        );
 
         return $this->render('AppBundle:App:shareD.html.twig', array(
 
-            'users' => $listUsers,
+            'users' => $users,
             'dashboard' => $dashboards
         ));
+    }
+
+
+
+
+    //.......Delete dashboard
+    public function deleteDashAction($id){
+        $em = $this->getDoctrine()->getManager();
+        $dashboard = $em->getRepository('AppBundle:Dashboards')->find($id);
+
+        if ($dashboard != null){
+            $em->remove($dashboard);
+            $em->flush();
+        }
+        $em->flush();
+        return $this->redirectToRoute('app_home');
     }
 
 }

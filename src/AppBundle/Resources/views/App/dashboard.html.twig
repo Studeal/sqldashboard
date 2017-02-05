@@ -20,7 +20,6 @@
                     <ul class="dropdown-menu menu_pos">
                         <li><a href="{{ path('app_add_component') }}">Add component</a></li>
                         <li><a href="javascript:void(0)">Paste component</a></li>
-
                     </ul>
                 </div>
                 <div class="col-xs-6">
@@ -191,7 +190,7 @@
                                 <p>Do you want to delete the dashboard ?</p>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Yes
+                                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="window.location='{{ path('app_delete_dashboard',{'id': dashboards.id}) }}'"> Yes
                                 </button>
                                 <button type="button" class="btn btn-default" data-dismiss="modal">
                                     Cancel
