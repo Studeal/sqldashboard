@@ -3,6 +3,10 @@ app_home:
     path:     /
     defaults: { _controller: AppBundle:App:view }
 
+#app_home:
+#    path:     /dash
+#    defaults: { _controller: AppBundle:App:Namedash }
+
 #app_login:
 #    path:     /login
 #    defaults: {_controller: AppBundle:App:login }
@@ -39,9 +43,9 @@ fos_user_profile:
     resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
     prefix: /profile
 
-#fos_user_register:
-#    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
-#    prefix: /register
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /register
 
 fos_user_resetting:
     resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
