@@ -34,6 +34,9 @@ app_edit_component:
     defaults: { _controller: AppBundle:App:editComponent }
     requirements:
         componentId: \d+
+
+
+
 #Route configuration FosUserBundle
 
 fos_user_security:

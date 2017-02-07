@@ -1,4 +1,4 @@
-{% extends "::base.html.twig" %}
+{% extends "::layout.html.twig" %}
 
 {% block title %} {{ parent() }}{% endblock %}
 
@@ -11,7 +11,7 @@
 {% block body %}
 
     {% block nav %}
-        {% include "AppBundle/Resources/views/App/navbar.html.twig"%}
+        {% include "AppBundle:App:navbar.html.twig" %}
     {% endblock %}
 
     <div class="col-xs-10 contenu contenudash">
