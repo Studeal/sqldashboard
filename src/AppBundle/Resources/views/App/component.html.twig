@@ -33,7 +33,15 @@
                 {{ form_label(form.nameComp, "Component name:", {'label_attr': {'class': 'col-xs-2 control-label'}}) }}
                 {{ form_errors(form.nameComp) }}
                 <div class="col-xs-8">
-                    {{ form_widget(form.nameComp, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_widget(form.nameComp, {'attr': {'class': 'form-control', 'value': componentName}}) }}
+                </div>
+            </div>
+            <div class="form-group">
+                {#Display error + label + input for Component Legend#}
+                {{ form_label(form.legend, "Chart legend:", {'label_attr': {'class': 'col-xs-2 control-label'}}) }}
+                {{ form_errors(form.legend) }}
+                <div class="col-xs-8">
+                    {{ form_widget(form.legend, {'attr': {'class': 'form-control', 'value': legend}}) }}
                 </div>
                 {#Display button execute#}
                 <div class="col-xs-2">
@@ -45,7 +53,8 @@
                 {{ form_errors(form.requestSQL) }}
                 {{ form_widget(form.requestSQL, {'attr': {'class':       'form-control',
                                                           'rows':         8,
-                                                          'placeholder': 'SQL Request'}}) 
+                                                          'placeholder': 'SQL Request',
+                                                          'value':       requestSql}}) 
                 }}
             </div>
 
@@ -67,6 +76,7 @@
 
     <!-- Charts Display -->
     <div class="row charts">
+        {{ dump(chart) }}
         <div class="col-xs-12" id="linechart" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
     </div>
 
@@ -88,7 +98,7 @@
     {{ parent() }}
     <script src="//code.highcharts.com/4.1.8/highcharts.js"></script>
     <script src="//code.highcharts.com/4.1.8/modules/exporting.js"></script>
-    <script type="text/javascript">
+    {#<script type="text/javascript">
         {{ chart(chart) }}
-    </script>
+    </script>#}
 {% endblock %}

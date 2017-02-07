@@ -15,8 +15,10 @@ class ComponentsType extends AbstractType
     {
         $builder
             ->add('nameComp',   'text')
+            ->add('legend',     'text')
             ->add('requestSQL', 'textarea')
-            ->add('Execute',    'submit');
+            ->add('Execute',    'submit')
+            ;
     }
     
     /**

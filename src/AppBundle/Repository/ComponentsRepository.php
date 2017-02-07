@@ -2,7 +2,6 @@
 
 namespace AppBundle\Repository;
 
-use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -13,5 +12,8 @@ use Doctrine\ORM\EntityRepository;
  */
 class ComponentsRepository extends EntityRepository
 {
-    
+    public function getRequestSql()
+    {
+        
+    }
 }
