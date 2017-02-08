@@ -29,49 +29,33 @@
 <div id="sidebar" class="col-xs-2 sidebar">
     <div class="list-group">
         <!-- Large modal -->
-        <button type="button" class="btn btn-default btn-block  col-xs-2 createdashboard " data-toggle="modal" data-target=".bs-example-modal-lg">Create Dashboard</button>
+        <button type="button" class="btn btn-default btn-block  col-xs-2 createdashboard " data-toggle="modal" data-target=".bs-example-modal-lg" >Create Dashboard</button>
         <!-- PopUp - Modal Create Dashboard Button -->
         <div class="modal fade bs-example-modal-lg popup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
-                    <div class="modal-header "><h1 class="text­center ">Create Dashboard</h1></div>
-
                     <div class="modal-header well">
-                        {#{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}#}
-                        {#Les erreurs générales du formulaire. #}
-                        {#{{ form_errors(form) }}#}
-                        {#<div class="form-group">#}
-                            {#Generate label. #}
-                            {#{{ form_label(form.title, "Name Dashboard", {'label_attr': {'class':'col-sm3 control-label'}}) }}#}
-                            {#<div>#}
+                        {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+                        {#Les erreurs générales du formulaire.#}
+                        {{ form_errors(form) }}
+                        <div class="form-group">
+                            {#Generate label.#}
+                            {{ form_label(form.nameDash, "Create a name Dashboard", {'label_attr': {'class':'col-sm3 control-label'}}) }}
+                            <div>
                             {#Generate input#}
-                            {#{{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}#}
-                            {#</div>#}
-                            {#Generate label + error + widget#}
-                            {#{{ form_row(form) }}#}
-                            {#Generate button#}
-                            {#{{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}#}
-                            {#{{ form_rest(form) }}#}
-                            {#{{ form_end(form) }}#}
+                            {{ form_widget(form.nameDash, {'attr': {'class': 'form-control'}}) }}
+                            </div>
                         </div>
-                    {#<form>#}
-                        {#<div>#}
-                            {#<label for="dashboardname">Dashboard name : </label>#}
-                            {#<input type="text" class="form-control" id="dashboardname">#}
-                        {#</div>#}
-                    {#</form>#}
-                {#</div>#}
-                    {#<div class="modal-footer">#}
-                        {#<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>#}
-                        {#<button type="button" class="btn btn-default" >Add Dashboard</button>#}
-                    {#</div>#}
+                        {#Generate button#}
+                        {{ form_widget(form.add, {'attr': {'class': 'btn btn-primary' }}) }}
+                        {{ form_rest(form) }}
+                        {{ form_end(form) }}
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 
 
 

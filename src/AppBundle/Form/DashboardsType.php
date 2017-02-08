@@ -14,8 +14,8 @@ class DashboardsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nameDash')
-            ->add('idUsersCreator')
+            ->add('nameDash', 'text')
+            ->add('add', 'submit')
         ;
     }
 

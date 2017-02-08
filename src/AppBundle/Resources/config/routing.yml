@@ -3,9 +3,6 @@ app_home:
     path:     /
     defaults: { _controller: AppBundle:App:view }
 
-#app_home:
-#    path:     /dash
-#    defaults: { _controller: AppBundle:App:Namedash }
 
 #app_login:
 #    path:     /login
