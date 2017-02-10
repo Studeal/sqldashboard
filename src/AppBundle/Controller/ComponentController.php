@@ -19,15 +19,28 @@ class ComponentController extends Controller
 		return $this->render('AppBundle::layout.html.twig');
 	}
 
-	public function addComponentAction(Request $request, $dashboardId)
+	public function addComponentAction($dashboardId)
 	{
-		$chart = $this->container->get('app.charts');
+		$component = new Components();
+
+		$em = $this->getDoctrine()
+				   ->getManager();
+
+		$component->setDashboards($em->getRepository('AppBundle:Dashboards')->find($dashboardId));
+
+		$em->persist($component);
+		$em->flush();
 
 
-		//Change the head title
-		$mainTitle = "Component creation";
 
-
+		return $this->redirectToRoute('app_edit_component', array('componentId' => $component->getId()));
+		
+	}
+	
+	
+	//M	ethod for edit a component
+	public function editComponentAction(Request $request, $componentId)
+	{
 		//Return table and field list (bypass doctrine)
 		$conn = $this->get('database_connection');
 		$tables = $conn->fetchall('SHOW TABLES');
@@ -41,97 +54,57 @@ class ComponentController extends Controller
 			}
 		}
 
+		//Get the component in the db
+		$repository = $this
+			->getdoctrine()
+			->getManager()
+			->getRepository('AppBundle:Components');
+
+		$component = $repository->find($componentId);
+
+		//Get charts service
+		$chart = $this->container->get('app.charts');
+
+		//Set chart
+		$chart->setLegend($component->getLegend());
+		$chart->setRequestSql($component->getRequestSQL());
+		$chart->setTypeGraph($component->getTypeGraph());
+		$chart->setXAxis($component->getXAxis());
+		$chart->setYAxis($component->getYAxis());
+
+		//Change the head title
+		$mainTitle = "Edit component";
 
 		//Generate form
-		$components = new Components();
-		$dashboards = new Dashboards();
-
-		$form = $this->get('form.factory')->create(new ComponentsType, $components);
+		$form = $this->get('form.factory')->create(new ComponentsType, $component);
 
         if($form->handleRequest($request)->isValid())
         {
             $em = $this->getDoctrine()
 					   ->getManager();
-			$components->setDashboards($em->getRepository('AppBundle:Dashboards')->find($dashboardId));
-            $em->persist($components);
+			// //We associate the dashboard's id to the chart
+			// $component->setDashboards($em->getRepository('AppBundle:Dashboards')->find($component->getDashboards()));
+            
+			$em->persist($component);
 			$em->flush();
 
-			return $this->redirect($this->generateUrl('app_add_component', array(
-				'dashboardId' => $dashboardId,
-				'compName'    => $components->getNameComp(),
-				'legend'      => $components->getLegend(),
-				'requestSql'  => $components->getRequestSQL(),
-				'id'          => $components->getId()
+
+			//Reload the page with 
+			return $this->redirect($this->generateUrl('app_edit_component', array(
+				'componentId' => $component->getId()
 			)));
-        }
-		
-		
-		//Factice charts for display
-		
-		if ($request->isMethod('GET')){
-			$componentName = $request->query->get('compName');
-			$requestSql    = $request->query->get('requestSql');
-			$legend        = $request->query->get('legend');
-			$chart  ->charts($request->query->get('id'));
-		}
-		else{
-			$componentName = "";
-			$requestSql =    "";
-			$legend =        ""; 
-			
-			$series = array(
-			array("name" => "Legend",    "data" => array())
-			);
-			
-			
-			$chart = new Highchart();
-			$chart->chart->renderTo('linechart');
-			$chart->title->text('');
-			$chart->xAxis->title(array('text'  => "x axis title"));
-			$chart->yAxis->title(array('text'  => "y axis title"));
-			$chart->series($series);
-		}
-		
-		
+		}		
 
 		return $this->render('AppBundle:App:component.html.twig', array(
-			'componentName' => $componentName,
-			'requestSql'    => $requestSql,
-			'legend'        => $legend,
-			'chart'         => $chart,
 			'mainTitle'     => $mainTitle,
+			'tables'        => $listTables,
 			'form'          => $form->createView(),
-			'tables'        => $listTables
-		));
-		
-	}
-	
-	
-	//M	ethod for edit a component
-	public function editComponentAction($componentId)
-	{
-		
-		//Change the head title
-		$mainTitle = "Component edition";
-		
-		
-		//Factice charts
-		$series = array(
-		array("name" => "Data Serie Name",    "data" => array(1,2,4,5,6,3,8))
-		);
-
-		$ob = new Highchart();
-		$ob->chart->renderTo('linechart');
-		$ob->title->text('');
-		$ob->xAxis->title(array('text'  => "Horizontal axis title"));
-		$ob->yAxis->title(array('text'  => "Vertical axis title"));
-		$ob->series($series);
-		
-
-		return $this->render('AppBundle:App:component.html.twig', array(
-		'chart'         => $ob,
-		'componentName' => "Component name1",
-		'mainTitle'     => $mainTitle
+			'componentName' => $component->getNameComp(),
+			'legend'        => $chart->getLegend(),
+			'xAxis'         => $chart->getXAxis(),
+			'yAxis'         => $chart->getYAxis(),
+			'requestSql'    => $component->getRequestSQL(),
+			'chart'         => $chart->generateChart()
 		));
 		
 	}

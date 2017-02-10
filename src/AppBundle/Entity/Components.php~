@@ -32,21 +32,21 @@ class Components
      *
      * @ORM\Column(name="nameComp", type="string", length=255)
      */
-    protected $nameComp;
+    protected $nameComp = "";
 
     /**
      * @var string
      *
      * @ORM\Column(name="requestSQL", type="text")
      */
-    protected $requestSQL;
+    protected $requestSQL = "";
 
     /**
      * @var string
      *
      * @ORM\Column(name="typeGraph", type="string", length=15)
      */
-    protected $typeGraph = "linecharts";
+    protected $typeGraph = "column";
 
     /**
      * @var string
@@ -60,7 +60,21 @@ class Components
      *
      * @ORM\Column(name="legend", type="string", length=255)
      */
-    protected $legend;
+    protected $legend = "";
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="xAxis", type="string", length=255)
+     */
+    protected $xAxis = "";
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="yAxis", type="string", length=255)
+     */
+    protected $yAxis = "";
 
     /**
      * Get id
@@ -190,5 +204,29 @@ class Components
     public function getDashboards()
     {
         return $this->dashboards;
+    }
+
+    /**
+     * Set legend
+     *
+     * @param string $legend
+     *
+     * @return Components
+     */
+    public function setLegend($legend)
+    {
+        $this->legend = $legend;
+
+        return $this;
+    }
+
+    /**
+     * Get legend
+     *
+     * @return string
+     */
+    public function getLegend()
+    {
+        return $this->legend;
     }
 }

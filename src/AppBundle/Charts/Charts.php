@@ -3,73 +3,87 @@
 namespace AppBundle\Charts;
 
 use Ob\HighchartsBundle\Highcharts\Highchart;
+use AppBundle\RequestSql\RequestSql; 
 
 class Charts
 {
-    protected $em;
+    private $xAxis;
+    private $yAxis;
+    private $legend;
+    private $requestSql;
+    private $typeGraph;
+    protected $rqSql;
 
-    public function __construct(\Doctrine\ORM\EntityManager $em)
+    public function __construct(RequestSql $rqSql)
     {
-        $this->em = $em;
-    }
-    
-    private function requestSql($idComp)
-    {
-        $repository = $this
-            ->em
-            ->getRepository('AppBundle:Components');
-
-        $result = $repository->find($idComp);
-
-        $rq = $this->getEntityManager()->getConnection()->prepare($rawSql->getRequestSQL());
-        $rq->execute([]);
-
-        return $rq->fetchAll();
+        $this->xAxis      = "X axis name";
+        $this->yAxis      = "Y axis name";
+        $this->legend     = "Legend name";
+        $this->requestSql = array('');
+        $this->typeGraph  = "column";
+        $this->rqSql      = $rqSql;
     }
 
-    private function processingSql($idComp)
-    {
-        $sql = explode(" ", requestSql($idComp));
-
-        $xAxis = $sql[1];
-        $yAxis = $sql[2];
-
-        return array($xAxis, $yAxis);
+    public function setXAxis($value){
+        $this->xAxis = $value;
     }
 
-    public function charts($idComp)
-    {
-        $repository = $this
-            ->em
-            ->getRepository('AppBundle:Components');
+    public function setYAxis($value){
+        $this->yAxis = $value;
+    }
 
-        $component = $repository->find($idComp);
+    public function setLegend($value){
+        $this->legend = $value;
+    }
 
-        $axisName = processingSql($idComp);
-        $requestSql = requestSql($idComp);
+    public function setRequestSql($value){
+        $this->requestSql = $value;
+    }
 
-        $series = array(
-            array("name" => $component->getLabel(), "data" => $requestSql)
-        );
+    public function setTypeGraph($value){
+        $this->typeGraph = $value;
+    }
+
+    public function getXAxis(){
+        return $this->xAxis;
+    }
+
+    public function getYAxis(){
+        return $this->yAxis;
+    }
+
+    public function getLegend(){
+        return $this->legend;
+    }
+
+    public function getRequestSql(){
+        return $this->requestSql;
+    }
+
+    public function getTypeGraph(){
+        return $this->typeGraph;
+    }
+
+    public function generateChart(){
+
+        $this->requestSql = $this->rqSql->processingSql($this->requestSql);
+
+        $series = array(array(
+                        "name" => $this->legend, 
+                        "data" => $this->requestSql[0] 
+                        ));
 
         $chart = new Highchart();
-        $chart->chart->renderTo($component->getTypeGraph());
+        $chart->chart->renderTo("chart");
+        if($this->typeGraph != "linechart"){
+            $chart->chart->type($this->typeGraph);
+        }
         $chart->title->text('');
-        $chart->xAxis->title(array('text'  => $axisName[0]));
-		$chart->yAxis->title(array('text'  => $axisName[1]));
+        $chart->xAxis->title(array('text'  => $this->xAxis));
+        $chart->xAxis->categories($this->requestSql[1]);
+		$chart->yAxis->title(array('text'  => $this->yAxis));
 		$chart->series($series);
 
-
         return $chart;
-        // if($component['typeGraph '] == "piechart" )
-        // {
-        //     $ob->plotOptions->pie(array(
-        //         'allowPointSelect' => true,
-        //         'dataLabels'       => array(
-        //             'enabled' => true,
-        //             'format'  => '<b>{point.name}</b>: {point.percentage:.1f} %'),
-                
-        //     ))
-        // }
     }
 }

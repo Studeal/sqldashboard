@@ -32,21 +32,21 @@ class Components
      *
      * @ORM\Column(name="nameComp", type="string", length=255)
      */
-    protected $nameComp;
+    protected $nameComp = "";
 
     /**
      * @var string
      *
      * @ORM\Column(name="requestSQL", type="text")
      */
-    protected $requestSQL;
+    protected $requestSQL = "";
 
     /**
      * @var string
      *
      * @ORM\Column(name="typeGraph", type="string", length=15)
      */
-    protected $typeGraph = "linecharts";
+    protected $typeGraph = "column";
 
     /**
      * @var string
@@ -60,7 +60,21 @@ class Components
      *
      * @ORM\Column(name="legend", type="string", length=255)
      */
-    protected $legend;
+    protected $legend = "";
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="xAxis", type="string", length=255)
+     */
+    protected $xAxis = "";
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="yAxis", type="string", length=255)
+     */
+    protected $yAxis = "";
 
     /**
      * Get id
@@ -214,5 +228,53 @@ class Components
     public function getLegend()
     {
         return $this->legend;
+    }
+
+    /**
+     * Set xAxis
+     *
+     * @param string $xAxis
+     *
+     * @return Components
+     */
+    public function setXAxis($xAxis)
+    {
+        $this->xAxis = $xAxis;
+
+        return $this;
+    }
+
+    /**
+     * Get xAxis
+     *
+     * @return string
+     */
+    public function getXAxis()
+    {
+        return $this->xAxis;
+    }
+
+    /**
+     * Set yAxis
+     *
+     * @param string $yAxis
+     *
+     * @return Components
+     */
+    public function setYAxis($yAxis)
+    {
+        $this->yAxis = $yAxis;
+
+        return $this;
+    }
+
+    /**
+     * Get yAxis
+     *
+     * @return string
+     */
+    public function getYAxis()
+    {
+        return $this->yAxis;
     }
 }
