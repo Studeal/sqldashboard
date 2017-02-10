@@ -16,7 +16,7 @@ class Components
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Dashboards")
      * @ORM\JoinColumn(nullable=false)
      */
-     private $dashboards;
+    protected $dashboards;
 
     /**
      * @var int
@@ -25,36 +25,56 @@ class Components
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="nameComp", type="string", length=255)
      */
-    private $nameComp;
+    protected $nameComp = "";
 
     /**
      * @var string
      *
      * @ORM\Column(name="requestSQL", type="text")
      */
-    private $requestSQL;
+    protected $requestSQL = "";
 
     /**
      * @var string
      *
      * @ORM\Column(name="typeGraph", type="string", length=15)
      */
-    private $typeGraph;
+    protected $typeGraph = "column";
 
     /**
      * @var string
      *
      * @ORM\Column(name="sizeComponent", type="string", length=10)
      */
-    private $sizeComponent;
+    protected $sizeComponent = "3";
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="legend", type="string", length=255)
+     */
+    protected $legend = "";
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="xAxis", type="string", length=255)
+     */
+    protected $xAxis = "";
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="yAxis", type="string", length=255)
+     */
+    protected $yAxis = "";
 
     /**
      * Get id
@@ -184,5 +204,77 @@ class Components
     public function getDashboards()
     {
         return $this->dashboards;
+    }
+
+    /**
+     * Set legend
+     *
+     * @param string $legend
+     *
+     * @return Components
+     */
+    public function setLegend($legend)
+    {
+        $this->legend = $legend;
+
+        return $this;
+    }
+
+    /**
+     * Get legend
+     *
+     * @return string
+     */
+    public function getLegend()
+    {
+        return $this->legend;
+    }
+
+    /**
+     * Set xAxis
+     *
+     * @param string $xAxis
+     *
+     * @return Components
+     */
+    public function setXAxis($xAxis)
+    {
+        $this->xAxis = $xAxis;
+
+        return $this;
+    }
+
+    /**
+     * Get xAxis
+     *
+     * @return string
+     */
+    public function getXAxis()
+    {
+        return $this->xAxis;
+    }
+
+    /**
+     * Set yAxis
+     *
+     * @param string $yAxis
+     *
+     * @return Components
+     */
+    public function setYAxis($yAxis)
+    {
+        $this->yAxis = $yAxis;
+
+        return $this;
+    }
+
+    /**
+     * Get yAxis
+     *
+     * @return string
+     */
+    public function getYAxis()
+    {
+        return $this->yAxis;
     }
 }

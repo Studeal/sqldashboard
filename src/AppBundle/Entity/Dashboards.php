@@ -1,9 +1,6 @@
 <?php
-
 namespace AppBundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
-
 /**
  * Dashboards
  *
@@ -13,11 +10,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Dashboards
 {
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", mappedBy="dashboards")
-     */
-    protected $user;
-
-    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -25,22 +17,18 @@ class Dashboards
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
     /**
      * @var string
      *
      * @ORM\Column(name="nameDash", type="string", length=255)
      */
     protected $nameDash;
-
     /**
      * @var int
      *
      * @ORM\Column(name="idUsersCreator", type="integer")
      */
-    private $idUsersCreator;
-
-
+    protected $idUsersCreator;
     /**
      * Get id
      *
@@ -50,7 +38,6 @@ class Dashboards
     {
         return $this->id;
     }
-
     /**
      * Set nameDash
      *
@@ -61,10 +48,8 @@ class Dashboards
     public function setNameDash($nameDash)
     {
         $this->nameDash = $nameDash;
-
         return $this;
     }
-
     /**
      * Get nameDash
      *
@@ -74,7 +59,6 @@ class Dashboards
     {
         return $this->nameDash;
     }
-
     /**
      * Set idUsersCreator
      *
@@ -85,10 +69,8 @@ class Dashboards
     public function setIdUsersCreator($idUsersCreator)
     {
         $this->idUsersCreator = $idUsersCreator;
-
         return $this;
     }
-
     /**
      * Get idUsersCreator
      *
@@ -106,37 +88,4 @@ class Dashboards
         $this->user = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    /**
-     * Add user
-     *
-     * @param \AppBundle\Entity\User $user
-     *
-     * @return Dashboards
-     */
-    public function addUser(\AppBundle\Entity\User $user)
-    {
-        $this->user[] = $user;
-
-        return $this;
-    }
-
-    /**
-     * Remove user
-     *
-     * @param \AppBundle\Entity\User $user
-     */
-    public function removeUser(\AppBundle\Entity\User $user)
-    {
-        $this->user->removeElement($user);
-    }
-
-    /**
-     * Get user
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
 }

@@ -24,11 +24,13 @@ app_user_profile:
     defaults: { _controller: AppBundle:App:userProfile }
 
 app_add_component:
-    path:     /components/add
-    defaults: { _controller: AppBundle:App:addComponent }
+    path:     /components/{dashboardId}/add
+    defaults: { _controller: AppBundle:Component:addComponent }
+    requirements:
+        componentId: \d+
 
 app_edit_component:
     path:     /components/{componentId}/edit
-    defaults: { _controller: AppBundle:App:editComponent }
+    defaults: { _controller: AppBundle:Component:editComponent }
     requirements:
         componentId: \d+

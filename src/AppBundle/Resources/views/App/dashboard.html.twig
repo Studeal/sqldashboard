@@ -10,6 +10,7 @@
 
     <!-- Dashboard content -->
     <div class="container-fluid">
+        {{ dump(allCharts) }}
         <div class="col-xs-12">
             <div class="row">
                 <div class="btn-group col-xs-3">
@@ -18,12 +19,12 @@
                         <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
                     </button>
                     <ul class="dropdown-menu menu_pos">
-                        <li><a href="{{ path('app_add_component') }}">Add component</a></li>
+                        <li><a href="{{ path('app_add_component',{'dashboardId': dashboards.id}) }}">Add component</a></li>
                         <li><a href="javascript:void(0)">Paste component</a></li>
                     </ul>
                 </div>
                 <div class="col-xs-6">
-                    <h2 class="text-center">Dashboard name</h2>
+                    <h2 class="text-center">{{ dashboards.nameDash }}</h2>
                 </div>
                 <!-- Dashboard settings -->
                 <div class="col-xs-3">
@@ -32,7 +33,7 @@
                         <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                     </button>
                     <ul class="dropdown-menu menu_pos float_right">
-                        <li><a href="{{ path('app_share_dashboard', {'id': 11}) }}">
+                        <li><a href="{{ path('app_share_dashboard', {'id': dashboards.id}) }}">
                                 <span class="glyphicon glyphicon-export" aria-hidden="true"></span> Share</a></li>
                         <li><a href="javascript:void(0)" data-toggle="modal" data-target="#myModalHorizontal"><span
                                         class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit</a></li>
@@ -45,12 +46,11 @@
             <!-- Components container -->
             <div class="row">
                 <!-- Show components in page with for -->
-
                 {% for key, chart1 in allCharts %}
                     <div class="component col-xs-12" id="component{{ key }}">
                         <div class="row">
                             <div class="col-xs-5 ">
-                                <h4>Component name</h4>
+                                <h4>{{ componentsName[key] }}</h4>
                             </div>
                             <div class="col-xs-3 change_width">
                                 <!-- ComponentType dropdownMenu -->
@@ -101,7 +101,8 @@
                                                data-target="#deletecomponent"><span
                                                         class="glyphicon glyphicon-remove-sign"
                                                         aria-hidden="true"></span> Delete</a></li>
-                                        <li><a href="{{ path('app_edit_component', {'componentId' : 1}) }}"><span
+                                        <li>
+                                            <a href="{{ path('app_edit_component', {'componentId' : componentsId[key]}) }}"><span
                                                         class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                                 Edit</a></li>
                                         <li class="show_menu"><a href="javascript:void(0)"><span
@@ -125,7 +126,7 @@
                             </div>
                         </div>
                         <!-- Chart drawing -->
-                        <div id="linechart{{ key }}" style="min-width: 300px; height: 300px; margin: 0 auto">
+                        <div id="chart{{ key }}" style="min-width: 300px; height: 300px; margin: 0 auto">
                         </div>
                     </div>
                 {% endfor %}
@@ -218,22 +219,20 @@
                         </div>
                         <!-- Modal Body -->
                         <div class="modal-body">
-                            <form class="form-horizontal" role="form">
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label"
-                                           for="inputEmail3">Edit name</label>
-                                    <div class="col-sm-10">
-                                        <input type="email" class="form-control"
-                                               id="inputEmail3" placeholder="thisdashboard"/>
-                                    </div>
+                            {{ form_start(form,{'attr': {'class': 'form-horizontal', 'role':'form'}}) }}
+                            {{ form_errors(form) }}
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    {{ form_widget(form.nameDash,  {'attr': {'class': 'form-control', 'value': dashboards.nameDash}}) }}
                                 </div>
-                                <div class="form-group">
-                                    <div class="col-sm-offset-2 col-sm-10">
-                                        <a href="{{ path('app_share_dashboard', {'id': 1}) }}" class="btn btn-default">Add/Remove viewers
-                                        </a>
-                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <a href="{{ path('app_share_dashboard', {'id': 1}) }}" class="btn btn-default">Add/Remove
+                                        viewers
+                                    </a>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                         <!-- Modal Footer -->
                         <div class="modal-footer">
@@ -241,10 +240,10 @@
                                     data-dismiss="modal">
                                 Close
                             </button>
-                            <button type="button" class="btn btn-primary">
-                                Save changes
-                            </button>
+                            {{ form_widget(form.UpdateName, {'attr': {'class':'btn btn-primary'}}) }}
                         </div>
+                        {{ form_rest(form) }}
+                        {{ form_end(form) }}
                     </div>
                 </div>
             </div>
@@ -255,8 +254,10 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
+        {% for chart in allCharts %}
         {% for key, chart1 in allCharts %}
         {{ chart(chart1) }}
+        {% endfor %}
         {% endfor %}
 
         //..............Set chart width

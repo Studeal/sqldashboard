@@ -1,11 +1,8 @@
 <?php
-
 namespace AppBundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\Common\Collections\ArrayCollection;
-
 /**
  * User
  *
@@ -15,10 +12,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 class User extends BaseUser
 {
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Dashboards", inversedBy="user")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Dashboards", cascade={"persist"})
      */
     protected $dashboards;
-
     /**
      * @var int
      *
@@ -27,40 +23,34 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
     /**
      * @var string
      *
      * @ORM\Column(name="firstName", type="string", length=255)
      */
     protected $firstName;
-
     /**
      * @var string
      *
      * @ORM\Column(name="lastName", type="string", length=255)
      */
     protected $lastName;
-
     /**
      * @var string
      *
      * @ORM\Column(name="image", type="string", length=255)
      */
     protected $image;
-
     /**
      * @var bool
      *
      * @ORM\Column(name="status", type="boolean")
      */
     protected $status;
-
     public function __construct(){
         parent::__construct();
         $this->dashboards = new ArrayCollection();
     }
-
     /**
      * Set firstName
      *
@@ -71,10 +61,8 @@ class User extends BaseUser
     public function setFirstName($firstName)
     {
         $this->firstName = $firstName;
-
         return $this;
     }
-
     /**
      * Get firstName
      *
@@ -84,7 +72,6 @@ class User extends BaseUser
     {
         return $this->firstName;
     }
-
     /**
      * Set lastName
      *
@@ -95,10 +82,8 @@ class User extends BaseUser
     public function setLastName($lastName)
     {
         $this->lastName = $lastName;
-
         return $this;
     }
-
     /**
      * Get lastName
      *
@@ -108,7 +93,6 @@ class User extends BaseUser
     {
         return $this->lastName;
     }
-
     /**
      * Set image
      *
@@ -119,10 +103,8 @@ class User extends BaseUser
     public function setImage($image)
     {
         $this->image = $image;
-
         return $this;
     }
-
     /**
      * Get image
      *
@@ -132,7 +114,6 @@ class User extends BaseUser
     {
         return $this->image;
     }
-
     /**
      * Set status
      *
@@ -143,10 +124,8 @@ class User extends BaseUser
     public function setStatus($status)
     {
         $this->status = $status;
-
         return $this;
     }
-
     /**
      * Get status
      *
@@ -156,7 +135,6 @@ class User extends BaseUser
     {
         return $this->status;
     }
-
     /**
      * Add dashboard
      *
@@ -167,10 +145,8 @@ class User extends BaseUser
     public function addDashboard(\AppBundle\Entity\Dashboards $dashboard)
     {
         $this->dashboards[] = $dashboard;
-
         return $this;
     }
-
     /**
      * Remove dashboard
      *
@@ -180,7 +156,6 @@ class User extends BaseUser
     {
         $this->dashboards->removeElement($dashboard);
     }
-
     /**
      * Get dashboards
      *

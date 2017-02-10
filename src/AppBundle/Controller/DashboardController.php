@@ -3,6 +3,8 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\AppBundle;
+use AppBundle\Form\DashboardsType;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Knp\Bundle\PaginatorBundle\KnpPaginatorBundle;
 use AppBundle\Entity\Dashboards;
@@ -10,6 +12,7 @@ use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Ob\HighchartsBundle\Highcharts\Highchart;  //Highcharts bundle
 use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Entity\Components;
 
 
 class DashboardController extends Controller
@@ -20,56 +23,67 @@ class DashboardController extends Controller
     }
 
 
-    public function viewAction($id)
+    public function viewAction(Request $request, $id)
     {
-//
-        $series = array(
-            array("name" => "Data Serie Name", "data" => array(1, 2, 4, 5, 6, 3, 8))
-        );
-        $series1 = array(
-            array("name" => "Data Serie Name", "data" => array(1, 6, 4, 22, 3, 5, 8, 8, 11))
-        );
-        $series2 = array(
-            array("name" => "Data Serie Name", "data" => array(19, 2, 4, 5, 6, 22, 8)),
-            array("name" => "Data Serie Name2", "data" => array(19, 2, 4, 5, 6, 22, 8))
-        );
+        $repository = $this
+            ->getdoctrine()
+            ->getManager()
+            ->getRepository('AppBundle:Components');
+        $components = $repository->findBy(
+            array('dashboards' => $id));
 
-        $ob = new Highchart();
-        $ob->chart->renderTo('linechart0');  // The #id of the div where to render the chart
-        $ob->title->text('');
-        $ob->chart->type('');
-        $ob->xAxis->title(array('text' => "Horizontal axis title"));
-        $ob->yAxis->title(array('text' => "Vertical axis title"));
-        $ob->series($series);
+        $charts = array();
+        $componentsName = array();
+        $componentsId = array();
 
-        $ob1 = new Highchart();
-        $ob1->chart->renderTo('linechart1');  // The #id of the div where to render the chart
-        $ob1->title->text('');
-        $ob1->xAxis->title(array('text' => "Horizontal axis title"));
-        $ob1->yAxis->title(array('text' => "Vertical axis title"));
-        $ob1->series($series1);
+        foreach ($components as $key => $component) {
+            $chart = $this->container->get('app.charts');
+            $chart->setLegend($component->getLegend());
+            $chart->setRequestSql($component->getRequestSQL());
+            $chart->setTypeGraph($component->getTypeGraph());
+            $chart->setXAxis($component->getXAxis());
+            $chart->setYAxis($component->getYAxis());
+            $chart = $chart->generateChart($key);
+            array_push($charts, $chart);
+            array_push($componentsName, $component->getNameComp());
+            array_push($componentsId, $component->getId());
+        }
 
-        $ob2 = new Highchart();
-        $ob2->chart->renderTo('linechart2');  // The #id of the div where to render the chart
-        $ob2->title->text('');
-        $ob2->xAxis->title(array('text' => "Horizontal axis title"));
-        $ob2->yAxis->title(array('text' => "Vertical axis title"));
-        $ob2->series($series2);
+        //Get charts service
 
-        $dashboards = $this->getDoctrine()->getRepository('AppBundle:Dashboards')->find($id);
-        dump($dashboards);
+        $em = $this->getDoctrine()->getManager();
+        $dashboard = $em->getRepository('AppBundle:Dashboards')->find($id);
+
+
+        $form = $this->get('form.factory')->create(new DashboardsType(), $dashboard);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()
+                ->getManager();
+            $em->persist($dashboard);
+            $em->flush();
+
+            return $this->redirectToRoute('app_home', array(
+                'id' => $id));
+        }
 
         return $this->render('AppBundle:App:dashboard.html.twig', array(
-            'allCharts' => array(
-                $ob,
-                $ob1,
-                $ob2
-            ),
-            'dashboards' => $dashboards
+            'allCharts' => $charts,
+            'componentsName' => $componentsName,
+            'componentsId' => $componentsId,
+            'dashboards' => $dashboard,
+            'id' => $id,
+            'form' => $form->createView()
         ));
     }
 
 
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function shareAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
@@ -77,23 +91,14 @@ class DashboardController extends Controller
             ->getRepository('AppBundle:Dashboards')
             ->find($id);
 
-//        $findUsers = $em->getRepository('AppBundle:User')->byCategorie($username);
-//        $listUsers = $em
-//            ->getRepository('AppBundle:User')
-//            ->findAll();
-
-
         $parameter = $request->get('search');
+
         $listUsers = $em
-            ->getRepository('AppBundle:User')->createQueryBuilder('u')
-            ->where('u.username LIKE :usern')
-            ->setParameter('usern', '%'.$parameter.'%')
+            ->getRepository('AppBundle:User')->createQueryBuilder('user')
+            ->where('user.username LIKE :username')
+            ->setParameter('username', '%' . $parameter . '%')
             ->getQuery()
             ->getResult();
-
-
-
-
 
 
 //        if form has been submited removes all users from dashboard, adds the checked ones and saves them in the database
@@ -111,13 +116,16 @@ class DashboardController extends Controller
                     ->find($active);
                 $user->addDashboard($dashboards);
                 $em->persist($user);
-
             }
+
             $em->flush();
-            return $this->redirectToRoute('app_home');
+
+            return $this->redirectToRoute('app_home', array(
+                'id' => $id));
         }
-        $users  = $this->get('knp_paginator')->paginate($listUsers,
-            $this->get('request')->query->get('page',1), 1/*limit per page*/
+        //pagination
+        $users = $this->get('knp_paginator')->paginate($listUsers,
+            $this->get('request')->query->get('page', 1), 2/*limit per page*/
         );
 
         return $this->render('AppBundle:App:shareD.html.twig', array(
@@ -127,20 +135,19 @@ class DashboardController extends Controller
         ));
     }
 
-
-
-
     //.......Delete dashboard
-    public function deleteDashAction($id){
+    public function deleteDashAction($id)
+    {
         $em = $this->getDoctrine()->getManager();
         $dashboard = $em->getRepository('AppBundle:Dashboards')->find($id);
 
-        if ($dashboard != null){
+        if ($dashboard != null) {
             $em->remove($dashboard);
             $em->flush();
         }
-        $em->flush();
-        return $this->redirectToRoute('app_home');
+
+        return $this->redirectToRoute('app_home', array(
+            'id' => $id));//to do redirect to homepage
     }
 
 }

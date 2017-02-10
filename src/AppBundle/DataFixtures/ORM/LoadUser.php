@@ -15,8 +15,8 @@ class LoadUser implements FixtureInterface
         $users = array(
             array('firstName' => 'Jean',
                   'lastName' => 'Fernandez',
-                  'userName'=> 'jean_F1',
-                  'email' => 'jeanF1@gmail.com',
+                  'userName'=> 'jean_F3',
+                  'email' => 'jeanF3@gmail.com',
                   'password'=> 'pass',
                 'image'=> 'img',
                 'status'=>'active',
@@ -31,8 +31,8 @@ class LoadUser implements FixtureInterface
             ),
              array('firstName' => 'Marc',
                  'lastName' => 'Charles',
-                 'userName'=> 'marc_F1',
-                 'email' => 'marc1C@gmail.com',
+                 'userName'=> 'marc_F3',
+                 'email' => 'marc3C@gmail.com',
                  'password'=> 'pass',
                  'image'=> 'img1',
                  'status'=>'active',)
