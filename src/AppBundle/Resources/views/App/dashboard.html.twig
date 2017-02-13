@@ -10,7 +10,8 @@
 
     <!-- Dashboard content -->
     <div class="container-fluid">
-        {{ dump(allCharts) }}
+        {#{{ dump(component) }}#}
+        {#{{ dump(allCharts) }}#}
         <div class="col-xs-12">
             <div class="row">
                 <div class="btn-group col-xs-3">
@@ -19,7 +20,8 @@
                         <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
                     </button>
                     <ul class="dropdown-menu menu_pos">
-                        <li><a href="{{ path('app_add_component',{'dashboardId': dashboards.id}) }}">Add component</a></li>
+                        <li><a href="{{ path('app_add_component',{'dashboardId': dashboards.id}) }}">Add component</a>
+                        </li>
                         <li><a href="javascript:void(0)">Paste component</a></li>
                     </ul>
                 </div>
@@ -53,7 +55,9 @@
                                 <h4>{{ componentsName[key] }}</h4>
                             </div>
                             <div class="col-xs-3 change_width">
-                                <!-- ComponentType dropdownMenu -->
+                                {{ form_start(forms[componentsId[key]],
+                                {'attr': {'class': 'form-horizontal', 'role':'form', 'name': key}}) }}
+                                {{ form_errors(forms[componentsId[key]]) }}
                                 <div class="dropdown">
                                     <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -61,25 +65,29 @@
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                        <li><a href="javascript:void(0)" onclick="change_chart_type('line', {{ key }})"><i
-                                                        class="fa fa-line-chart"
-                                                        aria-hidden="true"></i>
-                                                Line</a></li>
-                                        <li><a href="javascript:void(0)"
-                                               onclick="change_chart_type('column', {{ key }})"><i
-                                                        class="fa fa-bar-chart" aria-hidden="true"></i> Column</a></li>
-                                        <li><a href="javascript:void(0)" onclick="change_chart_type('area', {{ key }})"><i
-                                                        class="fa fa-area-chart" aria-hidden="true"></i> Area</a></li>
-                                        <li><a href="javascript:void(0)"
-                                               onclick="change_chart_type('pie', {{ key }})"><i
-                                                        class="fa fa-pie-chart" aria-hidden="true"></i> Pie</a></li>
-                                        <li><a href="javascript:void(0)"
-                                               onclick="change_chart_type('value', {{ key }})"><i
-                                                        class="fa fa-usd"
-                                                        aria-hidden="true"></i>
-                                                Value</a></li>
+                                        <li>
+                                            {{ form_widget(forms[componentsId[key]].linechart, {'attr': {'class' : 'fa fa-line-chart fa-2x compIcon formButton'}, 'label' : ' '} ) }}
+                                        </li>
+                                        <li>
+                                            {{ form_widget(forms[componentsId[key]].area, {'attr': {'class' : 'fa fa-area-chart fa-2x compIcon formButton'}, 'label' : ' '} ) }}
+                                        </li>
+                                        <li>
+                                            {{ form_widget(forms[componentsId[key]].column, {'attr': {'class' : 'fa fa-bar-chart fa-2x compIcon formButton'}, 'label' : ' '} ) }}
+                                        </li>
+                                        <li>
+                                            {{ form_widget(forms[componentsId[key]].bar, {'attr': {'class' : 'fa fa-usd fa-2x compIcon formButton'}, 'label' : ' '} ) }}
+                                        </li>
                                     </ul>
                                 </div>
+                                <div class="hide">{{ form_widget(forms[componentsId[key]].nameComp, {'attr': {'class' : 'fa fa-usd fa-2x compIcon formButton'}, 'label' : ' '} ) }}
+                                    {{ form_widget(forms[componentsId[key]].xAxis, {'attr': {'class' : 'fa fa-usd fa-2x compIcon formButton'}, 'label' : ' '} ) }}
+                                    {{ form_widget(forms[componentsId[key]].yAxis, {'attr': {'class' : 'fa fa-usd fa-2x compIcon formButton'}, 'label' : ' '} ) }}
+                                    {{ form_widget(forms[componentsId[key]].requestSQL, {'attr': {'class' : 'fa fa-usd fa-2x compIcon formButton'}, 'label' : ' '} ) }}
+                                    {{ form_widget(forms[componentsId[key]].legend, {'attr': {'class' : 'fa fa-usd fa-2x compIcon formButton'}, 'label' : ' '} ) }}
+                                    {{ form_widget(forms[componentsId[key]].Execute, {'attr': {'class' : 'fa fa-usd fa-2x compIcon formButton'}, 'label' : ' '} ) }}
+                                </div>
+                                {{ form_widget(forms[componentsId[key]]._token) }}
+                                {{ form_end(forms[componentsId[key]]) }}
                             </div>
                             <div class="col-xs-4 change_width">
                                 <!-- ComponentOptions dropdownMenu -->
@@ -94,8 +102,9 @@
                                                data-target="#copycomponent"><span
                                                         class=" glyphicon glyphicon-duplicate"
                                                         aria-hidden="true"></span> Copy</a></li>
-                                        <li><a href="javascript:void(0)"><span class="glyphicon glyphicon-refresh"
-                                                                               aria-hidden="true"></span>
+                                        <li><a href="{{ path('app_dashboard', {'id': dashboards.id}) }}"><span
+                                                        class="glyphicon glyphicon-refresh"
+                                                        aria-hidden="true"></span>
                                                 Refresh</a></li>
                                         <li><a href="#" data-toggle="modal"
                                                data-target="#deletecomponent"><span
@@ -125,82 +134,87 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Chart drawing -->
                         <div id="chart{{ key }}" style="min-width: 300px; height: 300px; margin: 0 auto">
                         </div>
                     </div>
-                {% endfor %}
-                <!-- Modal -->
-                <div class="modal fade" id="deletecomponent" role="dialog">
-                    <div class="modal-dialog">
 
-                        <!-- Delete component modal -->
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close"
-                                        data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Delete Component</h4>
-                            </div>
-                            <div class="modal-body">
-                                <p>Are you sure you want to delete the component ?</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Yes
-                                </button>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">
-                                    Cancel
-                                </button>
-                            </div>
+                    <!-- Chart drawing -->
+
+                {% endfor %}
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="deletecomponent" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Delete component modal -->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close"
+                                    data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Delete Component</h4>
                         </div>
-                    </div>
-                </div>
-                <!-- Modal -->
-                <div class="modal fade" id="copycomponent" role="dialog">
-                    <div class="modal-dialog">
-                        <!-- Copy component-->
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close"
-                                        data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Copy Component</h4>
-                            </div>
-                            <div class="modal-body">
-                                <p>Do you want to copy this component ?</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Yes
-                                </button>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">
-                                    Cancel
-                                </button>
-                            </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to delete the component ?</p>
                         </div>
-                    </div>
-                </div>
-                <!-- Modal -->
-                <div class="modal fade" id="deletedashboard" role="dialog">
-                    <div class="modal-dialog">
-                        <!-- Delete dashboard-->
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close"
-                                        data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Delete Dashboard</h4>
-                            </div>
-                            <div class="modal-body">
-                                <p>Do you want to delete the dashboard ?</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="window.location='{{ path('app_delete_dashboard',{'id': dashboards.id}) }}'"> Yes
-                                </button>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">
-                                    Cancel
-                                </button>
-                            </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Yes
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Cancel
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- Modal -->
+            <div class="modal fade" id="copycomponent" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Copy component-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close"
+                                    data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Copy Component</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Do you want to copy this component ?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Yes
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="deletedashboard" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Delete dashboard-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close"
+                                    data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Delete Dashboard</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Do you want to delete the dashboard ?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal"
+                                    onclick="window.location='{{ path('app_delete_dashboard',{'id': dashboards.id}) }}'">
+                                Yes
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {#</div>#}
             <!-- Modal editDashboard name  -->
             <div class="modal fade" id="myModalHorizontal" tabindex="-1" role="dialog"
                  aria-labelledby="myModalLabel" aria-hidden="true">
@@ -228,7 +242,8 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                    <a href="{{ path('app_share_dashboard', {'id': 1}) }}" class="btn btn-default">Add/Remove
+                                    <a href="{{ path('app_share_dashboard', {'id': dashboards.id}) }}"
+                                       class="btn btn-default">Add/Remove
                                         viewers
                                     </a>
                                 </div>
@@ -240,7 +255,7 @@
                                     data-dismiss="modal">
                                 Close
                             </button>
-                            {{ form_widget(form.UpdateName, {'attr': {'class':'btn btn-primary'}}) }}
+                            {{ form_widget(form.UpdateDashName, {'attr': {'class':'btn btn-primary'}}) }}
                         </div>
                         {{ form_rest(form) }}
                         {{ form_end(form) }}

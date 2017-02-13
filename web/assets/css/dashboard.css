@@ -65,3 +65,14 @@ box-sizing: border-box;
 .dropdown-menu li a{
     padding: 3px 8px;
 }
+
+
+.formButton{
+    background-color: transparent !important;
+    border: none !important;
+}
+
+.hide{
+    display: none;
+}
+

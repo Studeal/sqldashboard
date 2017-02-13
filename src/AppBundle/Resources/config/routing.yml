@@ -1,5 +1,8 @@
-
 app_home:
+    path:     /
+    defaults: { _controller: AppBundle:Dashboard:index}
+
+app_dashboard:
     path:     /{id}
     defaults: { _controller: AppBundle:Dashboard:view }
 

@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Ob\HighchartsBundle\Highcharts\Highchart;  //Highcharts bundle
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Components;
+use AppBundle\Form\ComponentsType;
 
 
 class DashboardController extends Controller
@@ -36,6 +37,10 @@ class DashboardController extends Controller
         $componentsName = array();
         $componentsId = array();
 
+
+        $forms = array();
+
+
         foreach ($components as $key => $component) {
             $chart = $this->container->get('app.charts');
             $chart->setLegend($component->getLegend());
@@ -47,16 +52,57 @@ class DashboardController extends Controller
             array_push($charts, $chart);
             array_push($componentsName, $component->getNameComp());
             array_push($componentsId, $component->getId());
+            $forms[$component->getId()] = $this->get('form.factory')->createNamedBuilder($component->getId(), new ComponentsType(), $component)->getForm();
+
         }
 
         //Get charts service
-
         $em = $this->getDoctrine()->getManager();
         $dashboard = $em->getRepository('AppBundle:Dashboards')->find($id);
 
-
         $form = $this->get('form.factory')->create(new DashboardsType(), $dashboard);
         $form->handleRequest($request);
+
+//        SELECT `id`,`idUsersCreator` FROM `dashboards`
+
+        if ($request->isMethod('POST')) {
+
+            foreach ($forms as $key => $oneForm) {
+                $forms[$key]->handleRequest($request);
+            }
+
+            foreach ($forms as $key => $oneForm) {
+                if ($oneForm->isSubmitted() && $oneForm->isValid()) {
+
+                    $em = $this->getDoctrine()
+                        ->getManager();
+                    $component = $em->getRepository('AppBundle:Components')->find($key);
+
+
+                    if ($oneForm->get('linechart')->isClicked()) {
+                        $component->setTypeGraph('linechart');
+                    }
+                    if ($oneForm->get('column')->isClicked()) {
+                        $component->setTypeGraph('column');
+                    }
+                    if ($oneForm->get('area')->isClicked()) {
+                        $component->setTypeGraph('area');
+                    }
+                    if ($oneForm->get('bar')->isClicked()) {
+                        $component->setTypeGraph('bar');
+                    }
+
+                    $em->persist($component);
+                    $em->flush();
+
+                    return $this->redirectToRoute('app_dashboard', array(
+                        'id' => $id,
+                        'component' => $component,
+                    ));
+                }
+            }
+        }
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()
@@ -64,8 +110,12 @@ class DashboardController extends Controller
             $em->persist($dashboard);
             $em->flush();
 
-            return $this->redirectToRoute('app_home', array(
+            return $this->redirectToRoute('app_dashboard', array(
                 'id' => $id));
+        }
+
+        foreach ($forms as $key => $formOne) {
+            $forms[$key] = $formOne->createView();
         }
 
         return $this->render('AppBundle:App:dashboard.html.twig', array(
@@ -73,8 +123,11 @@ class DashboardController extends Controller
             'componentsName' => $componentsName,
             'componentsId' => $componentsId,
             'dashboards' => $dashboard,
+            'components' => $components,
+            'component' => $component,
             'id' => $id,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'forms' => $forms
         ));
     }
 
@@ -84,7 +137,8 @@ class DashboardController extends Controller
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function shareAction(Request $request, $id)
+    public
+    function shareAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
         $dashboards = $em
@@ -113,14 +167,14 @@ class DashboardController extends Controller
 
             foreach ($activeUsers as $active) {
                 $user = $em->getRepository('AppBundle:User')
-                    ->find($active);
-                $user->addDashboard($dashboards);
+                    ->find($active)
+                    ->addDashboard($dashboards);
                 $em->persist($user);
             }
 
             $em->flush();
 
-            return $this->redirectToRoute('app_home', array(
+            return $this->redirectToRoute('app_dashboard', array(
                 'id' => $id));
         }
         //pagination
@@ -136,7 +190,8 @@ class DashboardController extends Controller
     }
 
     //.......Delete dashboard
-    public function deleteDashAction($id)
+    public
+    function deleteDashAction($id)
     {
         $em = $this->getDoctrine()->getManager();
         $dashboard = $em->getRepository('AppBundle:Dashboards')->find($id);
@@ -146,8 +201,13 @@ class DashboardController extends Controller
             $em->flush();
         }
 
-        return $this->redirectToRoute('app_home', array(
+        return $this->redirectToRoute('app_dashboard', array(
             'id' => $id));//to do redirect to homepage
+    }
+
+
+    public function copyComponent($id){
+
     }
 
 }
