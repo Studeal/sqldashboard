@@ -97,15 +97,15 @@ class ComponentController extends Controller
             }
 
             if ($form->get('column')->isClicked()) {
-                $chart->setTypeGraph('column');
+                $component->setTypeGraph('column');
             }
 
             if ($form->get('area')->isClicked()) {
-                $chart->setTypeGraph('area');
+                $component->setTypeGraph('area');
             }
 
             if ($form->get('bar')->isClicked()) {
-                $chart->setTypeGraph('bar');
+                $component->setTypeGraph('bar');
             }
 
             $em = $this->getDoctrine()
