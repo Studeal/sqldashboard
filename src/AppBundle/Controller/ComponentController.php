@@ -97,15 +97,15 @@ class ComponentController extends Controller
             }
 
             if ($form->get('column')->isClicked()) {
-                $component->setTypeGraph('column');
+                $chart->setTypeGraph('column');
             }
 
             if ($form->get('area')->isClicked()) {
-                $component->setTypeGraph('area');
+                $chart->setTypeGraph('area');
             }
 
             if ($form->get('bar')->isClicked()) {
-                $component->setTypeGraph('bar');
+                $chart->setTypeGraph('bar');
             }
 
             $em = $this->getDoctrine()
@@ -132,7 +132,7 @@ class ComponentController extends Controller
 			'xAxis'         => $chart->getXAxis(),
 			'yAxis'         => $chart->getYAxis(),
 			'requestSql'    => $component->getRequestSQL(),
-			'chart'         => $chart->generateChart(0)
+			'chart'         => $chart->generateChart()
 		));
 		
 	}
