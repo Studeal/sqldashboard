@@ -132,7 +132,7 @@ class ComponentController extends Controller
 			'xAxis'         => $chart->getXAxis(),
 			'yAxis'         => $chart->getYAxis(),
 			'requestSql'    => $component->getRequestSQL(),
-			'chart'         => $chart->generateChart()
+			'chart'         => $chart->generateChart(0)
 		));
 		
 	}
