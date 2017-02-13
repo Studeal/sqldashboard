@@ -81,26 +81,26 @@
             <li>{{form_widget(form.linechart, {'attr': {'class' : 'fa fa-line-chart fa-4x compIcon'}, 'label' : ' '} ) }}</li>
             <li>{{form_widget(form.area, {'attr': {'class' : 'fa fa-area-chart fa-4x compIcon'}, 'label' : ' '} ) }}</li>
             <li>{{form_widget(form.column, {'attr': {'class' : 'fa fa-bar-chart fa-4x compIcon'}, 'label' : ' '} ) }}</li>
-            <li>{{form_widget(form.value, {'attr': {'class' : 'fa fa-usd fa-4x compIcon'}, 'label' : ' '} ) }}</li>
+            <li>{{form_widget(form.bar, {'attr': {'class' : 'fa fa-align-left fa-4x compIcon'}, 'label' : ' '} ) }}</li>
         </ul>
     </div>
         {{form_end(form)}}
 
     <!-- Charts Display -->
     <div class="row charts">
-        <div class="col-xs-12" id="chart" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+        <div class="col-xs-12" id="chart0" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
     </div>
 
     <!-- Confirm button -->
     <div class="row button">
         <div class="col-xs-3 col-xs-offset-9">
             <div class="btn-group" role="group" aria-label="...">
-                <a href="" class="btn btn-default">Submit</a>
-                <a href="" class="btn btn-default">Cancel</a>
+                {#TODO: change href to the right dashboard#}
+                <a href="" class="btn btn-default">Return to dashboard</a>
             </div>
         </div>
     </div>
-</div>
+
 </div>
 {% endblock %}
 

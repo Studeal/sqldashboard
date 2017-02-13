@@ -88,10 +88,26 @@ class ComponentController extends Controller
 		$chart->setYAxis($component->getYAxis());
 
 		//Generate main form
-		$mainForm = $this->get('form.factory')->create(new ComponentsType, $component);
+		$form = $this->get('form.factory')->create(new ComponentsType, $component);
 
-        if($mainForm->handleRequest($request)->isValid())
+        if($form->handleRequest($request)->isValid())
         {
+            if ($form->get('linechart')->isClicked()) {
+                $component->setTypeGraph('linechart');
+            }
+
+            if ($form->get('column')->isClicked()) {
+                $component->setTypeGraph('column');
+            }
+
+            if ($form->get('area')->isClicked()) {
+                $component->setTypeGraph('area');
+            }
+
+            if ($form->get('bar')->isClicked()) {
+                $component->setTypeGraph('bar');
+            }
+
             $em = $this->getDoctrine()
 					   ->getManager();
 			// //We associate the dashboard's id to the chart
@@ -110,13 +126,13 @@ class ComponentController extends Controller
 		return $this->render('AppBundle:App:component.html.twig', array(
 			'mainTitle'     => $mainTitle,
 			'tables'        => $listTables,
-			'form'          => $mainForm->createView(),
+			'form'          => $form->createView(),
 			'componentName' => $component->getNameComp(),
 			'legend'        => $chart->getLegend(),
 			'xAxis'         => $chart->getXAxis(),
 			'yAxis'         => $chart->getYAxis(),
 			'requestSql'    => $component->getRequestSQL(),
-			'chart'         => $chart->generateChart()
+			'chart'         => $chart->generateChart(0)
 		));
 		
 	}

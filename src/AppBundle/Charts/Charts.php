@@ -64,7 +64,7 @@ class Charts
         return $this->typeGraph;
     }
 
-    public function generateChart(){
+    public function generateChart($key){
 
         $this->requestSql = $this->rqSql->processingSql($this->requestSql);
 
@@ -74,7 +74,7 @@ class Charts
                         ));
 
         $chart = new Highchart();
-        $chart->chart->renderTo("chart");
+        $chart->chart->renderTo("chart".$key);
         if($this->typeGraph != "linechart"){
             $chart->chart->type($this->typeGraph);
         }
