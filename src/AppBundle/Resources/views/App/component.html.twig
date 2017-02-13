@@ -73,21 +73,18 @@
                                                           'value':       requestSql}}) 
                 }}
             </div>
-
-            {# Display the rest of the form #}
-            {{form_rest(form)}}
-        {{form_end(form)}}
     </div>
 
     <!-- Charts choise -->
     <div class="row">
         <ul class="charts_choise">
-            <li><i class="fa fa-line-chart" aria-hidden="true"></i></li>
-            <li><i class="fa fa-area-chart" aria-hidden="true"></i></li>
-            <li><i class="fa fa-bar-chart" aria-hidden="true"></i></li>
-            <li><i class="fa fa-usd" aria-hidden="true"></i></li>
+            <li>{{form_widget(form.linechart, {'attr': {'class' : 'fa fa-line-chart fa-4x compIcon'}, 'label' : ' '} ) }}</li>
+            <li>{{form_widget(form.area, {'attr': {'class' : 'fa fa-area-chart fa-4x compIcon'}, 'label' : ' '} ) }}</li>
+            <li>{{form_widget(form.column, {'attr': {'class' : 'fa fa-bar-chart fa-4x compIcon'}, 'label' : ' '} ) }}</li>
+            <li>{{form_widget(form.value, {'attr': {'class' : 'fa fa-usd fa-4x compIcon'}, 'label' : ' '} ) }}</li>
         </ul>
     </div>
+        {{form_end(form)}}
 
     <!-- Charts Display -->
     <div class="row charts">

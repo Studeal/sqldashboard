@@ -56,12 +56,12 @@ class RequestSql
                 }
             }
 
-            return $resultat = array($dataChart, $xAxis);
+            return array($dataChart, $xAxis);
 
         }
         else
         {
-
+            return array();
         }
     }
 }

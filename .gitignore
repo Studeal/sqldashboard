@@ -50,3 +50,6 @@
 
 /.idea
 
+#DataFixtures
+/src/AppBundle/DataFixtures
+

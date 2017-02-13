@@ -39,6 +39,11 @@
 .charts_choise i{
     font-size: 40px;
 }
+
+.compIcon{
+    background-color: transparent !important;
+    border: none !important;
+}
 /*:::::::::::::::::::::::::: Chart view ::::*/
 .highcharts-button{
     display: none;

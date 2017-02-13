@@ -4,7 +4,6 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\Components;
-use AppBundle\Entity\Dashboards;
 use AppBundle\Form\ComponentsType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,12 +12,18 @@ use Ob\HighchartsBundle\Highcharts\Highchart;
 
 class ComponentController extends Controller
 {
-	
+    /***
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
 	public function indexAction()
     {
 		return $this->render('AppBundle::layout.html.twig');
 	}
 
+    /***
+     * @param $dashboardId
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
 	public function addComponentAction($dashboardId)
 	{
 		$component = new Components();
@@ -36,9 +41,12 @@ class ComponentController extends Controller
 		return $this->redirectToRoute('app_edit_component', array('componentId' => $component->getId()));
 		
 	}
-	
-	
-	//M	ethod for edit a component
+
+    /***
+     * @param Request $request
+     * @param $componentId
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
 	public function editComponentAction(Request $request, $componentId)
 	{
 		//Return table and field list (bypass doctrine)
@@ -48,11 +56,18 @@ class ComponentController extends Controller
 		{
 			foreach($table as $key => $tab)
 			{
-				// $listTables = $tab;
-				$field = $conn->fetchall('DESCRIBE '.$tab);
-				$listTables[$tab] = $field;
+
+				//Exclude the Sqldashboard's tables
+				if (!($tab == "components" || $tab == "dashboards" || $tab == "user" || $tab == "user_dashboards"))
+				{
+					$field = $conn->fetchall('DESCRIBE '.$tab);
+					$listTables[$tab] = $field;
+				}
 			}
 		}
+		
+		//Change the head title
+		$mainTitle = "Edit component";
 
 		//Get the component in the db
 		$repository = $this
@@ -72,13 +87,10 @@ class ComponentController extends Controller
 		$chart->setXAxis($component->getXAxis());
 		$chart->setYAxis($component->getYAxis());
 
-		//Change the head title
-		$mainTitle = "Edit component";
+		//Generate main form
+		$mainForm = $this->get('form.factory')->create(new ComponentsType, $component);
 
-		//Generate form
-		$form = $this->get('form.factory')->create(new ComponentsType, $component);
-
-        if($form->handleRequest($request)->isValid())
+        if($mainForm->handleRequest($request)->isValid())
         {
             $em = $this->getDoctrine()
 					   ->getManager();
@@ -89,7 +101,7 @@ class ComponentController extends Controller
 			$em->flush();
 
 
-			//Reload the page with 
+			//Reload the page with new data 
 			return $this->redirect($this->generateUrl('app_edit_component', array(
 				'componentId' => $component->getId()
 			)));
@@ -98,7 +110,7 @@ class ComponentController extends Controller
 		return $this->render('AppBundle:App:component.html.twig', array(
 			'mainTitle'     => $mainTitle,
 			'tables'        => $listTables,
-			'form'          => $form->createView(),
+			'form'          => $mainForm->createView(),
 			'componentName' => $component->getNameComp(),
 			'legend'        => $chart->getLegend(),
 			'xAxis'         => $chart->getXAxis(),

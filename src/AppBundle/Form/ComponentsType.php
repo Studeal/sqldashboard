@@ -20,9 +20,13 @@ class ComponentsType extends AbstractType
             ->add('yAxis',      'text')
             ->add('requestSQL', 'textarea')
             ->add('Execute',    'submit')
+            ->add('linechart',  'submit')
+            ->add('column',     'submit')
+            ->add('area',       'submit')
+            ->add('value',      'submit')
             ;
     }
-    
+
     /**
      * {@inheritdoc}
      */
