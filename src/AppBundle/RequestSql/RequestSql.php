@@ -61,7 +61,7 @@ class RequestSql
         }
         else
         {
-            return array();
+            return array('','');
         }
     }
 }

@@ -30,10 +30,10 @@
             
             <div class="form-group">
                 {#Display error + label + input for Component Name#}
-                {{ form_label(form.nameComp, "Component name:", {'label_attr': {'class': 'col-xs-2 control-label'}}) }}
-                {{ form_errors(form.nameComp) }}
+                {{ form_label(form.name, "Component name:", {'label_attr': {'class': 'col-xs-2 control-label'}}) }}
+                {{ form_errors(form.name) }}
                 <div class="col-xs-8">
-                    {{ form_widget(form.nameComp, {'attr': {'class': 'form-control', 'value': componentName}}) }}
+                    {{ form_widget(form.name, {'attr': {'class': 'form-control', 'value': componentName}}) }}
                 </div>
             </div>
             <div class="form-group">

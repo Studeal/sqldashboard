@@ -23,7 +23,7 @@ class ComponentType extends AbstractType
             ->add('linechart',  'submit')
             ->add('column',     'submit')
             ->add('area',       'submit')
-            ->add('bar',        'submit')
+            ->add('bar',        'submit');
     }
     
     /**

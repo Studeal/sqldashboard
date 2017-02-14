@@ -59,7 +59,7 @@ class ComponentController extends Controller
 			{
 
 				//Exclude the Sqldashboard's tables
-				if (!($tab == "components" || $tab == "dashboards" || $tab == "user" || $tab == "user_dashboards"))
+				if (!($tab == "sqldashboard_component" || $tab == "sqldashboard_dashboard" || $tab == "sqldashboard_user" || $tab == "dashboard_user"))
 				{
 				    //Display the tables
 					$field = $conn->fetchall('DESCRIBE '.$tab);
@@ -128,7 +128,7 @@ class ComponentController extends Controller
 			'mainTitle'     => $mainTitle,
 			'tables'        => $listTables,
 			'form'          => $form->createView(),
-			'componentName' => $component->getNameComp(),
+			'componentName' => $component->getName(),
 			'legend'        => $chart->getLegend(),
 			'xAxis'         => $chart->getXAxis(),
 			'yAxis'         => $chart->getYAxis(),
