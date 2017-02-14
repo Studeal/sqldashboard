@@ -14,7 +14,7 @@ class ComponentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nameComp',   'text')
+            ->add('name',       'text')
             ->add('legend',     'text')
             ->add('xAxis',      'text')
             ->add('yAxis',      'text')
@@ -23,10 +23,9 @@ class ComponentType extends AbstractType
             ->add('linechart',  'submit')
             ->add('column',     'submit')
             ->add('area',       'submit')
-            ->add('bar',      'submit')
-            ;
+            ->add('bar',        'submit')
     }
-
+    
     /**
      * {@inheritdoc}
      */
