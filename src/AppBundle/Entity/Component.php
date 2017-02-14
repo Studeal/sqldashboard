@@ -5,19 +5,13 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Components
+ * Component
  *
- * @ORM\Table(name="components")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ComponentsRepository")
+ * @ORM\Table(name="sqldashboard_component")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ComponentRepository")
  */
-class Components
+class Component
 {
-    /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Dashboards")
-     * @ORM\JoinColumn(nullable=false)
-     */
-     protected $dashboards;
-
     /**
      * @var int
      *
@@ -25,56 +19,63 @@ class Components
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Dashboard")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $dashboard;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nameComp", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255)
      */
-    protected $nameComp = "";
+    private $name = "";
 
     /**
      * @var string
      *
      * @ORM\Column(name="requestSQL", type="text")
      */
-    protected $requestSQL = "";
+    private $requestSQL = "";
 
     /**
      * @var string
      *
-     * @ORM\Column(name="typeGraph", type="string", length=15)
+     * @ORM\Column(name="typeGraph", type="string", length=255)
      */
-    protected $typeGraph = "column";
+    private $typeGraph = "column";
 
     /**
      * @var string
      *
      * @ORM\Column(name="sizeComponent", type="string", length=10)
      */
-    protected $sizeComponent = "3";
+    private $sizeComponent = "3";
 
     /**
      * @var string
      *
      * @ORM\Column(name="legend", type="string", length=255)
      */
-    protected $legend = "";
+    private $legend = "";
 
     /**
      * @var string
      *
      * @ORM\Column(name="xAxis", type="string", length=255)
      */
-    protected $xAxis = "";
+    private $xAxis = "";
 
     /**
      * @var string
      *
      * @ORM\Column(name="yAxis", type="string", length=255)
      */
-    protected $yAxis = "";
+    private $yAxis = "";
+
 
     /**
      * Get id
@@ -86,28 +87,29 @@ class Components
         return $this->id;
     }
 
+
     /**
-     * Set nameComp
+     * Set name
      *
-     * @param string $nameComp
+     * @param string $name
      *
-     * @return Components
+     * @return Component
      */
-    public function setNameComp($nameComp)
+    public function setName($name)
     {
-        $this->nameComp = $nameComp;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get nameComp
+     * Get name
      *
      * @return string
      */
-    public function getNameComp()
+    public function getName()
     {
-        return $this->nameComp;
+        return $this->name;
     }
 
     /**
@@ -115,7 +117,7 @@ class Components
      *
      * @param string $requestSQL
      *
-     * @return Components
+     * @return Component
      */
     public function setRequestSQL($requestSQL)
     {
@@ -139,7 +141,7 @@ class Components
      *
      * @param string $typeGraph
      *
-     * @return Components
+     * @return Component
      */
     public function setTypeGraph($typeGraph)
     {
@@ -163,7 +165,7 @@ class Components
      *
      * @param string $sizeComponent
      *
-     * @return Components
+     * @return Component
      */
     public function setSizeComponent($sizeComponent)
     {
@@ -183,35 +185,11 @@ class Components
     }
 
     /**
-     * Set dashboards
-     *
-     * @param \AppBundle\Entity\Dashboards $dashboards
-     *
-     * @return Components
-     */
-    public function setDashboards(\AppBundle\Entity\Dashboards $dashboards)
-    {
-        $this->dashboards = $dashboards;
-
-        return $this;
-    }
-
-    /**
-     * Get dashboards
-     *
-     * @return \AppBundle\Entity\Dashboards
-     */
-    public function getDashboards()
-    {
-        return $this->dashboards;
-    }
-
-    /**
      * Set legend
      *
      * @param string $legend
      *
-     * @return Components
+     * @return Component
      */
     public function setLegend($legend)
     {
@@ -235,7 +213,7 @@ class Components
      *
      * @param string $xAxis
      *
-     * @return Components
+     * @return Component
      */
     public function setXAxis($xAxis)
     {
@@ -259,7 +237,7 @@ class Components
      *
      * @param string $yAxis
      *
-     * @return Components
+     * @return Component
      */
     public function setYAxis($yAxis)
     {
@@ -276,5 +254,29 @@ class Components
     public function getYAxis()
     {
         return $this->yAxis;
+    }
+
+    /**
+     * Set dashboard
+     *
+     * @param \AppBundle\Entity\Dashboard $dashboard
+     *
+     * @return Component
+     */
+    public function setDashboard(\AppBundle\Entity\Dashboard $dashboard)
+    {
+        $this->dashboard = $dashboard;
+
+        return $this;
+    }
+
+    /**
+     * Get dashboard
+     *
+     * @return \AppBundle\Entity\Dashboard
+     */
+    public function getDashboard()
+    {
+        return $this->dashboard;
     }
 }

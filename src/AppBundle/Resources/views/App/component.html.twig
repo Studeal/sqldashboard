@@ -95,8 +95,8 @@
     <div class="row button">
         <div class="col-xs-3 col-xs-offset-9">
             <div class="btn-group" role="group" aria-label="...">
-                {#TODO: change href to the right dashboard#}
-                <a href="" class="btn btn-default">Return to dashboard</a>
+                {#TODO: change href to the right dashboard  {{ path('app_dashboard', {'id' : dashboardId) }}#}
+                <a href="{{ path('app_dashboard', {'id' : dashboardId}) }}" class="btn btn-default">Return to dashboard</a>
             </div>
         </div>
     </div>

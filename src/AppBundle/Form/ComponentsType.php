@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ComponentsType extends AbstractType
+class ComponentType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -33,7 +33,7 @@ class ComponentsType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Components'
+            'data_class' => 'AppBundle\Entity\Component'
         ));
     }
 
@@ -42,7 +42,7 @@ class ComponentsType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_components';
+        return 'appbundle_component';
     }
 
 
