@@ -33,9 +33,11 @@ class DashboardController extends Controller
         $components = $repository->findBy(
             array('dashboards' => $id));
 
+
         $charts = array();
         $componentsName = array();
         $componentsId = array();
+        $sizeComponent = array();
 
 
         $forms = array();
@@ -52,6 +54,7 @@ class DashboardController extends Controller
             array_push($charts, $chart);
             array_push($componentsName, $component->getNameComp());
             array_push($componentsId, $component->getId());
+            array_push($sizeComponent, $component->getSizeComponent());
             $forms[$component->getId()] = $this->get('form.factory')->createNamedBuilder($component->getId(), new ComponentsType(), $component)->getForm();
 
         }
@@ -127,7 +130,8 @@ class DashboardController extends Controller
             'component' => $component,
             'id' => $id,
             'form' => $form->createView(),
-            'forms' => $forms
+            'forms' => $forms,
+            'size' => $sizeComponent
         ));
     }
 
@@ -208,6 +212,28 @@ class DashboardController extends Controller
 
     public function copyComponent($id){
 
+    }
+
+
+    public function changeSizeAction($componentId, $size, $id){
+//        $repository = $this
+//            ->getdoctrine()
+//            ->getManager();
+//
+//        $component = $repository->getRepository('AppBundle:Components')
+//                                ->findOneBy(array('id' => $componentId));
+        $em = $this->getDoctrine()->getManager();
+        $component = $em->getRepository('AppBundle:Components')->find($componentId);
+
+
+        $component->setSizeComponent($size);
+
+        $em->persist($component);
+        $em->flush();
+
+            return $this->redirectToRoute('app_dashboard', array(
+                'id' => $id
+            ));
     }
 
 }

@@ -18,6 +18,11 @@ app_delete_dashboard:
     path:     /delete/{id}
     defaults: { _controller: AppBundle:Dashboard:deleteDash }
 
+
+app_change_size:
+    path:     /app_change_size/{componentId}/{size}/{id}
+    defaults: { _controller: AppBundle:Dashboard:changeSize }
+
 app_admin_profile:
     path:     /admin_profile
     defaults: { _controller: AppBundle:App:adminProfile }
