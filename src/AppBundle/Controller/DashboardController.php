@@ -4,16 +4,16 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\AppBundle;
-use AppBundle\Form\DashboardsType;
+use AppBundle\Form\DashboardType;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Knp\Bundle\PaginatorBundle\KnpPaginatorBundle;
-use AppBundle\Entity\Dashboards;
+use AppBundle\Entity\Dashboard;
 use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Ob\HighchartsBundle\Highcharts\Highchart;  //Highcharts bundle
 use Symfony\Component\HttpFoundation\Request;
-use AppBundle\Entity\Components;
-use AppBundle\Form\ComponentsType;
+use AppBundle\Entity\Component;
+use AppBundle\Form\ComponentType;
 
 
 class DashboardController extends Controller
@@ -29,17 +29,15 @@ class DashboardController extends Controller
         $repository = $this
             ->getdoctrine()
             ->getManager()
-            ->getRepository('AppBundle:Components');
+            ->getRepository('AppBundle:Component');
         $components = $repository->findBy(
-            array('dashboards' => $id));
+            array('dashboard' => $id));
 
 
         $charts = array();
-        $componentsName = array();
-        $componentsId = array();
+        $componentName = array();
+        $componentId = array();
         $sizeComponent = array();
-
-
         $forms = array();
 
 
@@ -52,21 +50,20 @@ class DashboardController extends Controller
             $chart->setYAxis($component->getYAxis());
             $chart = $chart->generateChart($key);
             array_push($charts, $chart);
-            array_push($componentsName, $component->getNameComp());
-            array_push($componentsId, $component->getId());
+            array_push($componentName, $component->getName());
+            array_push($componentId, $component->getId());
             array_push($sizeComponent, $component->getSizeComponent());
-            $forms[$component->getId()] = $this->get('form.factory')->createNamedBuilder($component->getId(), new ComponentsType(), $component)->getForm();
+            $forms[$component->getId()] = $this->get('form.factory')->createNamedBuilder($component->getId(), new ComponentType(), $component)->getForm();
 
         }
 
         //Get charts service
         $em = $this->getDoctrine()->getManager();
-        $dashboard = $em->getRepository('AppBundle:Dashboards')->find($id);
+        $dashboard = $em->getRepository('AppBundle:Dashboard')->find($id);
 
-        $form = $this->get('form.factory')->create(new DashboardsType(), $dashboard);
+        $form = $this->get('form.factory')->create(new DashboardType(), $dashboard);
         $form->handleRequest($request);
 
-//        SELECT `id`,`idUsersCreator` FROM `dashboards`
 
         if ($request->isMethod('POST')) {
 
@@ -78,8 +75,8 @@ class DashboardController extends Controller
                 if ($oneForm->isSubmitted() && $oneForm->isValid()) {
 
                     $em = $this->getDoctrine()
-                        ->getManager();
-                    $component = $em->getRepository('AppBundle:Components')->find($key);
+                               ->getManager();
+                    $component = $em->getRepository('AppBundle:Component')->find($key);
 
 
                     if ($oneForm->get('linechart')->isClicked()) {
@@ -109,7 +106,7 @@ class DashboardController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()
-                ->getManager();
+                       ->getManager();
             $em->persist($dashboard);
             $em->flush();
 
@@ -123,11 +120,10 @@ class DashboardController extends Controller
 
         return $this->render('AppBundle:App:dashboard.html.twig', array(
             'allCharts' => $charts,
-            'componentsName' => $componentsName,
-            'componentsId' => $componentsId,
-            'dashboards' => $dashboard,
+            'componentName' => $componentName,
+            'componentId' => $componentId,
+            'dashboard' => $dashboard,
             'components' => $components,
-            'component' => $component,
             'id' => $id,
             'form' => $form->createView(),
             'forms' => $forms,
@@ -145,19 +141,19 @@ class DashboardController extends Controller
     function shareAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $dashboards = $em
-            ->getRepository('AppBundle:Dashboards')
+        $dashboard = $em
+            ->getRepository('AppBundle:Dashboard')
             ->find($id);
 
         $parameter = $request->get('search');
 
         $listUsers = $em
-            ->getRepository('AppBundle:User')->createQueryBuilder('user')
-            ->where('user.username LIKE :username')
-            ->setParameter('username', '%' . $parameter . '%')
+            ->getRepository('AppBundle:User')
+            ->createQueryBuilder('user')
+            ->where('user.email LIKE :email')
+            ->setParameter('email', '%' . $parameter . '%')
             ->getQuery()
             ->getResult();
-
 
 //        if form has been submited removes all users from dashboard, adds the checked ones and saves them in the database
 
@@ -165,15 +161,15 @@ class DashboardController extends Controller
             $activeUsers = $request->get('activeUsers');
 
             foreach ($listUsers as $inactiveUser) {
-                $inactiveUser->removeDashboard($dashboards);
-                $em->persist($inactiveUser);
+                $dashboard->removeCollaborator($inactiveUser);
+                $em->persist($dashboard);
             }
 
             foreach ($activeUsers as $active) {
                 $user = $em->getRepository('AppBundle:User')
-                    ->find($active)
-                    ->addDashboard($dashboards);
-                $em->persist($user);
+                           ->find($active);
+                $dashboard->addCollaborator($user);
+                $em->persist($dashboard);
             }
 
             $em->flush();
@@ -181,15 +177,16 @@ class DashboardController extends Controller
             return $this->redirectToRoute('app_dashboard', array(
                 'id' => $id));
         }
+
         //pagination
-        $users = $this->get('knp_paginator')->paginate($listUsers,
+
+            $users = $this->get('knp_paginator')->paginate($listUsers,
             $this->get('request')->query->get('page', 1), 2/*limit per page*/
         );
 
         return $this->render('AppBundle:App:shareD.html.twig', array(
-
             'users' => $users,
-            'dashboard' => $dashboards
+            'dashboard' => $dashboard
         ));
     }
 
@@ -198,7 +195,7 @@ class DashboardController extends Controller
     function deleteDashAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $dashboard = $em->getRepository('AppBundle:Dashboards')->find($id);
+        $dashboard = $em->getRepository('AppBundle:Dashboard')->find($id);
 
         if ($dashboard != null) {
             $em->remove($dashboard);
@@ -209,31 +206,39 @@ class DashboardController extends Controller
             'id' => $id));//to do redirect to homepage
     }
 
-
-    public function copyComponent($id){
-
-    }
-
-
-    public function changeSizeAction($componentId, $size, $id){
-//        $repository = $this
-//            ->getdoctrine()
-//            ->getManager();
-//
-//        $component = $repository->getRepository('AppBundle:Components')
-//                                ->findOneBy(array('id' => $componentId));
+    public function changeSizeAction($componentId, $size, $id)
+    {
         $em = $this->getDoctrine()->getManager();
-        $component = $em->getRepository('AppBundle:Components')->find($componentId);
-
-
+        $component = $em->getRepository('AppBundle:Component')->find($componentId);
         $component->setSizeComponent($size);
-
         $em->persist($component);
         $em->flush();
 
-            return $this->redirectToRoute('app_dashboard', array(
-                'id' => $id
-            ));
+        return $this->redirectToRoute('app_dashboard', array(
+            'id' => $id
+        ));
+    }
+
+
+    public function copyComponent($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $component = $em->getRepository('AppBundle:Component')->find($id);
+
+        $em->persist($component);
+
+        return $this->redirectToRoute('app_dashboard', array(
+            'id' => $id
+        ));
+    }
+
+
+    public function pasteComponentAction($id)
+    {
+
+        return $this->redirectToRoute('app_dashboard', array(
+            'id' => $id
+        ));
     }
 
 }

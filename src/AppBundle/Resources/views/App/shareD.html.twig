@@ -24,19 +24,20 @@
             </div>
         </div>
         <!-- Users table -->
-        <form method="POST" action="{{ path('app_share_dashboard', {'id': 11}) }}">
+        <form method="POST" action="{{ path('app_share_dashboard', {'id': dashboard.id}) }}">
             <table class="table table-striped text-center table_users">
+
                 {% for user in users %}
                     <tr>
                         <td>
                             <!-- Share action -->
                             <input type="checkbox" class="checkbox-info"
-                                   {% if user.getDashboards().contains(dashboard) %}checked="checked"{% endif %}
+                                   {% if dashboard.getCollaborator().contains(user) %}checked="checked"{% endif %}
                                    name="activeUsers[]" value="{{ user.id }}">
 
                         </td>
                         <td><i class="fa fa-user-o fa-2x" aria-hidden="true"></i></td>
-                        <td>  {{ user.username }} </td>
+                        <td>  {{ user.email }} </td>
                     </tr>
 
                 {% endfor %}

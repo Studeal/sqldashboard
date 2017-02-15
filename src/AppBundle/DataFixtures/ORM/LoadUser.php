@@ -1,7 +1,7 @@
 <?php
 
 namespace AppBundle\DataFixtures\ORM;
-use AppBundle\Entity\Dashboards;
+use AppBundle\Entity\Dashboard;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use AppBundle\Entity\User;
@@ -9,10 +9,9 @@ use AppBundle\Entity\User;
 class LoadUser implements FixtureInterface
 {
     public function load(ObjectManager $manager){
-        $dashboard = new Dashboards();
-        $dashboard->setNameDash('nameDash');
-        $dashboard->setIdUsersCreator(4);
-        $users = array(
+        $dashboard = new Dashboard();
+        $dashboard->setName('name');
+        $user = array(
             array('firstName' => 'Jean',
                   'lastName' => 'Fernandez',
                   'userName'=> 'jean_F3',
@@ -38,16 +37,16 @@ class LoadUser implements FixtureInterface
                  'status'=>'active',)
         );
 
-        foreach ($users as $user){
+        foreach ($user as $user){
                 $utilisateur = new User();
                 $utilisateur->setFirstName($user['firstName']);
                 $utilisateur->setLastName($user['lastName']);
                 $utilisateur->setEmail($user['email']);
-                $utilisateur->setUsername($user['userName']);
+//                $utilisateur->setUsername($user['userName']);
                 $utilisateur->setPassword($user['password']);
                 $utilisateur->setImage($user['image']);
                 $utilisateur->setStatus($user['status']);
-                $utilisateur->addDashboard($dashboard);
+//                $utilisateur->addDashboard($dashboard);
                 $manager->persist($utilisateur);
             }
 

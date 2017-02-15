@@ -1,12 +1,12 @@
 <?php
 namespace AppBundle\Controller;
-use AppBundle\Entity\Components;
-use AppBundle\Entity\Dashboards;
+
+use AppBundle\Entity\Component;
+use AppBundle\Entity\Dashboard;
 use AppBundle\Form\ComponentsType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Ob\HighchartsBundle\Highcharts\Highchart;
-
 
 
 class ComponentController extends Controller
@@ -16,12 +16,13 @@ class ComponentController extends Controller
     {
         return $this->render('AppBundle::layout.html.twig');
     }
+
     public function addComponentAction($dashboardId)
     {
         $component = new Components();
         $em = $this->getDoctrine()
             ->getManager();
-        $component->setDashboards($em->getRepository('AppBundle:Dashboards')->find($dashboardId));
+        $component->setDashboard($em->getRepository('AppBundle:Dashboard')->find($dashboardId));
         $em->persist($component);
         $em->flush();
         return $this->redirectToRoute('app_edit_component', array('componentId' => $component->getId()));
@@ -35,12 +36,10 @@ class ComponentController extends Controller
         //Return table and field list (bypass doctrine)
         $conn = $this->get('database_connection');
         $tables = $conn->fetchall('SHOW TABLES');
-        foreach($tables as $table)
-        {
-            foreach($table as $key => $tab)
-            {
+        foreach ($tables as $table) {
+            foreach ($table as $key => $tab) {
                 // $listTables = $tab;
-                $field = $conn->fetchall('DESCRIBE '.$tab);
+                $field = $conn->fetchall('DESCRIBE ' . $tab);
                 $listTables[$tab] = $field;
             }
         }
@@ -48,7 +47,7 @@ class ComponentController extends Controller
         $repository = $this
             ->getdoctrine()
             ->getManager()
-            ->getRepository('AppBundle:Components');
+            ->getRepository('AppBundle:Component');
         $component = $repository->find($componentId);
         //Get charts service
         $chart = $this->container->get('app.charts');
@@ -62,8 +61,7 @@ class ComponentController extends Controller
         $mainTitle = "Edit component";
         //Generate form
         $form = $this->get('form.factory')->create(new ComponentsType, $component);
-        if($form->handleRequest($request)->isValid())
-        {
+        if ($form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()
                 ->getManager();
             // //We associate the dashboard's id to the chart
@@ -77,15 +75,15 @@ class ComponentController extends Controller
             )));
         }
         return $this->render('AppBundle:App:component.html.twig', array(
-            'mainTitle'     => $mainTitle,
-            'tables'        => $listTables,
-            'form'          => $form->createView(),
+            'mainTitle' => $mainTitle,
+            'tables' => $listTables,
+            'form' => $form->createView(),
             'componentName' => $component->getNameComp(),
-            'legend'        => $chart->getLegend(),
-            'xAxis'         => $chart->getXAxis(),
-            'yAxis'         => $chart->getYAxis(),
-            'requestSql'    => $component->getRequestSQL(),
-            'chart'         => $chart->generateChart(0)
+            'legend' => $chart->getLegend(),
+            'xAxis' => $chart->getXAxis(),
+            'yAxis' => $chart->getYAxis(),
+            'requestSql' => $component->getRequestSQL(),
+            'chart' => $chart->generateChart(0)
         ));
 
     }

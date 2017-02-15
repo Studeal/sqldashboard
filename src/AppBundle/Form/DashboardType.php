@@ -6,16 +6,18 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DashboardsType extends AbstractType
+class DashboardType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('nameDash', 'text')
-            ->add('UpdateDashName', 'submit');
+
+//->add('name')->add('creator')->add('collaborator')
+
+        $builder->add('name', 'text')
+            ->add('UpdateName', 'submit');;
     }
     
     /**
@@ -24,7 +26,7 @@ class DashboardsType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Dashboards'
+            'data_class' => 'AppBundle\Entity\Dashboard'
         ));
     }
 
@@ -33,7 +35,7 @@ class DashboardsType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_dashboards';
+        return 'appbundle_dashboard';
     }
 
 

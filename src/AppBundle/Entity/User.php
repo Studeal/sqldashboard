@@ -1,20 +1,17 @@
 <?php
+
 namespace AppBundle\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Model\User as BaseUser;
-use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * User
  *
- * @ORM\Table(name="user")
+ * @ORM\Table(name="sqldashboard_user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
-class User extends BaseUser
+class User
 {
-    /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Dashboards", cascade={"persist"})
-     */
-    protected $dashboards;
     /**
      * @var int
      *
@@ -23,34 +20,59 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
     /**
      * @var string
      *
      * @ORM\Column(name="firstName", type="string", length=255)
      */
     protected $firstName;
+
     /**
      * @var string
      *
      * @ORM\Column(name="lastName", type="string", length=255)
      */
     protected $lastName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=255)
+     */
+    protected $email;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password", type="string", length=255)
+     */
+    protected $password;
+
     /**
      * @var string
      *
      * @ORM\Column(name="image", type="string", length=255)
      */
     protected $image;
+
     /**
      * @var bool
      *
      * @ORM\Column(name="status", type="boolean")
      */
-    protected $status;
-    public function __construct(){
-        parent::__construct();
-        $this->dashboards = new ArrayCollection();
+    protected $status;    
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
     }
+
     /**
      * Set firstName
      *
@@ -61,8 +83,10 @@ class User extends BaseUser
     public function setFirstName($firstName)
     {
         $this->firstName = $firstName;
+
         return $this;
     }
+
     /**
      * Get firstName
      *
@@ -72,6 +96,7 @@ class User extends BaseUser
     {
         return $this->firstName;
     }
+
     /**
      * Set lastName
      *
@@ -82,8 +107,10 @@ class User extends BaseUser
     public function setLastName($lastName)
     {
         $this->lastName = $lastName;
+
         return $this;
     }
+
     /**
      * Get lastName
      *
@@ -93,6 +120,55 @@ class User extends BaseUser
     {
         return $this->lastName;
     }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     *
+     * @return User
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     *
+     * @return User
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Get password
+     *
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
     /**
      * Set image
      *
@@ -103,8 +179,10 @@ class User extends BaseUser
     public function setImage($image)
     {
         $this->image = $image;
+
         return $this;
     }
+
     /**
      * Get image
      *
@@ -114,6 +192,8 @@ class User extends BaseUser
     {
         return $this->image;
     }
+ 
+
     /**
      * Set status
      *
@@ -124,8 +204,10 @@ class User extends BaseUser
     public function setStatus($status)
     {
         $this->status = $status;
+
         return $this;
     }
+
     /**
      * Get status
      *
@@ -134,35 +216,5 @@ class User extends BaseUser
     public function getStatus()
     {
         return $this->status;
-    }
-    /**
-     * Add dashboard
-     *
-     * @param \AppBundle\Entity\Dashboards $dashboard
-     *
-     * @return User
-     */
-    public function addDashboard(\AppBundle\Entity\Dashboards $dashboard)
-    {
-        $this->dashboards[] = $dashboard;
-        return $this;
-    }
-    /**
-     * Remove dashboard
-     *
-     * @param \AppBundle\Entity\Dashboards $dashboard
-     */
-    public function removeDashboard(\AppBundle\Entity\Dashboards $dashboard)
-    {
-        $this->dashboards->removeElement($dashboard);
-    }
-    /**
-     * Get dashboards
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getDashboards()
-    {
-        return $this->dashboards;
     }
 }
