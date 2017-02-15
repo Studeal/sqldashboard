@@ -36,7 +36,7 @@ class Dashboard
     private $creator;
 
     /**
-     * @ORM\ManytoMany(targetEntity="AppBundle\Entity\User", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", cascade={"persist"})
      */
     private $collaborator;
 
