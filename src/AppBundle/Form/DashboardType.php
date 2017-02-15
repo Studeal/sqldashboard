@@ -17,7 +17,7 @@ class DashboardType extends AbstractType
 //->add('name')->add('creator')->add('collaborator')
 
         $builder->add('name', 'text')
-            ->add('UpdateName', 'submit');;
+            ->add('UpdateName', 'submit');
     }
     
     /**
