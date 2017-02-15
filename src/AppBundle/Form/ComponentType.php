@@ -14,16 +14,19 @@ class ComponentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name',       'text')
-            ->add('legend',     'text')
-            ->add('xAxis',      'text')
-            ->add('yAxis',      'text')
-            ->add('requestSQL', 'textarea')
+            ->add('name','text')
+            ->add('requestSQL','textarea')
+            ->add('typeGraph','text')
+            ->add('sizeComponent','text')
+            ->add('legend','text')
+            ->add('xAxis','text')
+            ->add('yAxis','text')
             ->add('Execute',    'submit')
-            ->add('linechart',  'submit')
             ->add('column',     'submit')
             ->add('area',       'submit')
+            ->add('linechart',  'submit')
             ->add('bar',        'submit');
+        ;
     }
     
     /**

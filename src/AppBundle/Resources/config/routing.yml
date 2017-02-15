@@ -1,24 +1,36 @@
 
 app_home:
     path:     /
-    defaults: { _controller: AppBundle:App:view }
+    defaults: { _controller: AppBundle:Dashboard:index }
+
+app_dashboard:
+    path:     /{id}
+    defaults: { _controller: AppBundle:Dashboard:view }
 
 app_login:
     path:     /login
-    defaults: {_controller: AppBundle:App:login }
-
-
-app_share_dashboard:
-    path:     /share
-    defaults: { _controller: AppBundle:App:share }
+    defaults: {_controller: AppBundle:User:login }
 
 app_admin_profile:
     path:     /admin_profile
-    defaults: { _controller: AppBundle:App:adminProfile }
+    defaults: { _controller: AppBundle:User:adminProfile }
 
 app_user_profile:
     path:     /user_profile
-    defaults: { _controller: AppBundle:App:userProfile }
+    defaults: { _controller: AppBundle:User:userProfile }
+
+app_share_dashboard:
+    path:     /share/{id}
+    defaults: { _controller: AppBundle:Dashboard:share }
+
+app_delete_dashboard:
+    path:     /delete/{id}
+    defaults: { _controller: AppBundle:Dashboard:deleteDash }
+
+app_change_size:
+    path:     /app_change_size/{componentId}/{size}/{id}
+    defaults: { _controller: AppBundle:Dashboard:changeSize }
+
 
 app_add_component:
     path:     /components/{dashboardId}/add
