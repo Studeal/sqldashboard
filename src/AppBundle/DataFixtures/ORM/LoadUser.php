@@ -42,11 +42,11 @@ class LoadUser implements FixtureInterface
                 $utilisateur->setFirstName($user['firstName']);
                 $utilisateur->setLastName($user['lastName']);
                 $utilisateur->setEmail($user['email']);
-//                $utilisateur->setUsername($user['userName']);
+                $utilisateur->setUsername($user['userName']);
                 $utilisateur->setPassword($user['password']);
                 $utilisateur->setImage($user['image']);
                 $utilisateur->setStatus($user['status']);
-//                $utilisateur->addDashboard($dashboard);
+                $utilisateur->addDashboard($dashboard);
                 $manager->persist($utilisateur);
             }
 

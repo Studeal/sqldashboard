@@ -3,6 +3,9 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
@@ -10,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="sqldashboard_user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
-class User
+class User extends BaseUser
 {
     /**
      * @var int
@@ -24,50 +27,44 @@ class User
     /**
      * @var string
      *
-     * @ORM\Column(name="firstName", type="string", length=255)
+     * @ORM\Column(name="firstName", type="string", length=255, nullable=true)
      */
-    protected $firstName;
+    protected $firstName = null;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="lastName", type="string", length=255)
+     * @ORM\Column(name="lastName", type="string", length=255, nullable=true)
      */
-    protected $lastName;
+    protected $lastName = null;
+
+
 
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=255)
+     * @ORM\Column(name="image", type="string", length=255, nullable=true)
      */
-    protected $email;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="password", type="string", length=255)
-     */
-    protected $password;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="image", type="string", length=255)
-     */
-    protected $image;
+    protected $image = null;
 
     /**
      * @var bool
      *
      * @ORM\Column(name="status", type="boolean")
      */
-    protected $status;    
+    protected $status = false;
 
     /**
      * Get id
      *
      * @return integer
      */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->dashboards = new ArrayCollection();
+    }
+
     public function getId()
     {
         return $this->id;
@@ -192,7 +189,6 @@ class User
     {
         return $this->image;
     }
- 
 
     /**
      * Set status

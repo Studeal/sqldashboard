@@ -1,0 +1,31 @@
+security:
+    encoders:
+        FOS\UserBundle\Model\UserInterface: bcrypt
+
+    providers:
+        fos_userbundle:
+            id:                         fos_user.user_provider.username_email
+
+    firewalls:
+        dev:
+            pattern:                    ^/(_(profiler|wdt)|css|images|js)/
+            security:                   false
+        main:
+            pattern:                    ^/
+            anonymous:                  true
+            form_login:
+                login_path:             fos_user_security_login
+                check_path:             fos_user_security_check
+                provider:               fos_userbundle
+                use_forward:            false
+                failure_path:           null
+                default_target_path:    /
+                remember_me:            true
+                csrf_token_generator:   security.csrf.token_manager
+            logout:
+                path:                   fos_user_security_logout
+                target:                 /login
+            remember_me:
+                key:                    %secret%
+                lifetime:               3000000000
+                path:                   /

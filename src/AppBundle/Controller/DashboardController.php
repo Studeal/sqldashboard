@@ -14,13 +14,16 @@ use Ob\HighchartsBundle\Highcharts\Highchart;  //Highcharts bundle
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Component;
 use AppBundle\Form\ComponentType;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 
 class DashboardController extends Controller
 {
+
     public function indexAction()
     {
-        return $this->render('AppBundle::layout.html.twig');
+        return $this->render('AppBundle::layout.html.twig'
+        );
     }
 
 
@@ -63,7 +66,6 @@ class DashboardController extends Controller
 
         $form = $this->get('form.factory')->create(new DashboardType(), $dashboard);
         $form->handleRequest($request);
-
 
         if ($request->isMethod('POST')) {
 
@@ -219,13 +221,10 @@ class DashboardController extends Controller
         ));
     }
 
-
-    public function copyComponent($id)
+    public function copyComponentAction(Request $request, $componentId, $id)
     {
-        $em = $this->getDoctrine()->getManager();
-        $component = $em->getRepository('AppBundle:Component')->find($id);
-
-        $em->persist($component);
+        $session = $request->getSession();
+        $session->set('idComponent',$componentId);
 
         return $this->redirectToRoute('app_dashboard', array(
             'id' => $id
@@ -233,8 +232,18 @@ class DashboardController extends Controller
     }
 
 
-    public function pasteComponentAction($id)
+    public function pasteComponentAction(Request $request, $id)
     {
+        $session = $request->getSession();
+        $em = $this->getDoctrine()->getManager();
+        $dashboard = $em->getRepository('AppBundle:Dashboard')->find($id);
+        $idComponent = $session->get('idComponent');
+        $component = $em->getRepository('AppBundle:Component')->find($idComponent);
+
+        $newComponent = clone $component;
+        $newComponent->setDashboard($dashboard);
+        $em->persist($newComponent);
+        $em->flush();
 
         return $this->redirectToRoute('app_dashboard', array(
             'id' => $id

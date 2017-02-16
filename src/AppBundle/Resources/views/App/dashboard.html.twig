@@ -22,7 +22,7 @@
                 <ul class="dropdown-menu menu_pos">
                     <li><a href="{{ path('app_add_component',{'dashboardId': dashboard.id}) }}">Add component</a>
                     </li>
-                    <li><a href="javascript:void(0)">Paste component</a></li>
+                    <li><a href="{{ path('app_paste_component', {'id': dashboard.id}) }}">Paste component</a></li>
                 </ul>
             </div>
             <div class="col-xs-6">
@@ -106,11 +106,10 @@
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <li><a href="javascript:void(0)" data-toggle="modal"
-                                               data-target="#copycomponent"><span
+                                        <li><a href="{{ path('app_copy_component', {'id': dashboard.id, 'componentId': componentId[key],}) }}"><span
                                                         class=" glyphicon glyphicon-duplicate"
                                                         aria-hidden="true"></span> Copy</a></li>
-                                        <li><a href="{{ path('app_dashboard', {'id': dashboard.id}) }}"><span
+                                        <li><a href="{{ path('app_dashboard', {'id':  componentId[key]}) }}"><span
                                                         class="glyphicon glyphicon-refresh"
                                                         aria-hidden="true"></span>
                                                 Refresh</a></li>
@@ -128,24 +127,16 @@
                                             <!-- Component width -->
                                             <ul class="cascade_menu">
                                                 <li>
-                                                    {#<a href="javascript:void(0)"#}
-                                                    {#onclick="set_width('col-xs-6', 'component{{ key }}')">2/4</a>#}
-
                                                     <a href="{{ path('app_change_size', {'componentId': componentId[key], 'size':1, 'id' : id}) }}">
                                                         2/4</a>
-
                                                 </li>
                                                 <li>
-                                                    {#<a href="javascript:void(0)"#}
-                                                    {#onclick="set_width('col-xs-9', 'component{{ key }}')">3/4</a>#}
                                                     <a href="{{ path('app_change_size', {'componentId': componentId[key], 'size':2, 'id' : id}) }}">
                                                         3/4</a>
                                                 </li>
                                                 <li>
                                                     <a href="{{ path('app_change_size', {'componentId': componentId[key], 'size':3, 'id' : id}) }}">
                                                         4/4</a>
-                                                    {#<a href="javascript:void(0)"#}
-                                                    {#onclick="set_width('col-xs-12', 'component{{ key }}')">4/4</a>#}
                                                 </li>
                                             </ul>
                                         </li>
@@ -186,28 +177,29 @@
                     </div>
                 </div>
                 <!-- Modal -->
-                <div class="modal fade" id="copycomponent" role="dialog">
-                    <div class="modal-dialog">
-                        <!-- Copy component-->
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close"
-                                        data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Copy Component</h4>
-                            </div>
-                            <div class="modal-body">
-                                <p>Do you want to copy this component ?</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Yes
-                                </button>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">
-                                    Cancel
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {#<div class="modal fade" id="copycomponent" role="dialog">#}
+                    {#<div class="modal-dialog">#}
+                        {#<!-- Copy component-->#}
+                        {#<div class="modal-content">#}
+                            {#<div class="modal-header">#}
+                                {#<button type="button" class="close"#}
+                                        {#data-dismiss="modal">&times;</button>#}
+                                {#<h4 class="modal-title">Copy Component</h4>#}
+                            {#</div>#}
+                            {#<div class="modal-body">#}
+                                {#<p>Do you want to copy this component ?</p>#}
+                            {#</div>#}
+                            {#<div class="modal-footer">#}
+                                {#<button type="button" class="btn btn-default" data-dismiss="modal"#}
+                                {#Yes#}
+                                {#</button>#}
+                                {#<button type="button" class="btn btn-default" data-dismiss="modal">#}
+                                    {#Cancel#}
+                                {#</button>#}
+                            {#</div>#}
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
                 <!-- Modal -->
                 <div class="modal fade" id="deletedashboard" role="dialog">
                     <div class="modal-dialog">
@@ -257,6 +249,7 @@
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         {{ form_widget(form.name,  {'attr': {'class': 'form-control', 'value': dashboard.name}}) }}
+
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -268,6 +261,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <!-- Modal Footer -->
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default"
@@ -293,35 +287,7 @@
                 {{ chart(chart1) }}
                 {% endfor %}
                 {% endfor %}
-
-                {#//..............Set chart width#}
-                {#function set_width(classname, id) {#}
-                {#$("#" + id).removeClass(function (index, classN) {#}
-                {#return (classN.match(/(^|\s)col-xs\S+/g) || []).join(' ');#}
-                {#}).addClass(classname);#}
-                {#{% for key, chart1 in allCharts %}#}
-                {#{{ chart(chart1) }}#}
-                {#{% endfor %}#}
-                {#}#}
-
-                {#var x = {{ (allCharts|json_encode|raw) }};#}
-
-                {#//..............Set chart type#}
-
-                {#function change_chart_type(type_select, cId) {#}
-                    {#var currentChart = x[cId];#}
-                    {#currentChart.chart.chart.type = type_select;#}
-                    {#var linechart3 = new Highcharts.Chart({#}
-                        {#chart: currentChart.chart.chart,#}
-                        {#type: type_select,#}
-                        {#series: currentChart.series[0],#}
-                        {#title: currentChart.title.title,#}
-                        {#xAxis: currentChart.xAxis.xAxis,#}
-                        {#yAxis: currentChart.yAxis.yAxis#}
-                    {#});#}
-                {#}#}
             </script>
             <script src="//code.highcharts.com/4.1.8/highcharts.js"></script>
             <script src="//code.highcharts.com/4.1.8/modules/exporting.js"></script>
-        {% endblock %}
-
+{% endblock %}

@@ -3,21 +3,28 @@ app_home:
     defaults: { _controller: AppBundle:Dashboard:index}
 
 app_dashboard:
-    path:     /{id}
+    path:     /dashboard/{id}
     defaults: { _controller: AppBundle:Dashboard:view }
 
 app_login:
-    path:     /login
+    path:     /login/
     defaults: {_controller: AppBundle:App:login }
 
 app_share_dashboard:
-    path:     /share/{id}
+    path:     /dashboard/share/{id}
     defaults: { _controller: AppBundle:Dashboard:share }
 
 app_delete_dashboard:
-    path:     /delete/{id}
+    path:     /dashboard/delete/{id}
     defaults: { _controller: AppBundle:Dashboard:deleteDash }
 
+app_copy_component:
+    path:     /dashboard/copy/{id}/{componentId}
+    defaults: { _controller: AppBundle:Dashboard:copyComponent }
+
+app_paste_component:
+    path:     /dashboard/paste/{id}
+    defaults: { _controller: AppBundle:Dashboard:pasteComponent }
 
 app_change_size:
     path:     /app_change_size/{componentId}/{size}/{id}
