@@ -10,7 +10,7 @@ class ComponentControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/component/1/add');
+        $crawler = $client->request('GET', '/components/1/add');
         
         $this->assertEquals('AppBundle\Controller\ComponentController::addComponentAction', $client->getRequest()->attributes->get('_controller'));
         $this->assertTrue(200 === $client->getResponse()->getStatusCode());
