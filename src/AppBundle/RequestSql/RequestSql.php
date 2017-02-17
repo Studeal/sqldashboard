@@ -7,30 +7,48 @@ class RequestSql
     protected $em;
     private $rqSql;
 
+    /***
+     * RequestSql constructor.
+     * @param \Doctrine\ORM\EntityManager $em
+     */
     public function __construct(\Doctrine\ORM\EntityManager $em)
     {
         $this->em = $em;
         $this->rqSql = array();
     }
 
+    /***
+     * @return array
+     */
     public function getRqSql()
     {
         return $this->rqSql;
     }
 
+    /***
+     * @param $value
+     */
     public function setRqSql($value)
     {
         $this->rqSql = $value;
     }
 
+    /***
+     * @param $rqSql
+     * @return array
+     */
     public function processingSql($rqSql)
     {
+
         $dataChart = array();
         $xAxis = array();
+
+        //If the request SQL type by user begin by "select"
         $testRequest = explode(" ", $rqSql);
 
-        if($testRequest[0] == "SELECT")
+        if(strtoupper($testRequest[0]) == "SELECT")
         {
+            //Execute the user's request
             $rq = $this
                 ->em
                 ->getConnection()
@@ -39,10 +57,11 @@ class RequestSql
 
             $datas = $rq->fetchAll();
 
+            //Extract data from db
             foreach($datas as $data)
             {
                 $i = 0;
-                foreach($data as $key => $value)
+                foreach($data as $value)
                 {
                     if($i == 0)
                     {
@@ -59,6 +78,7 @@ class RequestSql
             return array($dataChart, $xAxis);
 
         }
+        //If it's not "Select", send empty array
         else
         {
             return array('', '');

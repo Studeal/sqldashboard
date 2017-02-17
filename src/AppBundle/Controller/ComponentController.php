@@ -89,7 +89,7 @@ class ComponentController extends Controller
 		$chart->setXAxis($component->getXAxis());
 		$chart->setYAxis($component->getYAxis());
 
-		//Generate main form
+		//Generate form
 		$form = $this->get('form.factory')->create(new ComponentType, $component);
 
         if($form->handleRequest($request)->isValid())

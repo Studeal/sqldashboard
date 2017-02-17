@@ -14,6 +14,10 @@ class Charts
     private $typeGraph;
     protected $rqSql;
 
+    /***
+     * Charts constructor.
+     * @param RequestSql $rqSql
+     */
     public function __construct(RequestSql $rqSql)
     {
         $this->xAxis      = "X axis name";
@@ -24,60 +28,99 @@ class Charts
         $this->rqSql      = $rqSql;
     }
 
+    /***
+     * @param $value
+     */
     public function setXAxis($value){
         $this->xAxis = $value;
     }
 
+    /***
+     * @param $value
+     */
     public function setYAxis($value){
         $this->yAxis = $value;
     }
 
+    /***
+     * @param $value
+     */
     public function setLegend($value){
         $this->legend = $value;
     }
 
+    /***
+     * @param $value
+     */
     public function setRequestSql($value){
         $this->requestSql = $value;
     }
 
+    /***
+     * @param $value
+     */
     public function setTypeGraph($value){
         $this->typeGraph = $value;
     }
 
+    /***
+     * @return string
+     */
     public function getXAxis(){
         return $this->xAxis;
     }
 
+    /***
+     * @return string
+     */
     public function getYAxis(){
         return $this->yAxis;
     }
 
+    /***
+     * @return string
+     */
     public function getLegend(){
         return $this->legend;
     }
 
+    /***
+     * @return array
+     */
     public function getRequestSql(){
         return $this->requestSql;
     }
 
+    /***
+     * @return string
+     */
     public function getTypeGraph(){
         return $this->typeGraph;
     }
 
+    /***
+     * @param $key
+     * @return Highchart
+     */
     public function generateChart($key){
 
+        //Get data from user's request
         $this->requestSql = $this->rqSql->processingSql($this->requestSql);
 
+        //Set data for chart with db's data
         $series = array(array(
                         "name" => $this->legend, 
                         "data" => $this->requestSql[0] 
                         ));
 
+        //Create new chart
         $chart = new Highchart();
         $chart->chart->renderTo("chart".$key);
+        //Line chart does not need type
         if($this->typeGraph != "linechart"){
             $chart->chart->type($this->typeGraph);
         }
+
         $chart->title->text('');
         $chart->xAxis->title(array('text'  => $this->xAxis));
         $chart->xAxis->categories($this->requestSql[1]);
