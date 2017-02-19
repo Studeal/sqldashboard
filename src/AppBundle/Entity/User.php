@@ -5,20 +5,16 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
  *
- * @ORM\Table(name="user")
+ * @ORM\Table(name="sqldashboard_user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
 class User extends BaseUser
 {
-    /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Dashboards", cascade={"persist"})
-     */
-    protected $dashboards = null;
-
     /**
      * @var int
      *
@@ -42,6 +38,8 @@ class User extends BaseUser
      */
     protected $lastName = null;
 
+
+
     /**
      * @var string
      *
@@ -49,16 +47,15 @@ class User extends BaseUser
      */
     protected $image = null;
 
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="status", type="boolean")
-     */
-    protected $status = false;
-
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
         $this->dashboards = new ArrayCollection();
+    }
+
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
@@ -110,6 +107,54 @@ class User extends BaseUser
     }
 
     /**
+     * Set email
+     *
+     * @param string $email
+     *
+     * @return User
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     *
+     * @return User
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Get password
+     *
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
      * Set image
      *
      * @param string $image
@@ -131,63 +176,5 @@ class User extends BaseUser
     public function getImage()
     {
         return $this->image;
-    }
-
-    /**
-     * Set status
-     *
-     * @param boolean $status
-     *
-     * @return User
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * Get status
-     *
-     * @return boolean
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
-     * Add dashboard
-     *
-     * @param \AppBundle\Entity\Dashboards $dashboard
-     *
-     * @return User
-     */
-    public function addDashboard(\AppBundle\Entity\Dashboards $dashboard)
-    {
-        $this->dashboards[] = $dashboard;
-
-        return $this;
-    }
-
-    /**
-     * Remove dashboard
-     *
-     * @param \AppBundle\Entity\Dashboards $dashboard
-     */
-    public function removeDashboard(\AppBundle\Entity\Dashboards $dashboard)
-    {
-        $this->dashboards->removeElement($dashboard);
-    }
-
-    /**
-     * Get dashboards
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getDashboards()
-    {
-        return $this->dashboards;
     }
 }

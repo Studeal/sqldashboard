@@ -1,80 +1,229 @@
 {% extends "AppBundle::layout.html.twig" %} 
 
+
+
 {% block stylesheets %}
+
     {{ parent() }}
+
     <link rel="stylesheet" href="{{asset('assets/css/component.css')}}">
+
 {% endblock %}
 
-{% block title %} 
-    Component - {{ parent() }} 
-{% endblock %} 
+
+
+{% block title %}
+
+    Component - {{ parent() }}
+
+{% endblock %}
+
+
 
 {% block app_body %}
 
+
+
 <div id="component">
 
+
+
 <!-- Component sidebar display -->
+
 {% include 'AppBundle:App:componentSidebar.html.twig' %}
 
+
+
 <!-- Component form display -->
+
 <div class="col-xs-9 sidebar" id="main_component">
-    <div class="row">
-        <h1>{{ mainTitle }}</h1>
-    </div>
 
     <div class="row">
-        {# TODO: Form temporaire, à changer pour l'adapter à Docrtine et Symfony #}
-        <form class="form-horizontal">
-            <div class="form-group">
-                <label for="component_name" class="col-xs-3 control-label">Component name:</label>
-                <div class="col-xs-7">
-                    <input type="text" class="form-control" id="component_name" value="{{ componentName }}">
-                </div>
-                <div class="col-xs-2">
-                    <button type="submit" class="btn btn-default">Execute</button>
-                </div>
-            </div>
-            <div class="col-xs-12">
-                <textarea class="form-control" rows="4" placeholder="SQL Request"></textarea>
-            </div>
-        </form>
+
+        <h1>{{ mainTitle }}</h1>
+
     </div>
+
+
+
+    {# Create form with Twig and Doctrine #}
+
+    <div class="row">
+
+        {#Form start and display error#}
+
+        {{ form_start(form,{'attr': {'class': 'form-horizontal'}}) }}
+
+            {{ form_errors(form) }}
+
+
+
+            <div class="form-group">
+
+                {#Display error + label + input for Component Name#}
+
+                {{ form_label(form.name, "Component name:", {'label_attr': {'class': 'col-xs-2 control-label'}}) }}
+
+                {{ form_errors(form.name) }}
+
+                <div class="col-xs-8">
+
+                    {{ form_widget(form.name, {'attr': {'class': 'form-control', 'value': componentName}}) }}
+
+                </div>
+
+            </div>
+
+            <div class="form-group">
+
+                {#Display error + label + input for Component Legend#}
+
+                {{ form_label(form.legend, "Chart legend:", {'label_attr': {'class': 'col-xs-2 control-label'}}) }}
+
+                {{ form_errors(form.legend) }}
+
+                <div class="col-xs-8">
+
+                    {{ form_widget(form.legend, {'attr': {'class': 'form-control', 'value': legend}}) }}
+
+                </div>
+
+            </div>
+
+            <div class="form-group">
+
+                {#Display error + label + input for xAxis Name#}
+
+                {{ form_label(form.xAxis, "xAxis name:", {'label_attr': {'class': 'col-xs-2 control-label'}}) }}
+
+                {{ form_errors(form.xAxis) }}
+
+                <div class="col-xs-8">
+
+                    {{ form_widget(form.xAxis, {'attr': {'class': 'form-control', 'value': xAxis}}) }}
+
+                </div>
+
+            </div>
+
+            <div class="form-group">
+
+                {#Display error + label + input for yAxis Name#}
+
+                {{ form_label(form.yAxis, "yAxis name:", {'label_attr': {'class': 'col-xs-2 control-label'}}) }}
+
+                {{ form_errors(form.yAxis) }}
+
+                <div class="col-xs-8">
+
+                    {{ form_widget(form.yAxis, {'attr': {'class': 'form-control', 'value': yAxis}}) }}
+
+                </div>
+
+                {#Display button execute#}
+
+                <div class="col-xs-2">
+
+                    {{ form_widget(form.Execute, {'attr': {'class': 'btn btn-default'}}) }}
+
+                </div>
+
+            </div>
+
+            <div class="col-xs-12">
+
+                {# Display textarea for request SQL #}
+
+                {{ form_errors(form.requestSQL) }}
+
+                {{ form_widget(form.requestSQL, {'attr': {'class':       'form-control',
+
+                                                          'rows':         8,
+
+                                                          'placeholder': 'SQL Request',
+
+                                                          'value':       requestSql}})
+
+                }}
+
+            </div>
+
+    </div>
+
+
 
     <!-- Charts choise -->
+
     <div class="row">
+
         <ul class="charts_choise">
-            <li><i class="fa fa-line-chart" aria-hidden="true"></i></li>
-            <li><i class="fa fa-pie-chart" aria-hidden="true"></i></li>
-            <li><i class="fa fa-area-chart" aria-hidden="true"></i></li>
-            <li><i class="fa fa-bar-chart" aria-hidden="true"></i></li>
-            <li><i class="fa fa-usd" aria-hidden="true"></i></li>
+
+            <li>{{form_widget(form.linechart, {'attr': {'class' : 'fa fa-line-chart fa-4x compIcon'}, 'label' : ' '} ) }}</li>
+
+            <li>{{form_widget(form.area, {'attr': {'class' : 'fa fa-area-chart fa-4x compIcon'}, 'label' : ' '} ) }}</li>
+
+            <li>{{form_widget(form.column, {'attr': {'class' : 'fa fa-bar-chart fa-4x compIcon'}, 'label' : ' '} ) }}</li>
+
+            <li>{{form_widget(form.bar, {'attr': {'class' : 'fa fa-align-left fa-4x compIcon'}, 'label' : ' '} ) }}</li>
+
         </ul>
+
     </div>
+
+        {{form_end(form)}}
+
+
 
     <!-- Charts Display -->
+
     <div class="row charts">
-        <div class="col-xs-12" id="linechart" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+
+        <div class="col-xs-12" id="chart0" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+
     </div>
 
+
+
     <!-- Confirm button -->
+
     <div class="row button">
+
         <div class="col-xs-3 col-xs-offset-9">
+
             <div class="btn-group" role="group" aria-label="...">
-                <a href="" class="btn btn-default">Submit</a>
-                <a href="" class="btn btn-default">Cancel</a>
+
+                {#TODO: change href to the right dashboard  {{ path('app_dashboard', {'id' : dashboardId}) }}#}
+
+                <a href="" class="btn btn-default">Return to dashboard</a>
+
             </div>
+
         </div>
+
     </div>
+
+
+
 </div>
-</div>
+
 {% endblock %}
 
 
+
+
+
 {% block javascripts %}
+
     {{ parent() }}
+
     <script src="//code.highcharts.com/4.1.8/highcharts.js"></script>
+
     <script src="//code.highcharts.com/4.1.8/modules/exporting.js"></script>
+
     <script type="text/javascript">
+
         {{ chart(chart) }}
+
     </script>
+
 {% endblock %}

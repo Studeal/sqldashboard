@@ -24,38 +24,8 @@
     </div><!-- /.navbar-collapse -->
 </nav>
 
-<!-- SideBar  -->
-
-<div id="sidebar" class="col-xs-2 sidebar">
-    <div class="list-group">
-        <!-- Large modal -->
-        <button type="button" class="btn btn-default btn-block  col-xs-2 createdashboard " data-toggle="modal" data-target=".bs-example-modal-lg" >Create Dashboard</button>
-        <!-- PopUp - Modal Create Dashboard Button -->
-        <div class="modal fade bs-example-modal-lg popup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header well">
-                        {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
-                        {#Les erreurs générales du formulaire.#}
-                        {{ form_errors(form) }}
-                        <div class="form-group">
-                            {#Generate label.#}
-                            {{ form_label(form.nameDash, "Create a name Dashboard", {'label_attr': {'class':'col-sm3 control-label'}}) }}
-                            <div>
-                            {#Generate input#}
-                            {{ form_widget(form.nameDash, {'attr': {'class': 'form-control'}}) }}
-                            </div>
-                        </div>
-                        {#Generate button#}
-                        {{ form_widget(form.add, {'attr': {'class': 'btn btn-primary' }}) }}
-                        {{ form_rest(form) }}
-                        {{ form_end(form) }}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<!-- Component sidebar display -->
+{% include 'AppBundle:App:sidebar.html.twig' %}
 
 
 

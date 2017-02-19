@@ -1,5 +1,4 @@
-/* Component.html.twig stylesheet */ 
-
+/* Component.html.twig stylesheet */
 /*:::::::::::::::::::::::::: Global ::::::::*/
 #component li {
     list-style: none;
@@ -24,6 +23,7 @@
     font-size: 14px;
 }
 /*:::::::::::::::::::::::::: Form ::::::::::*/
+
 /*:::::::::::::::::::::::::: Charts choise :*/
 .charts_choise{
     text-align: center;
@@ -37,6 +37,11 @@
 
 .charts_choise i{
     font-size: 40px;
+}
+
+.compIcon{
+    background-color: transparent !important;
+    border: none !important;
 }
 /*:::::::::::::::::::::::::: Chart view ::::*/
 .highcharts-button{
@@ -53,4 +58,6 @@
 .button div div{
     float: right;
 }
-
+.contenu1{
+    height: 100% !important;
+}

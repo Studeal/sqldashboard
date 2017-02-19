@@ -8,29 +8,38 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Form\DashboardsType;
-use AppBundle\Entity\Dashboards;
+use AppBundle\Form\DashboardType;
+use AppBundle\Entity\Dashboard;
+use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 class NavbarController extends  Controller
 {
-    public function NameDashboardAction(Request $request){
-        $dashboard = new Dashboards();
-//      $form = $this->get('form.factory')->create(new DashboardsType, $dashboard);
-        $form = $this->createForm(new DashboardsType(), $dashboard);
+    public function NameDashboardAction( Request $request){
+        $em=$this->getDoctrine()->getManager();
+        $dashboard = new Dashboard();
+//        $user = $em
+//            ->getRepository('AppBundle: User')
+//            ->find($id);
+//        $dashboard->setCreator($user);
+        $form = $this->createForm(new DashboardType(), $dashboard);
+
 
         if($form->handleRequest($request)->isValid()){
-            $em=$this->getDoctrine()->getManager();
             $em->persist($dashboard);
             $em->flush();
 
-//            $request->getSession()->getFlashBag()->add('notice', 'Dashboard created');
 
-            return $this->redirect($this->generateUrl('app_home'), array('id' =>$dashboard->getId()));
+            return $this->redirect($this->generateUrl('app_name_dashboard'),
+                array('id' =>$dashboard->getId()));
 
         }
 
-        return $this->render('AppBundle:App:navbar.html.twig', array('form' => $form->createView()));
+        return $this->render('AppBundle:App:navbar.html.twig', array(
+
+            'form' => $form->createView()));
     }
+
+
 }
