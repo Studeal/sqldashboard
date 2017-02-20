@@ -8,7 +8,12 @@
     z-index: 99999;
     background-color: #222222;
 }
+#login{
+    height: 100vh;
+    background-color: #F1F2F7;
+    text-align: center;
 
+}
 .logo{
     height: auto;
     width: 120px;
