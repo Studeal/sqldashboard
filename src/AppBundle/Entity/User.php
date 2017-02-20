@@ -2,15 +2,16 @@
 
 namespace AppBundle\Entity;
 
+use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
-
+// ONLY ID var is required //
 /**
  * User
  *
  * @ORM\Table(name="sqldashboard_user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
-class User
+class User extends BaseUser
 {
     /**
      * @var int
@@ -35,19 +36,19 @@ class User
      */
     protected $lastName;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=255)
-     */
-    protected $email;
+//    /**
+//     * @var string
+//     *
+//     * @ORM\Column(name="email", type="string", length=255)
+//     */
+//    protected $email;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="password", type="string", length=255)
-     */
-    protected $password;
+//    /**
+//     * @var string
+//     *
+//     * @ORM\Column(name="password", type="string", length=255)
+//     */
+//    protected $password;
 
     /**
      * @var string
@@ -61,7 +62,7 @@ class User
      *
      * @ORM\Column(name="status", type="boolean")
      */
-    protected $status;    
+    protected $status;
 
     /**
      * Get id
@@ -192,7 +193,7 @@ class User
     {
         return $this->image;
     }
- 
+
 
     /**
      * Set status

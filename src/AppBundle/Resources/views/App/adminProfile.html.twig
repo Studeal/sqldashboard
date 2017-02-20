@@ -13,13 +13,13 @@
 
                     <div class="col-md-2 col-xs-2">
                         <div class="row">
-                            <p>First Name</p>
+                            <p>{{ usr.firstName }}</p>
                         </div>
                         <div class="row">
-                            <p>Last Name</p>
+                            <p>{{ usr.lastName }}</p>
                         </div>
                         <div class="row">
-                            <p>Email</p>
+                            <p>{{ usr.email }}</p>
                         </div>
                     </div>
 
@@ -103,18 +103,13 @@
                                             <th></th>
                                             <th></th>
                                         </tr>
-
-                                        <tr>
-                                            <td>User 1</td>
-                                            <td><a data-toggle="modal" data-target="#editUser">Edit</a></td>
-                                            <td><a data-toggle="modal" data-target="#deleteUser">Delete</a></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>User 2</td>
-                                            <td><a data-toggle="modal" data-target="#editUser">Edit</a></td>
-                                            <td><a data-toggle="modal" data-target="#deleteUser">Delete</a></td>
-                                        </tr>
+                                        {% for usr in usrs %}
+                                            <tr>
+                                                <td>{{ usr.username }}</td>
+                                                <td><a data-toggle="modal" data-target="#editUser">Edit</a></td>
+                                                <td><a data-toggle="modal" data-target="#deleteUser">Delete</a></td>
+                                            </tr>
+                                        {% endfor %}
                                     </table>
                                     {# END User Table Data #}
 
@@ -238,18 +233,24 @@
                                             <th>Creator</th>
                                             <th></th>
                                         </tr>
+                                        {% for dsh in dshs %}
+                                            <tr>
+                                                <td>{{ dsh.name }}</td>
+                                                <td>Cool User 1</td>
+                                                <td><a data-toggle="modal" data-target="#delDash">Delete</a></td>
+                                            </tr>
+                                        {% endfor %}
+                                        {#<tr>#}
+                                            {#<td>Dashboard 1</td>#}
+                                            {#<td>Cool User 1</td>#}
+                                            {#<td><a data-toggle="modal" data-target="#delDash">Delete</a></td>#}
+                                        {#</tr>#}
 
-                                        <tr>
-                                            <td>Dashboard 1</td>
-                                            <td>Cool User 1</td>
-                                            <td><a data-toggle="modal" data-target="#delDash">Delete</a></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>Dashboard 2</td>
-                                            <td>Cool User 2</td>
-                                            <td><a data-toggle="modal" data-target="#delDash">Delete</a></td>
-                                        </tr>
+                                        {#<tr>#}
+                                            {#<td>Dashboard 2</td>#}
+                                            {#<td>Cool User 2</td>#}
+                                            {#<td><a data-toggle="modal" data-target="#delDash">Delete</a></td>#}
+                                        {#</tr>#}
                                     </table>
                                     {# END Dashboard Table Data #}
 

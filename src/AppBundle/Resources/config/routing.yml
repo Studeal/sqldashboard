@@ -1,36 +1,38 @@
-
 app_home:
     path:     /
     defaults: { _controller: AppBundle:Dashboard:index }
 
-app_dashboard:
-    path:     /{id}
-    defaults: { _controller: AppBundle:Dashboard:view }
-
-app_login:
+fos_user_security:
     path:     /login
-    defaults: {_controller: AppBundle:User:login }
+    defaults: {_controller: FOSUserBundle:Security:login }
+
+fos_user_security_check:
+    path:     /login_check
+    defaults: {_controller: FOSUserBundle:Security:check }
 
 app_admin_profile:
-    path:     /admin_profile
+    path:     /admin_profile/{id}
     defaults: { _controller: AppBundle:User:adminProfile }
 
 app_user_profile:
-    path:     /user_profile
+    path:     /user_profile/{id}
     defaults: { _controller: AppBundle:User:userProfile }
 
+app_dashboard:
+    path:     /dashboard/{id}
+    defaults: { _controller: AppBundle:Dashboard:view }
+
 app_share_dashboard:
-    path:     /share/{id}
+    path:     /dashboard/share/{id}
     defaults: { _controller: AppBundle:Dashboard:share }
 
 app_delete_dashboard:
-    path:     /delete/{id}
+    path:     /dashboard/delete/{id}
     defaults: { _controller: AppBundle:Dashboard:deleteDash }
 
 app_change_size:
     path:     /app_change_size/{componentId}/{size}/{id}
     defaults: { _controller: AppBundle:Dashboard:changeSize }
-
 
 app_add_component:
     path:     /components/{dashboardId}/add
