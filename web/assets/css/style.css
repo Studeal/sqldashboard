@@ -6,20 +6,30 @@
     height:100vh;
     height: calc(100vh - 50px);
     z-index: 99999;
+    background-color: #222222;
 }
 
+.logo{
+    height: auto;
+    width: 120px;
+    margin: -7px;
+}
 .createdashboard{ /*button create dashboard position*/
     position: absolute;
     top:95%;
-    left: 0px;
 }
-
+.disconnect{
+    right: 17px;
+}
+.profil{
+    right: 17px;
+}
 .popup{
     z-index: 9999;
 }
 
 .contenu{ /*Work space*/
     float: right;
-    border-left: solid 1px grey;
     height: 100vh;
+    top: 50px;
 }

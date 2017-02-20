@@ -5,10 +5,12 @@ app_home:
     path:     /
     defaults: { _controller: AppBundle:Dashboard:index }
 
+
 #Route Dashboard
 app_dashboard:
     path:     /dashboard/{id}
     defaults: { _controller: AppBundle:Dashboard:view }
+
 app_share_dashboard:
     path:     /share/{id}
     defaults: { _controller: AppBundle:Dashboard:share }
@@ -19,9 +21,8 @@ app_delete_dashboard:
 app_change_size:
     path:     /app_change_size/{componentId}/{size}/{id}
     defaults: { _controller: AppBundle:Dashboard:changeSize }
-app_name_dashboard:
-    path:     /yourdashboard
-    defaults: {_controller: AppBundle:Navbar:NameDashboard }
+
+
 #Route Profile User & Admin
 app_admin_profile:
     path:     /admin_profile
@@ -29,6 +30,7 @@ app_admin_profile:
 app_user_profile:
     path:     /user_profile
     defaults: { _controller: AppBundle:User:userProfile }
+
 
 #Route Component
 app_add_component:

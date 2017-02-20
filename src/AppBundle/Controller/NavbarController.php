@@ -10,36 +10,44 @@ namespace AppBundle\Controller;
 
 use AppBundle\Form\DashboardType;
 use AppBundle\Entity\Dashboard;
-use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 class NavbarController extends  Controller
 {
-    public function NameDashboardAction( Request $request){
-        $em=$this->getDoctrine()->getManager();
+    public function NameDashboardAction( Request $request, $id){
+
+//        $session = $request->getSession();
+//
+//        $user = $em->getRepository('AppBundle:User')->find($session->getId());
+
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $userId = (string)$user->getId();
+
         $dashboard = new Dashboard();
-//        $user = $em
-//            ->getRepository('AppBundle: User')
-//            ->find($id);
-//        $dashboard->setCreator($user);
-        $form = $this->createForm(new DashboardType(), $dashboard);
+        $form = $this->createForm(new DashboardType, $dashboard);
+        $form->handleRequest($request);
 
+        if($form->isSubmitted() && $form->isValid()){
 
-        if($form->handleRequest($request)->isValid()){
+            $em=$this->getDoctrine()
+                     ->getManager();
             $em->persist($dashboard);
             $em->flush();
 
-
-            return $this->redirect($this->generateUrl('app_name_dashboard'),
-                array('id' =>$dashboard->getId()));
+            return $this->redirect($this->generateUrl('app_dashboard', array(
+                'id'=> $dashboard->getId()
+                )
+            ));
 
         }
 
         return $this->render('AppBundle:App:navbar.html.twig', array(
-
+            'id'=> $id,
+            'user'=>$userId,
             'form' => $form->createView()));
     }
+    public function SideBarAction(){
 
-
+    }
 }
