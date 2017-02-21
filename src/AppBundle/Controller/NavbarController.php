@@ -17,15 +17,13 @@ class NavbarController extends  Controller
 {
     public function NameDashboardAction( Request $request, $id){
 
-//        $session = $request->getSession();
-//
-//        $user = $em->getRepository('AppBundle:User')->find($session->getId());
 
         $user = $this->container->get('security.context')->getToken()->getUser();
         $userId = (string)$user->getId();
 
         $dashboard = new Dashboard();
-        $form = $this->createForm(new DashboardType, $dashboard);
+//        $form = $this->createForm(new DashboardType, $dashboard);
+        $form = $this->get('form.factory')->create(new DashboardType(), $dashboard);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
