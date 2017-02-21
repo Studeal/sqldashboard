@@ -9,3 +9,8 @@ services:
     app.requestSql:
          class: AppBundle\RequestSql\RequestSql
          arguments: [@doctrine.orm.entity_manager]
+
+    app.form.add.user:
+         class: AppBundle\Form\UserType
+         tags:
+              - { name: form.type, alias: app_form_add_user }

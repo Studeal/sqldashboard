@@ -12,3 +12,4 @@ class ChartsTest extends \PHPUnit_Framework_TestCase
         $result = $req->requestSql(1);
     }
 }
+

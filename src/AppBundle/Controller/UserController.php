@@ -8,51 +8,74 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\User;
 use Knp\Bundle\PaginatorBundle\KnpPaginatorBundle;
+use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends Controller
 {
-    // TODO: Make functions such as show/edit/delete instead of general functions like admin/user!!
-
-    /**
-     * @Route("/login", name="login")
-     */
     public function loginAction(){
         return $this->render('@App/Security/login_content.html.twig');
     }
 
-    /**
-     * @Route("/admin_profile/{id}", name="admin_profile")
-     */
-    public function adminProfileAction($id)
+    public function adminProfileAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
         $usr = $em->getRepository('AppBundle:User')->find($id);
         $usrs = $em->getRepository('AppBundle:User')->findAll();
         $dsh = $em->getRepository('AppBundle:Dashboard')->find($id);
         $dshs = $em->getRepository('AppBundle:Dashboard')->findAll();
-//        $em->persist($user); // Use when changing info in BDD
         $em->flush();
 
-//        //pagination
-//        $paginUsrs = $this->get('knp_paginator')->paginate($listUsers,
-//            $this->get('request')->query->get('page', 1), 2/*limit per page*/
-//        );
-////        return $this->render('AppBundle:App:shareD.html.twig', array(
-////            'users' => $users,
-////            'dashboard' => $dashboard
-////        ));
-        
+        // START PAGINATION //
+        $paginUsrs = $this->get('knp_paginator')->paginate($usrs,
+            $this->get('request')->query->get('page', 1), 3/*limit per page*/
+        );
+
+        $paginDshs = $this->get('knp_paginator')->paginate($dshs,
+            $this->get('request')->query->get('page', 1), 3/*limit per page*/
+        );
+        // END PAGINATION //
+
+        // START FORM ADD USER //
+        $newUser = new User();
+
+        $form = $this->get('form.factory')->create(new UserType(), $newUser);
+
+        if($form->handleRequest($request)->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($newUser);
+            $em->flush();
+
+            return $this->redirectToRoute('app_admin_profile', array('id' => $id));
+        }
+        // END FORM ADD USER //
+
         return $this->render('@App/App/adminProfile.html.twig', array(
-            'id'    => $id,
-            'usr'   => $usr,
-            'usrs'  => $usrs,
-            'dsh'   => $dsh,
-            'dshs'  => $dshs
+            'id'            => $id,
+            'usr'           => $usr,
+            'usrs'          => $usrs,
+            'dsh'           => $dsh,
+            'dshs'          => $dshs,
+            'paginUsrs'     => $paginUsrs,
+            'paginDashs'    => $paginDshs,
+            'form'          => $form->createView()
         ));
+    }
+
+    public function editUserAction()
+    {
+        return $this->container;
+    }
+
+    public function deleteUserAction()
+    {
+        return $this->container;
     }
 
     /**

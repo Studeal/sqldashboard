@@ -53,7 +53,6 @@
                                     <!-- Modal -->
                                     <div class="modal fade" id="addUser" role="dialog">
                                         <div class="modal-dialog">
-
                                             <!-- Modal content-->
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -63,35 +62,39 @@
 
                                                 {# START New User Form #}
                                                 <div class="modal-body">
-                                                    <form>
-                                                        <div class="form-group">
-                                                            <label for="newFirstName">First Name</label>
-                                                            <input type="text" class="form-control" id="newFirstName" placeholder="Michael">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="newLastName">Last Name</label>
-                                                            <input type="text" class="form-control" id="newLastName" placeholder="Jackson">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="newEmail1">Email address</label>
-                                                            <input type="email" class="form-control" id="newEmail1" placeholder="Email">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="newPassword">Password</label>
-                                                            <input type="password" class="form-control" id="newPassword" placeholder="Password">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="newFile">Profile Photo</label>
-                                                            <input type="file" id="newFile">
-                                                        </div>
-                                                    </form>
+                                                    {{ form_start(form) }}
+                                                    <div class="form-group">
+                                                        {{ form_row(form.firstName, { 'attr': {'class': 'form-control', 'placeholder': 'Michael'} }) }}
+                                                    </div>
+                                                    <div class="form-group">
+                                                        {{ form_row(form.lastName, { 'attr': {'class': 'form-control', 'placeholder': 'Jackson'} }) }}
+                                                    </div>
+                                                    <div class="form-group">
+                                                        {{ form_row(form.username, { 'attr': {'class': 'form-control', 'placeholder': 'michael_jackson'} }) }}
+                                                    </div>
+                                                    <div class="form-group">
+                                                        {{ form_row(form.email, { 'attr': {'class': 'form-control', 'placeholder': 'thriller@gmail.com'} }) }}
+                                                    </div>
+                                                    <div class="form-group">
+                                                        {{ form_row(form.plainPassword.first, {label: 'Password', 'attr': {'class': 'form-control'} }) }}
+                                                    </div>
+                                                    <div class="form-group">
+                                                        {{ form_row(form.plainPassword.second, {label: 'Repeat Password', 'attr': {'class': 'form-control'} }) }}
+                                                    </div>
+                                                    <div class="form-group">
+                                                        {{ form_row(form.image) }}
+                                                    </div>
+                                                    <div class="form-group">
+                                                        {{ form_row(form.roles) }}
+                                                    </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="submit" class="btn btn-default">Submit</button>
+                                                    {{ form_widget(form.Submit, { 'attr': {'class': 'btn btn-default'} }) }}
                                                 </div>
+
+                                                {{ form_end(form) }}
                                                 {# END New User Form #}
                                             </div>
-
                                         </div>
                                     </div>
                                     {# END Add New User Modal #}
@@ -103,7 +106,7 @@
                                             <th></th>
                                             <th></th>
                                         </tr>
-                                        {% for usr in usrs %}
+                                        {% for usr in paginUsrs %}
                                             <tr>
                                                 <td>{{ usr.username }}</td>
                                                 <td><a data-toggle="modal" data-target="#editUser">Edit</a></td>
@@ -196,27 +199,9 @@
                                 <div class="col-md-4 col-xs-12" align="center">
 
                                     {# START User Pagination #}
-                                    <nav class="navbar" aria-label="Page navigation">
-                                        <div class="container-fluid">
-                                            <ul class="pagination paginProf">
-                                                <li>
-                                                    <a href="#" aria-label="Previous">
-                                                        <span aria-hidden="true">&laquo;</span>
-                                                    </a>
-                                                </li>
-                                                <li><a href="#">1</a></li>
-                                                <li><a href="#">2</a></li>
-                                                <li><a href="#">3</a></li>
-                                                <li><a href="#">4</a></li>
-                                                <li><a href="#">5</a></li>
-                                                <li>
-                                                    <a href="#" aria-label="Next">
-                                                        <span aria-hidden="true">&raquo;</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </nav>
+                                    <div class="navUser">
+                                        {{ knp_pagination_render(paginUsrs) }}
+                                    </div>
                                     {# END User Pagination #}
 
                                 </div>
@@ -233,24 +218,13 @@
                                             <th>Creator</th>
                                             <th></th>
                                         </tr>
-                                        {% for dsh in dshs %}
+                                        {% for dsh in paginDashs %}
                                             <tr>
                                                 <td>{{ dsh.name }}</td>
                                                 <td>Cool User 1</td>
                                                 <td><a data-toggle="modal" data-target="#delDash">Delete</a></td>
                                             </tr>
                                         {% endfor %}
-                                        {#<tr>#}
-                                            {#<td>Dashboard 1</td>#}
-                                            {#<td>Cool User 1</td>#}
-                                            {#<td><a data-toggle="modal" data-target="#delDash">Delete</a></td>#}
-                                        {#</tr>#}
-
-                                        {#<tr>#}
-                                            {#<td>Dashboard 2</td>#}
-                                            {#<td>Cool User 2</td>#}
-                                            {#<td><a data-toggle="modal" data-target="#delDash">Delete</a></td>#}
-                                        {#</tr>#}
                                     </table>
                                     {# END Dashboard Table Data #}
 
@@ -282,23 +256,9 @@
                                         <div class="container-fluid">
 
                                             {# START Dashboard Pagination #}
-                                            <ul class="pagination paginProf">
-                                                <li>
-                                                    <a href="#" aria-label="Previous">
-                                                        <span aria-hidden="true">&laquo;</span>
-                                                    </a>
-                                                </li>
-                                                <li><a href="#">1</a></li>
-                                                <li><a href="#">2</a></li>
-                                                <li><a href="#">3</a></li>
-                                                <li><a href="#">4</a></li>
-                                                <li><a href="#">5</a></li>
-                                                <li>
-                                                    <a href="#" aria-label="Next">
-                                                        <span aria-hidden="true">&raquo;</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
+                                            <div class="navUser">
+                                                {{ knp_pagination_render(paginDashs) }}
+                                            </div>
                                             {# END Dashboard Pagination #}
 
                                         </div>
