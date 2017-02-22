@@ -1,4 +1,19 @@
-/*********************** SideBar & NavBar ***********************/
+/*********************** NavBar ***********************/
+
+.disconnect{
+    right: 17px;
+}
+.profil{
+    right: 17px;
+}
+.logo{
+    height: auto;
+    width: 120px;
+    margin: -7px;
+}
+
+/*********************** SideBar ***********************/
+
 #sidebar{/*SideBar position*/
     position: fixed;
     top:50px;
@@ -8,32 +23,48 @@
     z-index: 99999;
     background-color: #222222;
 }
+.spacelistdashboard{ /*workspace dashboard list*/
+    height: calc(100vh - 87px);
+}
+.scroll{/*scrollbar dashboard list*/
+    overflow:auto;
+}
+.createdashboard{ /*button create dashboard position*/
+    position: absolute;
+    top:95%;
+    background-color: rgb(245,245, 245);
+    border-color: transparent;
+    border-radius: 0 !important;
+}
+.changePadding{/*remove padding list dashboard and create dashboard button*/
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.stylecollapse{
+    background-color: rgba(245,245, 245, 0.5);
+}
+.popup{
+    z-index: 9999;
+}
+.panel-group .panel {
+    border-radius: 0 !important;
+}
+
+/*********************** Login ***********************/
+
 #login{
     height: 100vh;
     background-color: #F1F2F7;
     text-align: center;
 }
-.logo{
-    height: auto;
-    width: 120px;
-    margin: -7px;
-}
-.createdashboard{ /*button create dashboard position*/
-    position: absolute;
-    top:95%;
-}
-.disconnect{
-    right: 17px;
-}
-.profil{
-    right: 17px;
-}
-.popup{
-    z-index: 9999;
-}
+
+
+/*********************** Contenu ***********************/
 
 .contenu{ /*Work space*/
     float: right;
     height: 100vh;
     top: 50px;
+    overflow: auto;
 }
+

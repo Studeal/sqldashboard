@@ -1,5 +1,4 @@
 
-
 #home
 app_home:
     path:     /
@@ -21,7 +20,9 @@ app_delete_dashboard:
 app_change_size:
     path:     /app_change_size/{componentId}/{size}/{id}
     defaults: { _controller: AppBundle:Dashboard:changeSize }
-
+app_name_dashboard:
+    path:     /create/createdashboard
+    defaults: { _controller: AppBundle:Navbar:NameDashboard }
 
 #Route Profile User & Admin
 app_admin_profile:

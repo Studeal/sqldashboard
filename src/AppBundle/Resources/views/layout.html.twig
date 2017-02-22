@@ -11,7 +11,8 @@
 {% block body %}
     {#{{ dump(user) }}#}
 
-    {{ render(controller('AppBundle:Navbar:NameDashboard', {'id' : 3})) }}
+    {{ render(controller('AppBundle:Navbar:NameDashboard')) }}
+
     <div class="col-xs-10 contenu contenudash">
 
         {% block app_body %}

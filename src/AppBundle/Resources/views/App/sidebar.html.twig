@@ -1,11 +1,10 @@
 <!-- SideBar  -->
 
-<div id="sidebar" class="col-xs-2 sidebar">
+<div id="sidebar" class="col-xs-2 sidebar changePadding">
 
-<!-- LIST DASHBOARD --- COLLAPSE -->
+<!-- DASHBOARD LIST --- COLLAPSE -->
 
-    <div class="list-group">
-            <div>{{ dump(user) }}</div>
+    <div class="list-group spacelistdashboard scroll stylesscrollbar">
             <div class="panel-group">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -13,9 +12,10 @@
                             <a data-toggle="collapse" href="#collapse3">My Dashboard</a>
                         </h4>
                     </div>
-                    <div id="collapse3" class="panel-collapse collapse">
-                        <div class="panel-body">Panel Body</div>
-                        <div class="panel-footer">Panel Footer</div>
+                    <div id="collapse3" class="panel-collapse collapse stylecollapse">
+                        {% for key, myDashboard in myDashboards %}
+                            <div class="panel-body"><a href="{{ path('app_dashboard', {'id': myDashboard.id}) }}">{{ myDashboard.name }}</a></div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -27,15 +27,17 @@
                         </h4>
                     </div>
                     <div id="collapse2" class="panel-collapse collapse">
-                        <div class="panel-body">Panel</div>
-                        <div class="panel-footer">Panel Footer</div>
+                        {% for key, sharedDashboard in sharedDashboards %}
+                            <div class="panel-body"><a href="{{ path('app_dashboard', {'id': sharedDashboard.id}) }}">{{ sharedDashboard.name }}</a></div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
+    </div>
 
 <!-- BUTTON CREATE DASHBOARD --- Large modal -->
 
-        <button type="button" class="btn btn-default block panel-title col-xs-10 createdashboard " data-toggle="modal" data-target=".bs-example-modal-lg" >Create Dashboard</button>
+        <button type="button" class="btn btn-default block panel-title col-xs-12 createdashboard" data-toggle="modal" data-target=".bs-example-modal-lg" >Create Dashboard</button>
         <!-- PopUp - Modal Create Dashboard Button -->
         <div class="modal fade bs-example-modal-lg popup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
             <div class="modal-dialog modal-lg" role="document">
@@ -47,13 +49,11 @@
                         </h4>
                     </div>
                     <div class="modal-main well">
-                        {{ form_start(form) }}
-                        {#Les erreurs générales du formulaire.#}
+                        {{ form_start(form,{'action':path('app_name_dashboard'),'method':'POST','attr': {'class': 'form-horizontal', 'role':'form'}}) }}                        {#Les erreurs générales du formulaire.#}
                         {{ form_errors(form) }}
                         <div class="form-group">
                             {#Generate label.#}
                             {{ form_label(form.name, "Name", {'label_attr': {'class':'col-sm3 control-label', 'value':''}}) }}
-                            {{ form_widget(form.creator, {'attr': {'class': 'form-control', 'value' : user}}) }}
                             <div>
                                 {#Generate input#}
                                 {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
@@ -73,5 +73,4 @@
                 </div>
             </div>
         </div>
-    </div>
 </div>

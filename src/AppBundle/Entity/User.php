@@ -47,6 +47,13 @@ class User extends BaseUser
      */
     protected $image = null;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="status", type="boolean")
+     */
+    protected $status = false;
+
     public function __construct()
     {
         parent::__construct();
