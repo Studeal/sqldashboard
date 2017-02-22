@@ -9,15 +9,11 @@
 {% endblock %}
 
 {% block body %}
-    
-    {% block nav %}
-        {% include "::navbar.html.twig"%}
-    {% endblock %}
-  
+    {{ render(controller('AppBundle:Navbar:NameDashboard')) }}
     <div class="col-xs-10 contenu contenudash">
 
         {% block app_body %}
-            
+
         {% endblock %}
     </div>
 

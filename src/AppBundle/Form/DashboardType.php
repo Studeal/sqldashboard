@@ -19,7 +19,7 @@ class DashboardType extends AbstractType
         $builder
             ->add('UpdateName', 'submit')
             ->add('name', 'text')
-            ->add('add', 'submit')
+            ->add('AddYourDashboard', 'submit')
         ;
     }
     

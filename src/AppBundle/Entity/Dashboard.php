@@ -28,7 +28,7 @@ class Dashboard
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
      */
-    private $creator;
+    protected $creator;
     /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", cascade={"persist"})
      */

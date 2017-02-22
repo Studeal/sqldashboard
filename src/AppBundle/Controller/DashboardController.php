@@ -26,24 +26,30 @@ class DashboardController extends Controller
         );
     }
 
-
+    //.......Dashboard view action
     public function viewAction(Request $request, $id)
     {
+        //.......Get current logged user
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $userId = $user->getId();
+
         $repository = $this
             ->getdoctrine()
             ->getManager()
             ->getRepository('AppBundle:Component');
+
+        //.......Get current dashboard components
         $components = $repository->findBy(
             array('dashboard' => $id));
 
-
+        //.......Initialize chart's variables
         $charts = array();
         $componentName = array();
         $componentId = array();
         $sizeComponent = array();
         $forms = array();
 
-
+        //.......For each component set chart's variables and create a form for each component
         foreach ($components as $key => $component) {
             $chart = $this->container->get('app.charts');
             $chart->setLegend($component->getLegend());
@@ -57,30 +63,32 @@ class DashboardController extends Controller
             array_push($componentId, $component->getId());
             array_push($sizeComponent, $component->getSizeComponent());
             $forms[$component->getId()] = $this->get('form.factory')->createNamedBuilder($component->getId(), new ComponentType(), $component)->getForm();
-
         }
-
-        //Get charts service
+        //.......Get current dashboard object
         $em = $this->getDoctrine()->getManager();
-        $dashboard = $em->getRepository('AppBundle:Dashboard')->find($id);
+        $dashboard = $em->getRepository('AppBundle:Dashboard')
+            ->find($id);
+        //.......Set dashboard's creator
+        $creator = $dashboard->getCreator();
 
+        //.......Generate form for "Edit Dashboard"
         $form = $this->get('form.factory')->create(new DashboardType(), $dashboard);
         $form->handleRequest($request);
 
+        //.......Check if the method is POST and which form component is submitted
         if ($request->isMethod('POST')) {
 
             foreach ($forms as $key => $oneForm) {
                 $forms[$key]->handleRequest($request);
             }
-
             foreach ($forms as $key => $oneForm) {
                 if ($oneForm->isSubmitted() && $oneForm->isValid()) {
 
                     $em = $this->getDoctrine()
-                               ->getManager();
-                    $component = $em->getRepository('AppBundle:Component')->find($key);
-
-
+                        ->getManager();
+                    $component = $em->getRepository('AppBundle:Component')
+                        ->find($key);
+                    //.......Change graphic's type
                     if ($oneForm->get('linechart')->isClicked()) {
                         $component->setTypeGraph('linechart');
                     }
@@ -93,7 +101,7 @@ class DashboardController extends Controller
                     if ($oneForm->get('bar')->isClicked()) {
                         $component->setTypeGraph('bar');
                     }
-
+                    //.......Save changes made on component
                     $em->persist($component);
                     $em->flush();
 
@@ -105,22 +113,23 @@ class DashboardController extends Controller
             }
         }
 
-
+        //.......If dashboard edit form was submitted, save changes to database
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()
-                       ->getManager();
             $em->persist($dashboard);
             $em->flush();
 
             return $this->redirectToRoute('app_dashboard', array(
                 'id' => $id));
         }
-
+        //.......Create the view for each component form
         foreach ($forms as $key => $formOne) {
             $forms[$key] = $formOne->createView();
         }
-
+        //.......Render dashboard view and send the variables to it
         return $this->render('AppBundle:App:dashboard.html.twig', array(
+            'userId' => $userId,
+            'user' => $user,
+            'creator' => $creator,
             'allCharts' => $charts,
             'componentName' => $componentName,
             'componentId' => $componentId,
@@ -139,26 +148,28 @@ class DashboardController extends Controller
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public
-    function shareAction(Request $request, $id)
+
+    //.......Share Dashboard Function
+    public function shareAction(Request $request, $id)
     {
+        //.......Get current dashboard
         $em = $this->getDoctrine()->getManager();
         $dashboard = $em
             ->getRepository('AppBundle:Dashboard')
             ->find($id);
-
+        //.......Get the parameter from url for search function
         $parameter = $request->get('search');
-
+        //.......Get all the user that have in the last name the "value" parameter
         $listUsers = $em
             ->getRepository('AppBundle:User')
             ->createQueryBuilder('user')
-            ->where('user.email LIKE :email')
-            ->setParameter('email', '%' . $parameter . '%')
+            ->where('user.lastName LIKE :lastName')
+            ->setParameter('lastName', '%' . $parameter . '%')
             ->getQuery()
             ->getResult();
 
-//        if form has been submited removes all users from dashboard, adds the checked ones and saves them in the database
-
+        //.......if form has been submitted removes all collaborators from dashboard,
+        // ......adds the checked ones to the dashboard and saves them in the database
         if ($request->get('activeUsers')) {
             $activeUsers = $request->get('activeUsers');
 
@@ -169,7 +180,7 @@ class DashboardController extends Controller
 
             foreach ($activeUsers as $active) {
                 $user = $em->getRepository('AppBundle:User')
-                           ->find($active);
+                    ->find($active);
                 $dashboard->addCollaborator($user);
                 $em->persist($dashboard);
             }
@@ -179,39 +190,73 @@ class DashboardController extends Controller
             return $this->redirectToRoute('app_dashboard', array(
                 'id' => $id));
         }
-
-        //pagination
-
-            $users = $this->get('knp_paginator')->paginate($listUsers,
-            $this->get('request')->query->get('page', 1), 2/*limit per page*/
+        //......pagination
+        $users = $this->get('knp_paginator')->paginate($listUsers,
+            $this->get('request')->query->get('page', 1), 4/*limit per page*/
         );
 
         return $this->render('AppBundle:App:shareD.html.twig', array(
+            'listUsers' => $listUsers,
             'users' => $users,
             'dashboard' => $dashboard
         ));
     }
 
     //.......Delete dashboard
-    public
-    function deleteDashAction($id)
+    public function deleteDashAction($id)
     {
+        //.......Get current dashboard
         $em = $this->getDoctrine()->getManager();
         $dashboard = $em->getRepository('AppBundle:Dashboard')->find($id);
-
+        //.......delete the dashboard and update database
         if ($dashboard != null) {
             $em->remove($dashboard);
             $em->flush();
         }
+        return $this->redirectToRoute('app_home', array(
+            'id' => $id));
+    }
 
-        return $this->redirectToRoute('app_dashboard', array(
+    //.......Leave dashboard function - current user can quit a dashboard where he's been added
+    public function leaveDashAction($id)
+    {
+        //.......get current user
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+        //.......get current dashboard
+        $dashboard = $em->getRepository('AppBundle:Dashboard')
+            ->find($id);
+        //.......remove current user from dashboard
+        $dashboard->removeCollaborator($user);
+        $em->flush();
+
+        return $this->redirectToRoute('app_home', array(
             'id' => $id));//to do redirect to homepage
     }
 
-    public function changeSizeAction($componentId, $size, $id)
+    //.......Delete Component
+    public function deleteComponentAction($componentId, $id)
     {
+        //......get component by id
         $em = $this->getDoctrine()->getManager();
         $component = $em->getRepository('AppBundle:Component')->find($componentId);
+        //......delete component
+        if ($component != null) {
+            $em->remove($component);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('app_dashboard', array(
+            'id' => $id
+        ));
+    }
+    //.......Change graph size
+    public function changeSizeAction($componentId, $size, $id)
+    {
+        //......get current component
+        $em = $this->getDoctrine()->getManager();
+        $component = $em->getRepository('AppBundle:Component')->find($componentId);
+        //......set component size
         $component->setSizeComponent($size);
         $em->persist($component);
         $em->flush();
@@ -221,25 +266,29 @@ class DashboardController extends Controller
         ));
     }
 
+    //.......Copy Component
     public function copyComponentAction(Request $request, $componentId, $id)
     {
         $session = $request->getSession();
-        $session->set('idComponent',$componentId);
+        //......save current component id in the session
+        $session->set('idComponent', $componentId);
 
         return $this->redirectToRoute('app_dashboard', array(
             'id' => $id
         ));
     }
 
-
+    //.......Paste Component
     public function pasteComponentAction(Request $request, $id)
     {
         $session = $request->getSession();
         $em = $this->getDoctrine()->getManager();
+        //......get current dashboard
         $dashboard = $em->getRepository('AppBundle:Dashboard')->find($id);
+        //......get the id of the component saved in the session inside copy action
         $idComponent = $session->get('idComponent');
         $component = $em->getRepository('AppBundle:Component')->find($idComponent);
-
+        //......clone the component and add it to the dashboard
         $newComponent = clone $component;
         $newComponent->setDashboard($dashboard);
         $em->persist($newComponent);
