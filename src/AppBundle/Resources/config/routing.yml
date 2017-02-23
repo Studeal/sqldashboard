@@ -1,24 +1,3 @@
-app_home:
-    path:     /
-    defaults: { _controller: AppBundle:App:view }
-
-app_login:
-    path:     /login
-    defaults: {_controller: AppBundle:App:login }
-
-
-app_share_dashboard:
-    path:     /share
-    defaults: { _controller: AppBundle:App:share }
-
-app_admin_profile:
-    path:     /admin_profile
-    defaults: { _controller: AppBundle:App:adminProfile }
-
-app_user_profile:
-    path:     /user_profile
-    defaults: { _controller: AppBundle:App:userProfile }
-
 app_add_component:
     path:     /components/{dashboardId}/add
     defaults: { _controller: AppBundle:Component:addComponent }
