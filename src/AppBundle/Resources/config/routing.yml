@@ -11,8 +11,6 @@ fos_user_security_check:
     defaults: {_controller: FOSUserBundle:Security:check }
 
 
-#Dashboard actions
-
 app_dashboard:
     path:     /dashboard/{id}
     defaults: { _controller: AppBundle:Dashboard:view }
