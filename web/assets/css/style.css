@@ -14,6 +14,9 @@
 .home{
     font-size:large;
 }
+.navbar-inverse{
+    background-color: rgb(241,242,247);
+}
 /*********************** SideBar ***********************/
 
 #sidebar{/*SideBar position*/
@@ -23,7 +26,7 @@
     height:100vh;
     height: calc(100vh - 50px);
     z-index: 99999;
-    background-color: #737373;
+    background-color: rgb(241,242,247);
 }
 .spacelistdashboard{ /*workspace dashboard list*/
     height: calc(100vh - 87px);
@@ -52,9 +55,7 @@
 .panel-group .panel {
     border-radius: 0 !important;
 }
-.navbar-inverse{
-    background-color: #737373;
-}
+
 /*********************** Login ***********************/
 
 #login{
