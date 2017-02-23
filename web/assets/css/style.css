@@ -11,7 +11,9 @@
     width: 120px;
     margin: -7px;
 }
-
+.home{
+    font-size:large;
+}
 /*********************** SideBar ***********************/
 
 #sidebar{/*SideBar position*/
@@ -21,7 +23,7 @@
     height:100vh;
     height: calc(100vh - 50px);
     z-index: 99999;
-    background-color: #222222;
+    background-color: #737373;
 }
 .spacelistdashboard{ /*workspace dashboard list*/
     height: calc(100vh - 87px);
@@ -32,9 +34,9 @@
 .createdashboard{ /*button create dashboard position*/
     position: absolute;
     top:95%;
-    background-color: rgb(245,245, 245);
-    border-color: transparent;
+    background-color: #F5F5F5 !important;
     border-radius: 0 !important;
+    border-color: #C4C4C4;
 }
 .changePadding{/*remove padding list dashboard and create dashboard button*/
     padding-left: 0px;
@@ -42,6 +44,7 @@
 }
 .stylecollapse{
     background-color: rgba(245,245, 245, 0.5);
+    text-align: center;
 }
 .popup{
     z-index: 9999;
@@ -49,7 +52,9 @@
 .panel-group .panel {
     border-radius: 0 !important;
 }
-
+.navbar-inverse{
+    background-color: #737373;
+}
 /*********************** Login ***********************/
 
 #login{
@@ -67,4 +72,5 @@
     top: 50px;
     overflow: auto;
 }
+
 
