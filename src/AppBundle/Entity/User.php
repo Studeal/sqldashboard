@@ -5,6 +5,9 @@ namespace AppBundle\Entity;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * User
@@ -25,14 +28,16 @@ class User extends BaseUser
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
+     * @Assert\Length(min=4)
      * @ORM\Column(name="firstName", type="string", length=255)
      */
     protected $firstName;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
+     * @Assert\Length(min=4)
      * @ORM\Column(name="lastName", type="string", length=255)
      */
     protected $lastName;
@@ -110,9 +115,9 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function setImage($image)
+    public function setImage(File $file = null)
     {
-        $this->image = $image;
+        $this->image = $file;
 
         return $this;
     }

@@ -14,12 +14,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\User;
 use Knp\Bundle\PaginatorBundle\KnpPaginatorBundle;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UserController extends Controller
 {
-    public function loginAction(){
-        return $this->render('@App/Security/login_content.html.twig');
-    }
+//    public function loginAction(){
+//        return $this->render('@App/App/login.html.twig');
+//    }
 
     public function adminProfileAction(Request $request, $id)
     {
@@ -30,13 +31,27 @@ class UserController extends Controller
         $dshs = $em->getRepository('AppBundle:Dashboard')->findAll();
         $em->flush();
 
+        // $file stores the uploaded image file
+        /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
+        $file = $usr->getImage();
+
         // START PAGINATION //
         $paginUsrs = $this->get('knp_paginator')->paginate($usrs,
-            $this->get('request')->query->get('page', 1), 3/*limit per page*/
+            $this->get('request')->query->get('pageUsrs', 1), 50,/*limit per page*/
+            array(
+                'pageParameterName' => 'pageUsrs',
+                'sortFieldParameterName' => 'sortUsrs',
+                'sortDirectionParameterName' => 'directionUsrs',
+            )
         );
 
         $paginDshs = $this->get('knp_paginator')->paginate($dshs,
-            $this->get('request')->query->get('page', 1), 3/*limit per page*/
+            $this->get('request')->query->get('pageDshs', 1), 50,/*limit per page*/
+            array(
+                'pageParameterName' => 'pageDshs',
+                'sortFieldParameterName' => 'sortDshs',
+                'sortDirectionParameterName' => 'directionDshs',
+            )
         );
         // END PAGINATION //
 
@@ -47,14 +62,46 @@ class UserController extends Controller
 
         if($form->handleRequest($request)->isValid()) {
 
+            // Generate a unique name for the file before saving it
+            $fileName = md5(uniqid()).'.'.$file->getExtension();
+
+            // Move the file to the directory where brochures are stored
+            $file->move(
+                $this->getParameter('img_directory'),
+                $fileName
+            );
+
+            // Update the 'image' property to store the img file name
+            // instead of its contents
+            $newUser->setImage($fileName);
+
             $em = $this->getDoctrine()->getManager();
 
             $em->persist($newUser);
+            $em->flush();
+            
+
+            return $this->redirectToRoute('app_admin_profile', array('id' => $id));
+        }
+        // END FORM ADD USER //
+
+        // START EDIT USER //
+
+        $form2 = $this->get('form.factory')->create(new UserType(), $usr);
+
+        if($form2->handleRequest($request)->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($usr);
             $em->flush();
 
             return $this->redirectToRoute('app_admin_profile', array('id' => $id));
         }
         // END FORM ADD USER //
+
+        //
+        //
 
         return $this->render('@App/App/adminProfile.html.twig', array(
             'id'            => $id,
@@ -64,8 +111,21 @@ class UserController extends Controller
             'dshs'          => $dshs,
             'paginUsrs'     => $paginUsrs,
             'paginDashs'    => $paginDshs,
-            'form'          => $form->createView()
+            'form'          => $form->createView(),
+            'form2'         => $form2->createView(),
         ));
+    }
+
+    public function deleteDashAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $dashboard = $em->getRepository('AppBundle:Dashboard')->find($id);
+        if ($dashboard != null) {
+            $em->remove($dashboard);
+            $em->flush();
+        }
+        return $this->redirectToRoute('app_dashboard', array(
+            'id' => $id));//to do redirect to homepage
     }
 
     public function editUserAction()
@@ -92,7 +152,7 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/login_check", name="login_check")
+     * @Route("/register", name="register")
      */
     public function registerAction()
     {
@@ -100,7 +160,7 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/register", name="register")
+     * @Route("/login_check", name="login_check")
      */
     public function loginCheckAction()
     {

@@ -41,3 +41,11 @@
     margin-right: -50%;
     transform: translate(-50%, -50%);
 }
+
+#loginForm {
+    padding-top: 15em;
+}
+
+#btnLogin {
+    margin: 20px;
+}
