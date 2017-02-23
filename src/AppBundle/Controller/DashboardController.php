@@ -27,6 +27,11 @@ class DashboardController extends Controller
     }
 
     //.......Dashboard view action
+    /***
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function viewAction(Request $request, $id)
     {
         //.......Get current logged user
@@ -142,14 +147,12 @@ class DashboardController extends Controller
         ));
     }
 
-
-    /**
+    //.......Share Dashboard Function
+    /***
      * @param Request $request
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-
-    //.......Share Dashboard Function
     public function shareAction(Request $request, $id)
     {
         //.......Get current dashboard
@@ -203,21 +206,38 @@ class DashboardController extends Controller
     }
 
     //.......Delete dashboard
+    /***
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function deleteDashAction($id)
     {
         //.......Get current dashboard
         $em = $this->getDoctrine()->getManager();
         $dashboard = $em->getRepository('AppBundle:Dashboard')->find($id);
+        //.......get the components that are on the dashboard
+        $components = $em->getRepository('AppBundle:Component')->findBy(
+            array('dashboard' => $id));
+
+        //.......delete the components
         //.......delete the dashboard and update database
         if ($dashboard != null) {
+            foreach ($components as $component) {
+                $em->remove($component);
+            }
             $em->remove($dashboard);
             $em->flush();
         }
+
         return $this->redirectToRoute('app_home', array(
             'id' => $id));
     }
 
     //.......Leave dashboard function - current user can quit a dashboard where he's been added
+    /***
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function leaveDashAction($id)
     {
         //.......get current user
@@ -235,6 +255,11 @@ class DashboardController extends Controller
     }
 
     //.......Delete Component
+    /***
+     * @param $componentId
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function deleteComponentAction($componentId, $id)
     {
         //......get component by id
@@ -251,6 +276,12 @@ class DashboardController extends Controller
         ));
     }
     //.......Change graph size
+    /***
+     * @param $componentId
+     * @param $size
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function changeSizeAction($componentId, $size, $id)
     {
         //......get current component
@@ -267,6 +298,12 @@ class DashboardController extends Controller
     }
 
     //.......Copy Component
+    /***
+     * @param Request $request
+     * @param $componentId
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function copyComponentAction(Request $request, $componentId, $id)
     {
         $session = $request->getSession();
@@ -279,6 +316,11 @@ class DashboardController extends Controller
     }
 
     //.......Paste Component
+    /***
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function pasteComponentAction(Request $request, $id)
     {
         $session = $request->getSession();

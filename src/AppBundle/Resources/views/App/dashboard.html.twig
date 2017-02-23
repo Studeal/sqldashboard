@@ -25,9 +25,8 @@
                 </button>
                 <ul class="dropdown-menu menu_pos float_right">
                 {% if dashboard.getCollaborator().contains(user) %}
-                    <li><a href="{{ path('app_leave_dashboard',{'id': dashboard.id}) }}">
-                            <i class="fa fa-sign-out changeColor" aria-hidden="true"></i>
-            Leave Dashboard</a>
+                    <li><a href="javascript:void(0)" data-toggle="modal" data-target="#leavedashboard"><i class="fa fa-sign-out changeColor"
+            aria-hidden="true"></i> Leave Dashboard</a>
                     </li>
                     {% endif %}
 
@@ -90,12 +89,15 @@
                             <div class="col-xs-6 ">
                                 <h4>{{ componentName[key] }}</h4>
                             </div>
+                            {% if dashboard.getCreator().id == userId %}
                             <div class="col-xs-3 change_width">
                             <!-- Create form view for type graphic -->
                                 {{ form_start(forms[componentId[key]],
                                 {'attr': {'class': 'form-horizontal', 'role':'form', 'name': key}}) }}
                                 {{ form_errors(forms[componentId[key]]) }}
+
                                 <div class="dropdown">
+
                                     <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         Type
@@ -115,7 +117,9 @@
                                             {{ form_widget(forms[componentId[key]].bar, {'attr': {'class' : 'fa fa-align-left compIcon formButton addPad'}, 'label' : ' Bar'} ) }}
                                         </li>
                                     </ul>
+
                                 </div>
+
                                 <!-- Hide unused component properties in the form -->
                                 <div class="hidden">{{ form_widget(forms[componentId[key]].name, {'attr': {'class' : 'fa fa-usd  compIcon formButton'}, 'label' : ' '} ) }}
                                     {{ form_widget(forms[componentId[key]].xAxis, {'attr': {'class' : 'fa fa-usd  compIcon formButton'}, 'label' : ' '} ) }}
@@ -126,12 +130,14 @@
                                 </div>
                                 {{ form_widget(forms[componentId[key]]._token) }}
                                 {{ form_end(forms[componentId[key]]) }}
-                            </div>
 
+                            </div>
+                                    {% endif %}
                             <div class="col-xs-3 change_width">
+                            {% if dashboard.getCreator().id == userId %}
                                 <!-- ComponentOptions dropdownMenu -->
                                 <div class="dropdown">
-                                {% if dashboard.getCreator().id == userId %}
+
                                     <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         Options
@@ -140,6 +146,7 @@
                                     <ul class="dropdown-menu">
                                         <li><a href="{{ path('app_copy_component', {'id': dashboard.id, 'componentId': componentId[key],}) }}"><i class="fa fa-files-o compIcon" aria-hidden="true"></i>
                                          Copy</a></li>
+
                                         <li><a href="{{ path('app_dashboard', {'id':  dashboard.id}) }}"><i class="fa fa-refresh" aria-hidden="true"></i>
                                                 Refresh</a></li>
                                         <li><a href="{{ path('app_delete_component', {'id': dashboard.id, 'componentId': componentId[key],}) }}"><i class="fa fa-files-o compIcon" aria-hidden="true"></i>
@@ -164,10 +171,15 @@
                                                 </li>
                                             </ul>
                                         </li>
+
                                     </ul>
-                                    {% endif %}
+
                                 </div>
 
+                            {% else %}
+                            <a href="{{ path('app_copy_component', {'id': dashboard.id, 'componentId': componentId[key],}) }}"><i class="fa fa-files-o compIcon" aria-hidden="true"></i>
+                                         Copy</a>
+                            {% endif %}
                             </div>
                         </div>
                         <div id="chart{{ key }}" style="min-width: 300px; height: 300px; margin: 0 auto">
@@ -178,6 +190,33 @@
 
                     {% endfor %}
                 </div>
+                  <!-- Modal Leave Dashboard -->
+                <div class="modal fade" id="leavedashboard" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Delete dashboard-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close"
+                                        data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Leave Dashboard</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>Do you want to leave dashboard ?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal"
+                                        onclick="window.location='{{ path('app_leave_dashboard',{'id': dashboard.id}) }}'">
+                                    Yes
+                                </button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
                 <!-- Modal Delete Dashboard -->
                 <div class="modal fade" id="deletedashboard" role="dialog">
                     <div class="modal-dialog">
