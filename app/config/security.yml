@@ -1,22 +1,27 @@
 security:
-    firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-        main:
-            pattern:            ^/
-            form_login:
-                provider: fos_userbundle
-                csrf_token_generator: security.csrf.token_manager
-                login_path:   fos_user_security_login
-                check_path:   fos_user_security_check
-#                remember_me:  true
-            logout:
-                path:         fos_user_security_logout
-                target:       fos_user_security_login
-            anonymous:        ~
-            switch_user:      ~
+        firewalls:
+            dev:
+                pattern:                    ^/(_(profiler|wdt)|css|images|js)/
+                security:                   false
+            main:
+                pattern:                    ^/
+                anonymous:                  true
+                form_login:
+                    login_path:             fos_user_security_login
+                    check_path:             fos_user_security_check
+                    provider:               fos_userbundle
+                    use_forward:            false
+                    failure_path:           null
+                    default_target_path:    /
+                    remember_me:            true
+                    csrf_token_generator:   security.csrf.token_manager
+                logout:
+                    path:                   fos_user_security_logout
+                    target:                 /login
+                remember_me:
+                    key:                    %secret%
+                    lifetime:               3000000000
+                    path:                   /
 
     encoders:
         FOS\UserBundle\Model\UserInterface: bcrypt
