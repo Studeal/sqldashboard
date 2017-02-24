@@ -13,13 +13,13 @@
 
             <div class="col-md-2 col-xs-2">
                 <div class="row">
-                    <p>First Name</p>
+                    <p>{{ usr.firstName }}</p>
                 </div>
                 <div class="row">
-                    <p>Last Name</p>
+                    <p>{{ usr.lastName }}</p>
                 </div>
                 <div class="row">
-                    <p>Email</p>
+                    <p>{{ usr.email }}</p>
                 </div>
             </div>
 
@@ -43,37 +43,35 @@
                 {# END Tab Pane List #}
 
                 {# START User Settings #}
-                    <div id="mySettings" class="tab-pane fade in active">
-                        <div class="table-responsive">
-                            <form id="mySettingsForm">
-                                <h3>My Settings</h3>
-                                <br>
-                                <div class="form-group">
-                                    <label for="newFirstName">First Name</label>
-                                    <input type="text" class="form-control" id="newFirstName" placeholder="Michael">
-                                </div>
-                                <div class="form-group">
-                                    <label for="newLastName">Last Name</label>
-                                    <input type="text" class="form-control" id="newLastName" placeholder="Jackson">
-                                </div>
-                                <div class="form-group">
-                                    <label for="newEmail1">Email address</label>
-                                    <input type="email" class="form-control" id="newEmail1" placeholder="Email">
-                                </div>
-                                <div class="form-group">
-                                    <label for="newPassword">Password</label>
-                                    <input type="password" class="form-control" id="newPassword" placeholder="Password">
-                                </div>
-                                <div class="form-group">
-                                    <label for="newFile">Profile Photo</label>
-                                    <input type="file" id="newFile">
-                                </div>
-                                <button type="submit" class="btn btn-default pull-right">Submit</button>
-                            </form>
-                        </div>
+                <h3>My Settings</h3>
+                    {{ form_start(form3, {'attr': {'novalidate': 'novalidate'}}) }}
+                    <div class="form-group">
+                        {{ form_row(form3.firstName, { 'attr': {'class': 'form-control', 'value': usr.firstName} }) }}
                     </div>
-                    <br>
-                    {# END User Settings #}
+                    <div class="form-group">
+                        {{ form_row(form3.lastName, { 'attr': {'class': 'form-control', 'value': usr.lastName} }) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(form3.username, { 'attr': {'class': 'form-control', 'value': usr.username} }) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(form3.email, { 'attr': {'class': 'form-control', 'value': usr.email} }) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(form3.plainPassword.first, {label: 'Password', 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(form3.plainPassword.second, {label: 'Repeat Password', 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(form3.image, { 'attr': {'type': 'file'} }) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(form3.roles) }}
+                    </div>
+                    {{ form_widget(form3.Submit, { 'attr': {'class': 'btn btn-default pull-right'} }) }}
+                    {{ form_end(form3) }}
+                {# END User Settings #}
 
                 </div>
                 <br>

@@ -28,16 +28,12 @@ class User extends BaseUser
 
     /**
      * @var string
-     * @Assert\NotBlank()
-     * @Assert\Length(min=4)
      * @ORM\Column(name="firstName", type="string", length=255)
      */
     protected $firstName;
 
     /**
      * @var string
-     * @Assert\NotBlank()
-     * @Assert\Length(min=4)
      * @ORM\Column(name="lastName", type="string", length=255)
      */
     protected $lastName;

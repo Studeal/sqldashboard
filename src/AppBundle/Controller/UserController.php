@@ -18,9 +18,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UserController extends Controller
 {
-//    public function loginAction(){
-//        return $this->render('@App/App/login.html.twig');
-//    }
 
     public function adminProfileAction(Request $request, $id)
     {
@@ -65,7 +62,7 @@ class UserController extends Controller
             // Generate a unique name for the file before saving it
             $fileName = md5(uniqid()).'.'.$file->getExtension();
 
-            // Move the file to the directory where brochures are stored
+            // Move the file to the directory where images are stored
             $file->move(
                 $this->getParameter('img_directory'),
                 $fileName
@@ -79,17 +76,30 @@ class UserController extends Controller
 
             $em->persist($newUser);
             $em->flush();
-            
 
             return $this->redirectToRoute('app_admin_profile', array('id' => $id));
         }
         // END FORM ADD USER //
 
         // START EDIT USER //
-
         $form2 = $this->get('form.factory')->create(new UserType(), $usr);
 
         if($form2->handleRequest($request)->isValid()) {
+
+            // Generate a unique name for the file before saving it
+
+            $fileName = md5(uniqid()).'.'.$file->getExtension();
+            
+            // Move the file to the directory where images are stored
+            $file->move(
+                $this->getParameter('img_directory'),
+                $fileName
+            );
+
+            // Update the 'image' property to store the img file name
+            // instead of its contents
+            $usr->setImage($fileName);
+            $usr->setFirstName('tataouine');
 
             $em = $this->getDoctrine()->getManager();
 
@@ -98,10 +108,7 @@ class UserController extends Controller
 
             return $this->redirectToRoute('app_admin_profile', array('id' => $id));
         }
-        // END FORM ADD USER //
-
-        //
-        //
+        // END FORM EDIT USER //
 
         return $this->render('@App/App/adminProfile.html.twig', array(
             'id'            => $id,
@@ -112,7 +119,7 @@ class UserController extends Controller
             'paginUsrs'     => $paginUsrs,
             'paginDashs'    => $paginDshs,
             'form'          => $form->createView(),
-            'form2'         => $form2->createView(),
+            'form2'         => $form2->createView()
         ));
     }
 
@@ -124,8 +131,7 @@ class UserController extends Controller
             $em->remove($dashboard);
             $em->flush();
         }
-        return $this->redirectToRoute('app_dashboard', array(
-            'id' => $id));//to do redirect to homepage
+        return $this->redirectToRoute('app_dashboard', array('id' => $id));//to do redirect to homepage
     }
 
     public function editUserAction()
@@ -138,17 +144,52 @@ class UserController extends Controller
         return $this->container;
     }
 
-    /**
-     * @Route("/user_profile/{id}", name="user_profile")
-     */
-    public function userProfileAction($id)
+
+    public function userProfileAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('AppBundle:User')->find($id);
-        $em->persist($user);
+
+        $usr = $em->getRepository('AppBundle:User')->find($id);
+        $usrs = $em->getRepository('AppBundle:User')->findAll();
         $em->flush();
-        return $this->redirectToRoute('user_profile', array('id' => $id));
-//        return $this->render('@App/Profile/show_content.html.twig');
+
+        /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
+        $file = $usr->getImage();
+
+        // START EDIT USER //
+        $form3 = $this->get('form.factory')->create(new UserType(), $usr);
+
+        if($form3->handleRequest($request)->isValid()) {
+
+            // Generate a unique name for the file before saving it
+            $fileName = md5(uniqid()).'.'.$file->getExtension();
+
+            // Move the file to the directory where brochures are stored
+            $file->move(
+                $this->getParameter('img_directory'),
+                $fileName
+            );
+
+            // Update the 'image' property to store the img file name
+            // instead of its contents
+            $usr->setImage($fileName);
+
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($usr);
+            $em->flush();
+
+            return $this->redirectToRoute('app_user_profile', array('id' => $id));
+        }
+        // END FORM ADD USER //
+
+        return $this->render('@App/App/userProfile.html.twig', array(
+            'id'            => $id,
+            'usr'           => $usr,
+            'usrs'          => $usrs,
+            'form3'         => $form3->createView()
+        ));
+//        return $this->render('@App/App/userProfile.html.twig');
     }
 
     /**

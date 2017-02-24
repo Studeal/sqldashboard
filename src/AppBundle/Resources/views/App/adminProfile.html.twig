@@ -84,7 +84,6 @@
                                                         </div>
                                                         <div class="form-group">
                                                             {{ form_row(form.image, { 'attr': {'type': 'file'} }) }}
-                                                            {#{{form_enctype (form)}}#}
                                                         </div>
                                                         <div class="form-group">
                                                             {{ form_row(form.roles) }}
@@ -270,12 +269,11 @@
                             </div>
                             <div id="mySettings" class="tab-pane fade">
                                 <div class="table-responsive">
-
                                     {# START User Settings #}
                                         <h3>My Settings</h3>
                                         {{ form_start(form2, {'attr': {'novalidate': 'novalidate'}}) }}
                                             <div class="form-group">
-                                                {{ form_row(form2.firstName, { 'attr': {'class': 'form-control', 'value': usr.firstName} }) }}
+                                                {{ form_row(form2.firstName, { 'attr': {'class': 'form-control', 'value' : usr.firstName} }) }}
                                             </div>
                                             <div class="form-group">
                                                 {{ form_row(form2.lastName, { 'attr': {'class': 'form-control', 'value': usr.lastName} }) }}
@@ -297,12 +295,10 @@
                                             </div>
                                             <div class="form-group">
                                                 {{ form_row(form2.roles) }}
-                                                {#{{form_enctype (form2)}}#}
                                             </div>
-                                        {{ form_widget(form2.Submit, { 'attr': {'class': 'btn btn-default pull-right'} }) }}
-                                        {{ form_end(form2) }}
-                                        {# END User Settings #}
-
+                                    {{ form_widget(form2.Submit, { 'attr': {'class': 'btn btn-default pull-right'} }) }}
+                                    {{ form_end(form2) }}
+                                    {# END User Settings #}
                                 </div>
                             </div>
                         </div>

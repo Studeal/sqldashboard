@@ -18,9 +18,13 @@ app_user_profile:
     path:     /user_profile/{id}
     defaults: { _controller: AppBundle:User:userProfile }
 
-app_add_user:
-    path:     /admin_profile/{id}
-    defaults: { _controller: AppBundle:User:addUser }
+#app_add_user:
+#    path:     /admin_profile/{id}
+#    defaults: { _controller: AppBundle:User:addUser }
+#
+#app_edit_user:
+#    path:     /admin_profile/{id}
+#    defaults: { _controller: AppBundle:User:editUser }
 
 app_dashboard:
     path:     /dashboard/{id}
