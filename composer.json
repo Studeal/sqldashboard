@@ -23,7 +23,7 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "ob/highcharts-bundle": "^1.5",
         "knplabs/knp-paginator-bundle": "^2.5",
-        "friendsofsymfony/user-bundle": "~2.0@dev",
+        "friendsofsymfony/user-bundle": "~2.0@dev"
 
     },
     "require-dev": {
