@@ -29,20 +29,19 @@ class DashboardController extends Controller
     //.......Dashboard view action
     /***
      * @param Request $request
-     * @param $id
+     * @param $dashboard
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function viewAction(Request $request, $id)
+    public function viewAction(Dashboard $dashboard, Request $request)
     {
         //.......Get current logged user
         $user = $this->container->get('security.context')->getToken()->getUser();
         $userId = $user->getId();
         //.......Get current dashboard object
         $em = $this->getDoctrine()->getManager();
-        $dashboard = $em->getRepository('AppBundle:Dashboard')
-            ->find($id);
+        $id = $dashboard->getId();
 
-        if ($dashboard->getCollaborator()->contains($user)) {
+        if ($dashboard->getCollaborator()->contains($user) || $dashboard->getCreator() == $user) {
 
             $repository = $this
                 ->getdoctrine()
@@ -154,16 +153,14 @@ class DashboardController extends Controller
     //.......Share Dashboard Function
     /***
      * @param Request $request
-     * @param $id
+     * @param $dashboard
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function shareAction(Request $request, $id)
+    public function shareAction(Dashboard $dashboard, Request $request)
     {
         //.......Get current dashboard
         $em = $this->getDoctrine()->getManager();
-        $dashboard = $em
-            ->getRepository('AppBundle:Dashboard')
-            ->find($id);
+        $id = $dashboard->getId();
         //.......Get the parameter from url for search function
         $parameter = $request->get('search');
         //.......Get all the user that have in the last name the "value" parameter
@@ -216,14 +213,14 @@ class DashboardController extends Controller
 
     //.......Delete dashboard
     /***
-     * @param $id
+     * @param $dashboard
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteDashAction($id)
+    public function deleteDashAction(Dashboard $dashboard)
     {
         //.......Get current dashboard
         $em = $this->getDoctrine()->getManager();
-        $dashboard = $em->getRepository('AppBundle:Dashboard')->find($id);
+        $id = $dashboard->getId();
         //.......get the components that are on the dashboard
         $components = $em->getRepository('AppBundle:Component')->findBy(
             array('dashboard' => $id));
@@ -244,17 +241,16 @@ class DashboardController extends Controller
 
     //.......Leave dashboard function - current user can quit a dashboard where he's been added
     /***
-     * @param $id
+     * @param $dashboard
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function leaveDashAction($id)
+    public function leaveDashAction(Dashboard $dashboard)
     {
         //.......get current user
         $user = $this->container->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
         //.......get current dashboard
-        $dashboard = $em->getRepository('AppBundle:Dashboard')
-            ->find($id);
+        $id = $dashboard->getId();
         //.......remove current user from dashboard
         $dashboard->removeCollaborator($user);
         $em->flush();
@@ -327,15 +323,15 @@ class DashboardController extends Controller
     //.......Paste Component
     /***
      * @param Request $request
-     * @param $id
+     * @param $dashboard
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function pasteComponentAction(Request $request, $id)
+    public function pasteComponentAction(Dashboard $dashboard, Request $request)
     {
         $session = $request->getSession();
         $em = $this->getDoctrine()->getManager();
         //......get current dashboard
-        $dashboard = $em->getRepository('AppBundle:Dashboard')->find($id);
+        $id = $dashboard->getId();
         //......get the id of the component saved in the session inside copy action
         $idComponent = $session->get('idComponent');
         $component = $em->getRepository('AppBundle:Component')->find($idComponent);
