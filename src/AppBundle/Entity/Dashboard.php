@@ -23,12 +23,13 @@ class Dashboard
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
-     * @Assert\NotNull()
+     * @Assert\NotBlank()
+     * @Assert\Length(min=3)
      */
     private $name;
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=false)
      */
     protected $creator;
     /**

@@ -17,7 +17,6 @@ use AppBundle\Form\ComponentType;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 
-
 class DashboardController extends Controller
 {
 
@@ -38,114 +37,118 @@ class DashboardController extends Controller
         //.......Get current logged user
         $user = $this->container->get('security.context')->getToken()->getUser();
         $userId = $user->getId();
-
-        $repository = $this
-            ->getdoctrine()
-            ->getManager()
-            ->getRepository('AppBundle:Component');
-
-        //.......Get current dashboard components
-        $components = $repository->findBy(
-            array('dashboard' => $id));
-
-        //.......Initialize chart's variables
-        $charts = array();
-        $componentName = array();
-        $componentId = array();
-        $sizeComponent = array();
-        $forms = array();
-
-        //.......For each component set chart's variables and create a form for each component
-        foreach ($components as $key => $component) {
-            $chart = $this->container->get('app.charts');
-            $chart->setLegend($component->getLegend());
-            $chart->setRequestSql($component->getRequestSQL());
-            $chart->setTypeGraph($component->getTypeGraph());
-            $chart->setXAxis($component->getXAxis());
-            $chart->setYAxis($component->getYAxis());
-            $chart = $chart->generateChart($key);
-            array_push($charts, $chart);
-            array_push($componentName, $component->getName());
-            array_push($componentId, $component->getId());
-            array_push($sizeComponent, $component->getSizeComponent());
-            $forms[$component->getId()] = $this->get('form.factory')->createNamedBuilder($component->getId(), new ComponentType(), $component)->getForm();
-        }
         //.......Get current dashboard object
         $em = $this->getDoctrine()->getManager();
         $dashboard = $em->getRepository('AppBundle:Dashboard')
             ->find($id);
-        //.......Set dashboard's creator
-        $creator = $dashboard->getCreator();
 
-        //.......Generate form for "Edit Dashboard"
-        $form = $this->get('form.factory')->create(new DashboardType(), $dashboard);
-        $form->handleRequest($request);
+        if ($dashboard->getCollaborator()->contains($user)) {
 
-        //.......Check if the method is POST and which form component is submitted
-        if ($request->isMethod('POST')) {
+            $repository = $this
+                ->getdoctrine()
+                ->getManager()
+                ->getRepository('AppBundle:Component');
 
-            foreach ($forms as $key => $oneForm) {
-                $forms[$key]->handleRequest($request);
+            //.......Get current dashboard components
+            $components = $repository->findBy(
+                array('dashboard' => $id));
+
+            //.......Initialize chart's variables
+            $charts = array();
+            $componentName = array();
+            $componentId = array();
+            $sizeComponent = array();
+            $forms = array();
+
+            //.......For each component set chart's variables and create a form for each component
+            foreach ($components as $key => $component) {
+                $chart = $this->container->get('app.charts');
+                $chart->setLegend($component->getLegend());
+                $chart->setRequestSql($component->getRequestSQL());
+                $chart->setTypeGraph($component->getTypeGraph());
+                $chart->setXAxis($component->getXAxis());
+                $chart->setYAxis($component->getYAxis());
+                $chart = $chart->generateChart($key);
+                array_push($charts, $chart);
+                array_push($componentName, $component->getName());
+                array_push($componentId, $component->getId());
+                array_push($sizeComponent, $component->getSizeComponent());
+                $forms[$component->getId()] = $this->get('form.factory')->createNamedBuilder($component->getId(), new ComponentType(), $component)->getForm();
             }
-            foreach ($forms as $key => $oneForm) {
-                if ($oneForm->isSubmitted() && $oneForm->isValid()) {
+            //.......Set dashboard's creator
+            $creator = $dashboard->getCreator();
 
-                    $em = $this->getDoctrine()
-                        ->getManager();
-                    $component = $em->getRepository('AppBundle:Component')
-                        ->find($key);
-                    //.......Change graphic's type
-                    if ($oneForm->get('linechart')->isClicked()) {
-                        $component->setTypeGraph('linechart');
-                    }
-                    if ($oneForm->get('column')->isClicked()) {
-                        $component->setTypeGraph('column');
-                    }
-                    if ($oneForm->get('area')->isClicked()) {
-                        $component->setTypeGraph('area');
-                    }
-                    if ($oneForm->get('bar')->isClicked()) {
-                        $component->setTypeGraph('bar');
-                    }
-                    //.......Save changes made on component
-                    $em->persist($component);
-                    $em->flush();
+            //.......Generate form for "Edit Dashboard"
+            $form = $this->get('form.factory')->create(new DashboardType(), $dashboard);
+            $form->handleRequest($request);
 
-                    return $this->redirectToRoute('app_dashboard', array(
-                        'id' => $id,
-                        'component' => $component,
-                    ));
+            //.......Check if the method is POST and which form component is submitted
+            if ($request->isMethod('POST')) {
+
+                foreach ($forms as $key => $oneForm) {
+                    $forms[$key]->handleRequest($request);
+                }
+                foreach ($forms as $key => $oneForm) {
+                    if ($oneForm->isSubmitted() && $oneForm->isValid()) {
+
+                        $em = $this->getDoctrine()
+                            ->getManager();
+                        $component = $em->getRepository('AppBundle:Component')
+                            ->find($key);
+                        //.......Change graphic's type
+                        if ($oneForm->get('linechart')->isClicked()) {
+                            $component->setTypeGraph('linechart');
+                        }
+                        if ($oneForm->get('column')->isClicked()) {
+                            $component->setTypeGraph('column');
+                        }
+                        if ($oneForm->get('area')->isClicked()) {
+                            $component->setTypeGraph('area');
+                        }
+                        if ($oneForm->get('bar')->isClicked()) {
+                            $component->setTypeGraph('bar');
+                        }
+                        //.......Save changes made on component
+                        $em->persist($component);
+                        $em->flush();
+
+                        return $this->redirectToRoute('app_dashboard', array(
+                            'id' => $id,
+                            'component' => $component,
+                        ));
+                    }
                 }
             }
-        }
 
-        //.......If dashboard edit form was submitted, save changes to database
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($dashboard);
-            $em->flush();
+            //.......If dashboard edit form was submitted, save changes to database
+            if ($form->isSubmitted() && $form->isValid()) {
+                $em->persist($dashboard);
+                $em->flush();
 
-            return $this->redirectToRoute('app_dashboard', array(
+                return $this->redirectToRoute('app_dashboard', array(
+                    'id' => $id));
+            }
+            //.......Create the view for each component form
+            foreach ($forms as $key => $formOne) {
+                $forms[$key] = $formOne->createView();
+            }
+            //.......Render dashboard view and send the variables to it
+            return $this->render('AppBundle:App:dashboard.html.twig', array(
+                'userId' => $userId,
+                'user' => $user,
+                'allCharts' => $charts,
+                'componentName' => $componentName,
+                'componentId' => $componentId,
+                'dashboard' => $dashboard,
+                'id' => $id,
+                'form' => $form->createView(),
+                'forms' => $forms,
+                'size' => $sizeComponent
+            ));
+        } else {
+            return $this->redirectToRoute('app_home', array(
                 'id' => $id));
         }
-        //.......Create the view for each component form
-        foreach ($forms as $key => $formOne) {
-            $forms[$key] = $formOne->createView();
-        }
-        //.......Render dashboard view and send the variables to it
-        return $this->render('AppBundle:App:dashboard.html.twig', array(
-            'userId' => $userId,
-            'user' => $user,
-            'creator' => $creator,
-            'allCharts' => $charts,
-            'componentName' => $componentName,
-            'componentId' => $componentId,
-            'dashboard' => $dashboard,
-            'components' => $components,
-            'id' => $id,
-            'form' => $form->createView(),
-            'forms' => $forms,
-            'size' => $sizeComponent
-        ));
     }
 
     //.......Share Dashboard Function
@@ -177,18 +180,23 @@ class DashboardController extends Controller
         if ($request->get('activeUsers')) {
             $activeUsers = $request->get('activeUsers');
 
-            foreach ($listUsers as $inactiveUser) {
-                $dashboard->removeCollaborator($inactiveUser);
-                $em->persist($dashboard);
+            $activeCollaborators = $em->getRepository('AppBundle:User')->createQueryBuilder('u')
+                ->where('u.id IN (:ids)')
+                ->setParameter('ids', $activeUsers)
+                ->getQuery()
+                ->getResult();
+            // remove old collaborators
+            foreach ($dashboard->getCollaborator() as $collaborator) {
+                if (!in_array($collaborator, $activeCollaborators)) {
+                    $dashboard->removeCollaborator($collaborator);
+                }
             }
-
-            foreach ($activeUsers as $active) {
-                $user = $em->getRepository('AppBundle:User')
-                    ->find($active);
-                $dashboard->addCollaborator($user);
-                $em->persist($dashboard);
+            // add new ones
+            foreach ($activeCollaborators as $collaborator) {
+                if (!in_array($collaborator, $dashboard->getCollaborator()->toArray())) {
+                    $dashboard->addCollaborator($collaborator);
+                }
             }
-
             $em->flush();
 
             return $this->redirectToRoute('app_dashboard', array(
