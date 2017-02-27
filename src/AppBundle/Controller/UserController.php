@@ -15,6 +15,7 @@ use AppBundle\Entity\User;
 use Knp\Bundle\PaginatorBundle\KnpPaginatorBundle;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\File;
 
 class UserController extends Controller
 {
@@ -28,9 +29,6 @@ class UserController extends Controller
         $dshs = $em->getRepository('AppBundle:Dashboard')->findAll();
         $em->flush();
 
-        // $file stores the uploaded image file
-        /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
-        $file = $usr->getImage();
 
         // START PAGINATION //
         $paginUsrs = $this->get('knp_paginator')->paginate($usrs,
@@ -59,8 +57,12 @@ class UserController extends Controller
 
         if($form->handleRequest($request)->isValid()) {
 
+            // $file stores the uploaded image file
+            /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
+            $file = $newUser->getImage();
+
             // Generate a unique name for the file before saving it
-            $fileName = md5(uniqid()).'.'.$file->getExtension();
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
 
             // Move the file to the directory where images are stored
             $file->move(
@@ -86,10 +88,13 @@ class UserController extends Controller
 
         if($form2->handleRequest($request)->isValid()) {
 
-            // Generate a unique name for the file before saving it
+            // $file stores the uploaded image file
+            /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
+            $file = $usr->getImage();
 
-            $fileName = md5(uniqid()).'.'.$file->getExtension();
-            
+            // Generate a unique name for the file before saving it
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+
             // Move the file to the directory where images are stored
             $file->move(
                 $this->getParameter('img_directory'),
@@ -99,11 +104,8 @@ class UserController extends Controller
             // Update the 'image' property to store the img file name
             // instead of its contents
             $usr->setImage($fileName);
-            $usr->setFirstName('tataouine');
-
-            $em = $this->getDoctrine()->getManager();
-
-            $em->persist($usr);
+            
+            $em->merge($usr);
             $em->flush();
 
             return $this->redirectToRoute('app_admin_profile', array('id' => $id));
@@ -119,9 +121,11 @@ class UserController extends Controller
             'paginUsrs'     => $paginUsrs,
             'paginDashs'    => $paginDshs,
             'form'          => $form->createView(),
-            'form2'         => $form2->createView()
+            'form2'         => $form2->createView(),
+            'newUser'       => $newUser
         ));
     }
+
 
     public function deleteDashAction($id)
     {

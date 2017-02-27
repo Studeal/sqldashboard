@@ -21,7 +21,8 @@ class UserType extends AbstractType
             ->add('lastName',   'text')
             ->add('image',      'file', array('data_class' => null))
             //FileType::class, array('label' => 'Profile Image'
-            ->add('Submit',     'submit')
+            ->add('UpdateUser',     'submit')
+            ->add('AddUser',        'submit')
         ;
     }
     

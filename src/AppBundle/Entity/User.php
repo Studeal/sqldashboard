@@ -59,7 +59,7 @@ class User extends BaseUser
     /**
      * Set firstName
      *
-     * @param string $firstName
+     * @param string $firstNam
      *
      * @return User
      */
@@ -111,7 +111,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function setImage(File $file = null)
+    public function setImage($file)
     {
         $this->image = $file;
 

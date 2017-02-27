@@ -8,8 +8,11 @@
             <div id="userInfo" class="container-fluid">
                 <div class="row">
                     <div class="col-md-2 col-xs-4">
-                        {#<img src="{{ asset('assets/img/user_img.png') }}" width="100px" height="100px" alt="Profile image">#}
-                        <img src="{{ asset('assets/img/' ~ usr.image) }}" width="100px" height="100px" alt="Profile image">
+                        {% if usr.image %}
+                            <img src="{{ asset('assets/img/' ~ usr.image) }}" width="100px" height="100px" alt="Profile image">
+                        {% else %}
+                            <img src="{{ asset('assets/img/user_img.png') }}" width="100px" height="100px" alt="Profile image">
+                        {% endif %}
                     </div>
 
                     <div class="col-md-2 col-xs-2">
@@ -90,7 +93,8 @@
                                                         </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    {{ form_widget(form.Submit, { 'attr': {'class': 'btn btn-default'} }) }}
+                                                    {#Submit new user#}
+                                                    {{ form_widget(form.AddUser, { 'attr': {'class': 'btn btn-default'} }) }}
                                                 </div>
 
                                                 {{ form_end(form) }}
@@ -165,7 +169,8 @@
                                                     </form>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="submit" class="btn btn-default">Submit</button>
+                                                    {#{{ form_widget(form.UpdateUser, { 'attr': {'class': 'btn btn-default'} }) }}#}
+                                                    <button></button>
                                                 </div>
                                                 {# END Edit User Form #}
                                             </div>
@@ -222,7 +227,7 @@
                                         {% for dsh in paginDashs %}
                                             <tr>
                                                 <td>{{ dsh.name }}</td>
-                                                <td>Cool User 1</td>
+                                                <td>Ashley</td>
                                                 <td><a data-toggle="modal" data-target="#delDash">Delete</a></td>
                                             </tr>
                                         {% endfor %}
@@ -271,7 +276,7 @@
                                 <div class="table-responsive">
                                     {# START User Settings #}
                                         <h3>My Settings</h3>
-                                        {{ form_start(form2, {'attr': {'novalidate': 'novalidate'}}) }}
+                                        {{ form_start(form2, {'action':path('app_edit_user'),'method':'POST', 'attr': {'novalidate': 'novalidate'}}) }}
                                             <div class="form-group">
                                                 {{ form_row(form2.firstName, { 'attr': {'class': 'form-control', 'value' : usr.firstName} }) }}
                                             </div>
@@ -296,7 +301,7 @@
                                             <div class="form-group">
                                                 {{ form_row(form2.roles) }}
                                             </div>
-                                    {{ form_widget(form2.Submit, { 'attr': {'class': 'btn btn-default pull-right'} }) }}
+                                    {{ form_widget(form2.UpdateUser, { 'attr': {'class': 'btn btn-default pull-right'} }) }}
                                     {{ form_end(form2) }}
                                     {# END User Settings #}
                                 </div>
