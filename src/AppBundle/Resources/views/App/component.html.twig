@@ -25,7 +25,7 @@
     {# Create form with Twig and Doctrine #}
     <div class="row">
         {#Form start and display error#}
-        {{ form_start(form,{'attr': {'class': 'form-horizontal'}}) }}
+        {{ form_start(form,{'attr': {'novalidate' : 'novalidate', 'class': 'form-horizontal'}}) }}
             {{ form_errors(form) }}
             
             <div class="form-group">
@@ -33,7 +33,7 @@
                 {{ form_label(form.name, "Component name:", {'label_attr': {'class': 'col-xs-2 control-label'}}) }}
                 {{ form_errors(form.name) }}
                 <div class="col-xs-8">
-                    {{ form_widget(form.name, {'attr': {'class': 'form-control', 'value': componentName}}) }}
+                    {{ form_widget(form.name, {'attr': {'class': 'form-control', 'value': component.name}}) }}
                 </div>
             </div>
             <div class="form-group">
@@ -41,7 +41,7 @@
                 {{ form_label(form.legend, "Chart legend:", {'label_attr': {'class': 'col-xs-2 control-label'}}) }}
                 {{ form_errors(form.legend) }}
                 <div class="col-xs-8">
-                    {{ form_widget(form.legend, {'attr': {'class': 'form-control', 'value': legend}}) }}
+                    {{ form_widget(form.legend, {'attr': {'class': 'form-control', 'value': component.legend}}) }}
                 </div>
             </div>
             <div class="form-group">
@@ -49,7 +49,7 @@
                 {{ form_label(form.xAxis, "xAxis name:", {'label_attr': {'class': 'col-xs-2 control-label'}}) }}
                 {{ form_errors(form.xAxis) }}
                 <div class="col-xs-8">
-                    {{ form_widget(form.xAxis, {'attr': {'class': 'form-control', 'value': xAxis}}) }}
+                    {{ form_widget(form.xAxis, {'attr': {'class': 'form-control', 'value': component.xAxis}}) }}
                 </div>
             </div>
             <div class="form-group">
@@ -57,7 +57,7 @@
                 {{ form_label(form.yAxis, "yAxis name:", {'label_attr': {'class': 'col-xs-2 control-label'}}) }}
                 {{ form_errors(form.yAxis) }}
                 <div class="col-xs-8">
-                    {{ form_widget(form.yAxis, {'attr': {'class': 'form-control', 'value': yAxis}}) }}
+                    {{ form_widget(form.yAxis, {'attr': {'class': 'form-control', 'value': component.yAxis}}) }}
                 </div>
                 {#Display button execute#}
                 <div class="col-xs-2">
@@ -70,7 +70,7 @@
                 {{ form_widget(form.requestSQL, {'attr': {'class':       'form-control',
                                                           'rows':         8,
                                                           'placeholder': 'SQL Request',
-                                                          'value':       requestSql}}) 
+                                                          'value':       component.requestSql}}) 
                 }}
             </div>
     </div>
