@@ -83,35 +83,11 @@ class UserController extends Controller
         }
         // END FORM ADD USER //
 
-        // START EDIT USER //
+        // START BUILD FORM TO EDIT MY USER INFO //
         $form2 = $this->get('form.factory')->create(new UserType(), $usr);
+        // END BUILD FORM TO EDIT MY USER INFO //
 
-        if($form2->handleRequest($request)->isValid()) {
-
-            // $file stores the uploaded image file
-            /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
-            $file = $usr->getImage();
-
-            // Generate a unique name for the file before saving it
-            $fileName = md5(uniqid()).'.'.$file->guessExtension();
-
-            // Move the file to the directory where images are stored
-            $file->move(
-                $this->getParameter('img_directory'),
-                $fileName
-            );
-
-            // Update the 'image' property to store the img file name
-            // instead of its contents
-            $usr->setImage($fileName);
-            
-            $em->merge($usr);
-            $em->flush();
-
-            return $this->redirectToRoute('app_admin_profile', array('id' => $id));
-        }
-        // END FORM EDIT USER //
-
+        // RENDER VARIABLES AND PAGE //
         return $this->render('@App/App/adminProfile.html.twig', array(
             'id'            => $id,
             'usr'           => $usr,
@@ -138,10 +114,98 @@ class UserController extends Controller
         return $this->redirectToRoute('app_dashboard', array('id' => $id));//to do redirect to homepage
     }
 
-    public function editUserAction()
+    // START EDIT OWN USER INFO //
+    public function editUserAction(Request $request, $id)
     {
-        return $this->container;
+        $em = $this->getDoctrine()->getManager();
+        $usr = $em->getRepository('AppBundle:User')->find($id);
+        $usrs = $em->getRepository('AppBundle:User')->findAll();
+        $em->flush();
+
+        // START EDIT USER //
+        $form2 = $this->get('form.factory')->create(new UserType(), $usr);
+
+        if($form2->handleRequest($request)->isValid()) {
+
+            // $file stores the uploaded image file
+            /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
+            $file = $usr->getImage();
+
+            // Generate a unique name for the file before saving it
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+
+            // Move the file to the directory where images are stored
+            $file->move(
+                $this->getParameter('img_directory'),
+                $fileName
+            );
+
+            // Update the 'image' property to store the img file name
+            // instead of its contents
+            $usr->setImage($fileName);
+
+            $em->merge($usr);
+            $em->flush();
+
+            return $this->redirectToRoute('app_admin_profile', array('id' => $id));
+        }
+        // END FORM EDIT USER //
+
+        return $this->render('@App/App/adminProfile.html.twig', array(
+            'id'            => $id,
+            'usr'           => $usr,
+            'usrs'          => $usrs,
+            'form2'         => $form2->createView()
+        ));
     }
+    // END EDIT OWN USER INFO //
+
+    // START EDIT ALL USERS INFO //
+
+    public function editUsersAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $usr = $em->getRepository('AppBundle:User')->find($id);
+        $usrs = $em->getRepository('AppBundle:User')->findAll();
+        $em->flush();
+
+        $form2 = $this->get('form.factory')->create(new UserType(), $usr);
+
+        if($form2->handleRequest($request)->isValid()) {
+
+            // $file stores the uploaded image file
+            /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
+            $file = $usr->getImage();
+
+            // Generate a unique name for the file before saving it
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+
+            // Move the file to the directory where images are stored
+            $file->move(
+                $this->getParameter('img_directory'),
+                $fileName
+            );
+
+            // Update the 'image' property to store the img file name
+            // instead of its contents
+            $usr->setImage($fileName);
+
+            $em->merge($usr);
+            $em->flush();
+
+            return $this->redirectToRoute('app_admin_profile', array('id' => $id));
+        }
+        // END EDIT ALL USERS INFO //
+
+        return $this->render('@App/App/adminProfile.html.twig', array(
+            'id'            => $id,
+            'usr'           => $usr,
+            'usrs'          => $usrs,
+            'form2'         => $form2->createView()
+        ));
+    }
+
+    // //
 
     public function deleteUserAction()
     {
@@ -193,7 +257,7 @@ class UserController extends Controller
             'usrs'          => $usrs,
             'form3'         => $form3->createView()
         ));
-//        return $this->render('@App/App/userProfile.html.twig');
+        return $this->render('@App/App/userProfile.html.twig');
     }
 
     /**
