@@ -94,7 +94,7 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     {#Submit new user#}
-                                                    {{ form_widget(form.AddUser, { 'attr': {'class': 'btn btn-default'} }) }}
+                                                    {{ form_widget(form.Submit, { 'attr': {'class': 'btn btn-default'} }) }}
                                                 </div>
 
                                                 {{ form_end(form) }}
@@ -136,6 +136,7 @@
                                                 {# START Edit User Form #}
                                                 <div class="modal-body">
                                                     <form>
+                                                    {#{{ form_start(form4, {'action':path('app_edit_users', {'id': usr.id}), 'method':'POST' }) }}#}
                                                         <div class="form-group">
                                                             <label for="newFirstName">First Name</label>
                                                             <input type="text" class="form-control" id="newFirstName" placeholder="Michael">
@@ -166,6 +167,8 @@
                                                                 <input type="radio" name="inlineRadioOptions" id="deactivate" value="option2"> Deactivated
                                                             </label>
                                                         </div>
+                                                    {#{{ form_widget(form4.Submit, { 'attr': {'class': 'btn btn-default pull-right'} }) }}#}
+                                                    {#{{ form_end(form4) }}#}
                                                     </form>
                                                 </div>
                                                 <div class="modal-footer">
@@ -276,7 +279,7 @@
                                 <div class="table-responsive">
                                     {# START User Settings #}
                                         <h3>My Settings</h3>
-                                        {{ form_start(form2, {'action':path('app_edit_user'),'method':'POST', 'attr': {'novalidate': 'novalidate'}}) }}
+                                        {{ form_start(form2, {'action':path('app_edit_user', {'id': usr.id}), 'method':'POST' }) }}
                                             <div class="form-group">
                                                 {{ form_row(form2.firstName, { 'attr': {'class': 'form-control', 'value' : usr.firstName} }) }}
                                             </div>
@@ -301,7 +304,7 @@
                                             <div class="form-group">
                                                 {{ form_row(form2.roles) }}
                                             </div>
-                                    {{ form_widget(form2.UpdateUser, { 'attr': {'class': 'btn btn-default pull-right'} }) }}
+                                    {{ form_widget(form2.Submit, { 'attr': {'class': 'btn btn-default pull-right'} }) }}
                                     {{ form_end(form2) }}
                                     {# END User Settings #}
                                 </div>

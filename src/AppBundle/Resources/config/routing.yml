@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 app_home:
     path:     /
     defaults: { _controller: AppBundle:Dashboard:index }
@@ -21,10 +22,15 @@ app_user_profile:
 #app_add_user:
 #    path:     /admin_profile/{id}
 #    defaults: { _controller: AppBundle:User:addUser }
+
 #
 app_edit_user:
     path:     /admin_profile/edit/{id}
     defaults: { _controller: AppBundle:User:editUser }
+
+app_edit_users:
+    path:     /admin_profile/edit/users{id}
+    defaults: { _controller: AppBundle:User:editUsers }
 
 app_dashboard:
     path:     /dashboard/{id}
@@ -42,6 +48,8 @@ app_change_size:
     path:     /app_change_size/{componentId}/{size}/{id}
     defaults: { _controller: AppBundle:Dashboard:changeSize }
 
+=======
+>>>>>>> 360de5359e57b84b807162fd5d93000696dc3f61
 app_add_component:
     path:     /components/{dashboardId}/add
     defaults: { _controller: AppBundle:Component:addComponent }

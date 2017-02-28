@@ -1,5 +1,6 @@
 <?php
 
+<<<<<<< HEAD
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -79,64 +80,153 @@ class Dashboard
     {
         return $this->name;
     }
+=======
+    namespace AppBundle\Entity;
+>>>>>>> 360de5359e57b84b807162fd5d93000696dc3f61
 
-    
-
-    /**
-     * Set creator
-     *
-     * @param \AppBundle\Entity\User $creator
-     *
-     * @return Dashboard
-     */
-    public function setCreator(\AppBundle\Entity\User $creator)
-    {
-        $this->creator = $creator;
-
-        return $this;
-    }
+    use Doctrine\ORM\Mapping as ORM;
+    use Doctrine\Common\Collections\ArrayCollection;
+    use Symfony\Component\Validator\Constraints as Assert;
 
     /**
-     * Get creator
-     *
-     * @return \AppBundle\Entity\User
-     */
-    public function getCreator()
+    * Dashboard
+    *
+    * @ORM\Table(name="sqldashboard_dashboard")
+    * @ORM\Entity(repositoryClass="AppBundle\Repository\DashboardRepository")
+    */
+    class Dashboard
     {
-        return $this->creator;
-    }
+        /**
+        * @var int
+        *
+        * @ORM\Column(name="id", type="integer")
+        * @ORM\Id
+        * @ORM\GeneratedValue(strategy="AUTO")
+        */
+        private $id;
 
-    /**
-     * Add collaborator
-     *
-     * @param \AppBundle\Entity\User $collaborator
-     *
-     * @return Dashboard
-     */
-    public function addCollaborator(\AppBundle\Entity\User $collaborator)
-    {
-        $this->collaborator[] = $collaborator;
+        /**
+        * @var string
+        *
+        * @ORM\Column(name="name", type="string", length=255)
+        *
+        * @Assert\NotBlank()
+        * @Assert\Length(
+        *      max = 255,
+        *      maxMessage = "The name cannot be longer than {{ limit }} characters"
+        * )
+        *
+        */
+        private $name;
 
-        return $this;
-    }
+        /**
+        * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+        * @ORM\JoinColumn(nullable=false)
+        */
+        private $creator;
 
-    /**
-     * Remove collaborator
-     *
-     * @param \AppBundle\Entity\User $collaborator
-     */
-    public function removeCollaborator(\AppBundle\Entity\User $collaborator)
-    {
-        $this->collaborator->removeElement($collaborator);
-    }
+        /**
+        * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", cascade={"persist"})
+        */
+        private $collaborator;
 
-    /**
-     * Get collaborator
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getCollaborator()
-    {
-        return $this->collaborator;
+        public function __construct()
+        {
+            $this->collaborator = new ArrayCollection();
+        }
+
+
+        /**
+        * Get id
+        *
+        * @return int
+        */
+        public function getId()
+        {
+            return $this->id;
+        }
+
+        /**
+        * Set name
+        *
+        * @param string $name
+        *
+        * @return Dashboard
+        */
+        public function setName($name)
+        {
+            $this->name = $name;
+
+            return $this;
+        }
+
+        /**
+        * Get name
+        *
+        * @return string
+        */
+        public function getName()
+        {
+            return $this->name;
+        }
+
+        
+
+        /**
+        * Set creator
+        *
+        * @param \AppBundle\Entity\User $creator
+        *
+        * @return Dashboard
+        */
+        public function setCreator(\AppBundle\Entity\User $creator)
+        {
+            $this->creator = $creator;
+
+            return $this;
+        }
+
+        /**
+        * Get creator
+        *
+        * @return \AppBundle\Entity\User
+        */
+        public function getCreator()
+        {
+            return $this->creator;
+        }
+
+        /**
+        * Add collaborator
+        *
+        * @param \AppBundle\Entity\User $collaborator
+        *
+        * @return Dashboard
+        */
+        public function addCollaborator(\AppBundle\Entity\User $collaborator)
+        {
+            $this->collaborator[] = $collaborator;
+
+            return $this;
+        }
+
+        /**
+        * Remove collaborator
+        *
+        * @param \AppBundle\Entity\User $collaborator
+        */
+        public function removeCollaborator(\AppBundle\Entity\User $collaborator)
+        {
+            $this->collaborator->removeElement($collaborator);
+        }
+
+        /**
+        * Get collaborator
+        *
+        * @return \Doctrine\Common\Collections\Collection
+        */
+        public function getCollaborator()
+        {
+            return $this->collaborator;
+        }
     }
-}
