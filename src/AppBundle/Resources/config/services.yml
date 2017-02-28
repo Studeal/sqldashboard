@@ -1,8 +1,8 @@
 services:
     app.charts:
         class: AppBundle\Charts\Charts
-        arguments: [ @app.requestSql ]
+        arguments: [ @app.SQLRequest ]
 
-    app.requestSql:
-        class: AppBundle\RequestSql\RequestSql
+    app.SQLRequest:
+        class: AppBundle\SQLRequest\SQLRequest
         arguments: [ @doctrine.orm.entity_manager ]

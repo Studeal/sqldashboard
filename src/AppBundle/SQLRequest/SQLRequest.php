@@ -1,14 +1,14 @@
 <?php
 
-    namespace AppBundle\RequestSql;
+    namespace AppBundle\SQLRequest;
 
-    class RequestSql
+    class SQLRequest
     {
         protected $em;
         private $rqSql;
 
         /***
-        * RequestSql constructor.
+        * SQLRequest constructor.
         * @param \Doctrine\ORM\EntityManager $em
         */
         public function __construct(\Doctrine\ORM\EntityManager $em)

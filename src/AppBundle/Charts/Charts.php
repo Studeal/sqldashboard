@@ -16,7 +16,7 @@
 
         /***
         * Charts constructor.
-        * @param RequestSql $sqlRq
+        * @param SQLRequest $sqlRq
         */
         public function __construct(SQLRequest $sqlRq)
         {
