@@ -5,6 +5,7 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" type="" href="{{ asset('assets/css/style.css')}}">
+    <link rel="stylesheet" type="" href="{{ asset('assets/css/user.css')}}">
 {% endblock %}
 
 {% block body %}
@@ -13,9 +14,11 @@
         {% include "::navbar.html.twig"%}
     {% endblock %}
   
+    <div class="col-xs-10 contenu contenudash">
 
-    {% block app_body %}
-        
-    {% endblock %}
+        {% block app_body %}
+            
+        {% endblock %}
+    </div>
 
 {% endblock %}

@@ -49,4 +49,8 @@
 */Entity/*~
 
 /.idea
+/.vscode
+
+#DataFixtures
+/src/AppBundle/DataFixtures
 

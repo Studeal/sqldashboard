@@ -24,6 +24,7 @@
     font-size: 14px;
 }
 /*:::::::::::::::::::::::::: Form ::::::::::*/
+
 /*:::::::::::::::::::::::::: Charts choise :*/
 .charts_choise{
     text-align: center;
@@ -37,6 +38,11 @@
 
 .charts_choise i{
     font-size: 40px;
+}
+
+.compIcon{
+    background-color: transparent !important;
+    border: none !important;
 }
 /*:::::::::::::::::::::::::: Chart view ::::*/
 .highcharts-button{
