@@ -1,10 +1,8 @@
 <?php
-
 namespace AppBundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Dashboard
  *
@@ -21,31 +19,27 @@ class Dashboard
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(min=3)
      */
     private $name;
-
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
      */
-    private $creator;
-
+    protected $creator;
     /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", cascade={"persist"})
      */
     private $collaborator;
-
     public function __construct()
     {
         $this->collaborator = new ArrayCollection();
     }
-
-
     /**
      * Get id
      *
@@ -55,7 +49,6 @@ class Dashboard
     {
         return $this->id;
     }
-
     /**
      * Set name
      *
@@ -66,10 +59,8 @@ class Dashboard
     public function setName($name)
     {
         $this->name = $name;
-
         return $this;
     }
-
     /**
      * Get name
      *
@@ -79,8 +70,6 @@ class Dashboard
     {
         return $this->name;
     }
-
-    
 
     /**
      * Set creator
@@ -92,10 +81,8 @@ class Dashboard
     public function setCreator(\AppBundle\Entity\User $creator)
     {
         $this->creator = $creator;
-
         return $this;
     }
-
     /**
      * Get creator
      *
@@ -105,7 +92,6 @@ class Dashboard
     {
         return $this->creator;
     }
-
     /**
      * Add collaborator
      *
@@ -116,10 +102,8 @@ class Dashboard
     public function addCollaborator(\AppBundle\Entity\User $collaborator)
     {
         $this->collaborator[] = $collaborator;
-
         return $this;
     }
-
     /**
      * Remove collaborator
      *
@@ -129,7 +113,6 @@ class Dashboard
     {
         $this->collaborator->removeElement($collaborator);
     }
-
     /**
      * Get collaborator
      *

@@ -13,8 +13,14 @@ class DashboardType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', 'text')
-            ->add('UpdateName', 'submit');;
+
+//->add('name')->add('creator')->add('collaborator')
+
+        $builder
+            ->add('UpdateName', 'submit')
+            ->add('name', 'text')
+            ->add('AddYourDashboard', 'submit')
+        ;
     }
     
     /**

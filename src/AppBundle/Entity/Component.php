@@ -1,9 +1,7 @@
 <?php
-
 namespace AppBundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Component
  *
@@ -20,63 +18,84 @@ class Component
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Dashboard")
      * @ORM\JoinColumn(nullable=false)
      */
     private $dashboard;
-
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "The name cannot be longer than {{ limit }} characters"
+     * )
+     *
      */
     private $name = "";
-
     /**
      * @var string
      *
      * @ORM\Column(name="requestSQL", type="text")
+     *
+     * @Assert\NotBlank()
+     *
      */
     private $requestSQL = "";
-
     /**
      * @var string
      *
      * @ORM\Column(name="typeGraph", type="string", length=255)
      */
     private $typeGraph = "column";
-
     /**
      * @var string
      *
      * @ORM\Column(name="sizeComponent", type="string", length=10)
      */
     private $sizeComponent = "3";
-
     /**
      * @var string
      *
      * @ORM\Column(name="legend", type="string", length=255)
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "The legend cannot be longer than {{ limit }} characters"
+     * )
+     *
      */
     private $legend = "";
-
     /**
      * @var string
      *
      * @ORM\Column(name="xAxis", type="string", length=255)
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "The xAxis name cannot be longer than {{ limit }} characters"
+     * )
+     *
      */
     private $xAxis = "";
-
     /**
      * @var string
      *
      * @ORM\Column(name="yAxis", type="string", length=255)
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "The yAxis name cannot be longer than {{ limit }} characters"
+     * )
+     *
      */
     private $yAxis = "";
-
-
     /**
      * Get id
      *
@@ -86,8 +105,6 @@ class Component
     {
         return $this->id;
     }
-
-
     /**
      * Set name
      *
@@ -98,10 +115,8 @@ class Component
     public function setName($name)
     {
         $this->name = $name;
-
         return $this;
     }
-
     /**
      * Get name
      *
@@ -111,7 +126,6 @@ class Component
     {
         return $this->name;
     }
-
     /**
      * Set requestSQL
      *
@@ -122,10 +136,8 @@ class Component
     public function setRequestSQL($requestSQL)
     {
         $this->requestSQL = $requestSQL;
-
         return $this;
     }
-
     /**
      * Get requestSQL
      *
@@ -135,7 +147,6 @@ class Component
     {
         return $this->requestSQL;
     }
-
     /**
      * Set typeGraph
      *
@@ -146,10 +157,8 @@ class Component
     public function setTypeGraph($typeGraph)
     {
         $this->typeGraph = $typeGraph;
-
         return $this;
     }
-
     /**
      * Get typeGraph
      *
@@ -159,7 +168,6 @@ class Component
     {
         return $this->typeGraph;
     }
-
     /**
      * Set sizeComponent
      *
@@ -170,10 +178,8 @@ class Component
     public function setSizeComponent($sizeComponent)
     {
         $this->sizeComponent = $sizeComponent;
-
         return $this;
     }
-
     /**
      * Get sizeComponent
      *
@@ -183,7 +189,6 @@ class Component
     {
         return $this->sizeComponent;
     }
-
     /**
      * Set legend
      *
@@ -194,10 +199,8 @@ class Component
     public function setLegend($legend)
     {
         $this->legend = $legend;
-
         return $this;
     }
-
     /**
      * Get legend
      *
@@ -207,7 +210,6 @@ class Component
     {
         return $this->legend;
     }
-
     /**
      * Set xAxis
      *
@@ -218,10 +220,8 @@ class Component
     public function setXAxis($xAxis)
     {
         $this->xAxis = $xAxis;
-
         return $this;
     }
-
     /**
      * Get xAxis
      *
@@ -231,7 +231,6 @@ class Component
     {
         return $this->xAxis;
     }
-
     /**
      * Set yAxis
      *
@@ -242,10 +241,8 @@ class Component
     public function setYAxis($yAxis)
     {
         $this->yAxis = $yAxis;
-
         return $this;
     }
-
     /**
      * Get yAxis
      *
@@ -255,7 +252,6 @@ class Component
     {
         return $this->yAxis;
     }
-
     /**
      * Set dashboard
      *
@@ -266,10 +262,8 @@ class Component
     public function setDashboard(\AppBundle\Entity\Dashboard $dashboard)
     {
         $this->dashboard = $dashboard;
-
         return $this;
     }
-
     /**
      * Get dashboard
      *

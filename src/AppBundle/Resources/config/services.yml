@@ -4,11 +4,11 @@ services:
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
     app.charts:
         class: AppBundle\Charts\Charts
-        arguments: [@app.requestSql]
+        arguments: [@app.SQLRequest]
 
-    app.requestSql:
-         class: AppBundle\RequestSql\RequestSql
-         arguments: [@doctrine.orm.entity_manager]
+    app.SQLRequest:
+        class: AppBundle\SQLRequest\SQLRequest
+        arguments: [@doctrine.orm.entity_manager]
 
     app.form.add.user:
          class: AppBundle\Form\UserType

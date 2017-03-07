@@ -55,14 +55,14 @@ class UserController extends Controller
 
         $form = $this->get('form.factory')->create(new UserType(), $newUser);
 
-        if($form->handleRequest($request)->isValid()) {
+        if ($form->handleRequest($request)->isValid()) {
 
             // $file stores the uploaded image file
             /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
             $file = $newUser->getImage();
 
             // Generate a unique name for the file before saving it
-            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
 
             // Move the file to the directory where images are stored
             $file->move(
@@ -83,17 +83,69 @@ class UserController extends Controller
         }
         // END FORM ADD USER //
 
+        // START
+        // BUILD FORM TO EDIT MY USER INFO //
+//        $form4 = $this->get('form.factory')->create(new UserType(), $usr);
+
+        // START
+        // BUILD FORM TO EDIT MY USER INFO //
+        $form2 = $this->get('form.factory')->create(new UserType(), $usr);
+
+        // START
+        // BUILD FORM TO EDIT ALL USERS INFO //
+        // RENDER VARIABLES AND PAGE //
+        return $this->render('@App/App/adminProfile.html.twig', array(
+            'id' => $id,
+            'usr' => $usr,
+            'usrs' => $usrs,
+            'dsh' => $dsh,
+            'dshs' => $dshs,
+            'paginUsrs' => $paginUsrs,
+            'paginDashs' => $paginDshs,
+            'form' => $form->createView(),
+//            'form4' => $form4->createView(),
+            'form2' => $form2->createView(),
+            'newUser' => $newUser
+        ));
+    }
+
+
+    public function deleteDashboardAction($usrid, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $usr = $this->container->get('security.context')->getToken()->getUser();
+        $usrid = $usr->getId();
+        $dashboard = $em->getRepository('AppBundle:Dashboard')->find($id);
+        if ($dashboard != null) {
+            $em->remove($dashboard);
+            $em->flush();
+        }
+        return $this->redirectToRoute('app_admin_profile', array(
+            'id' => $id,
+            'dashboard' => $dashboard,
+            'usrid' => $usrid
+        ));
+    }
+
+    // START EDIT OWN USER INFO //
+    public function editUserAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $usr = $em->getRepository('AppBundle:User')->find($id);
+        $usrs = $em->getRepository('AppBundle:User')->findAll();
+        $em->flush();
+
         // START EDIT USER //
         $form2 = $this->get('form.factory')->create(new UserType(), $usr);
 
-        if($form2->handleRequest($request)->isValid()) {
+        if ($form2->handleRequest($request)->isValid()) {
 
             // $file stores the uploaded image file
             /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
             $file = $usr->getImage();
 
             // Generate a unique name for the file before saving it
-            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
 
             // Move the file to the directory where images are stored
             $file->move(
@@ -104,7 +156,7 @@ class UserController extends Controller
             // Update the 'image' property to store the img file name
             // instead of its contents
             $usr->setImage($fileName);
-            
+
             $em->merge($usr);
             $em->flush();
 
@@ -113,39 +165,115 @@ class UserController extends Controller
         // END FORM EDIT USER //
 
         return $this->render('@App/App/adminProfile.html.twig', array(
-            'id'            => $id,
-            'usr'           => $usr,
-            'usrs'          => $usrs,
-            'dsh'           => $dsh,
-            'dshs'          => $dshs,
-            'paginUsrs'     => $paginUsrs,
-            'paginDashs'    => $paginDshs,
-            'form'          => $form->createView(),
-            'form2'         => $form2->createView(),
-            'newUser'       => $newUser
+            'id' => $id,
+            'usr' => $usr,
+            'usrs' => $usrs,
+            'form2' => $form2->createView()
+        ));
+    }
+    // END EDIT OWN USER INFO //
+
+    // START EDIT ALL USERS INFO //
+    public function editUsersAction(Request $request, $id)
+    {
+        $superAdmin = $this->container->get('security.context')->getToken()->getUser();
+        $superAdminId = $superAdmin->getId();
+        $em = $this->getDoctrine()->getManager();
+        $usr = $em->getRepository('AppBundle:User')->find($id);
+        $usrs = $em->getRepository('AppBundle:User')->findAll();
+        $em->flush();
+
+        $form4 = $this->get('form.factory')->create(new UserType(), $usr);
+
+        if ($form4->handleRequest($request)->isValid()) {
+
+            // $file stores the uploaded image file
+            /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
+            $file = $usr->getImage();
+
+            // Generate a unique name for the file before saving it
+            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+
+            // Move the file to the directory where images are stored
+            $file->move(
+                $this->getParameter('img_directory'),
+                $fileName
+            );
+
+            // Update the 'image' property to store the img file name
+            // instead of its contents
+            $usr->setImage($fileName);
+
+            $em->merge($usr);
+            $em->flush();
+
+            return $this->redirectToRoute('app_admin_profile', array('id' => $superAdminId));
+        }
+        // END EDIT ALL USERS INFO //
+
+        return $this->render('@App/App/editUser.html.twig', array(
+            'id' => $id,
+            'usr' => $usr,
+            'usrs' => $usrs,
+            'superAdmin' => $superAdmin,
+            'form4' => $form4->createView()
         ));
     }
 
+    // //
 
-    public function deleteDashAction($id)
+    public function deleteUserAction($id)
     {
+        $superAdmin = $this->container->get('security.context')->getToken()->getUser();
+        $superAdminId = $superAdmin->getId();
+
+
         $em = $this->getDoctrine()->getManager();
-        $dashboard = $em->getRepository('AppBundle:Dashboard')->find($id);
-        if ($dashboard != null) {
-            $em->remove($dashboard);
+        $usr = $em->getRepository('AppBundle:User')->find($id);
+//        $thisUser = $usr->getUser();
+
+
+//            $del = $em->getRepository('AppBundle:User')->find($id);
+
+            $dashboards = $em->getRepository('AppBundle:Dashboard')->findBy(
+                array('creator' => $usr->getId()));
+
+            foreach ($dashboards as $dashboard) {
+                $id = $dashboard->getId();
+                $components = $em->getRepository('AppBundle:Component')->findBy(
+                    array('dashboard' => $id));
+
+                foreach ($components as $component) {
+
+                    $em->remove($component);
+                }
+
+                $em->remove($dashboard);
+            }
+
+            $em->remove($usr);
             $em->flush();
-        }
-        return $this->redirectToRoute('app_dashboard', array('id' => $id));//to do redirect to homepage
-    }
 
-    public function editUserAction()
-    {
-        return $this->container;
-    }
 
-    public function deleteUserAction()
-    {
-        return $this->container;
+//
+//        $em = $this->getDoctrine()->getManager();
+//        $usr = $this->container->get('security.context')->getToken()->getUser();
+//        $usrid = $usr->getId();
+//        $del = $em->getRepository('AppBundle:User')->find($id);
+//        $em->remove($del);
+//        $em->flush();
+//        return $this->redirectToRoute('app_admin_profile', array(
+//            'id' => $superAdminId,
+////          'usrid' => $usrid,
+//
+//            'usr' => $usr,
+//        ));
+        return $this->render('@App/App/deleteUser.html.twig', array(
+            'id'            => $superAdminId,
+//            'del'           => $del,
+//            'usrid'         => $usrid,
+            'usr'           => $usr,
+        ));
     }
 
 
@@ -157,16 +285,17 @@ class UserController extends Controller
         $usrs = $em->getRepository('AppBundle:User')->findAll();
         $em->flush();
 
-        /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
-        $file = $usr->getImage();
 
         // START EDIT USER //
         $form3 = $this->get('form.factory')->create(new UserType(), $usr);
 
         if($form3->handleRequest($request)->isValid()) {
 
+            /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
+            $file = $usr->getImage();
+
             // Generate a unique name for the file before saving it
-            $fileName = md5(uniqid()).'.'.$file->getExtension();
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
 
             // Move the file to the directory where brochures are stored
             $file->move(
@@ -185,7 +314,7 @@ class UserController extends Controller
 
             return $this->redirectToRoute('app_user_profile', array('id' => $id));
         }
-        // END FORM ADD USER //
+        // END FORM EDIT USER //
 
         return $this->render('@App/App/userProfile.html.twig', array(
             'id'            => $id,
@@ -193,7 +322,6 @@ class UserController extends Controller
             'usrs'          => $usrs,
             'form3'         => $form3->createView()
         ));
-//        return $this->render('@App/App/userProfile.html.twig');
     }
 
     /**

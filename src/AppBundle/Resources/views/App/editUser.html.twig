@@ -1,0 +1,34 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block title %}Edit User {% endblock %}
+
+{% block app_body %}
+    <h3>Edit User</h3>
+    {{ form_start(form4, {'action':path('app_edit_users', {'id': usr.id}), 'method':'POST', 'attr': {'novalidate': 'novalidate'} }) }}
+    <div class="form-group">
+        {{ form_row(form4.firstName, { 'attr': {'class': 'form-control', 'value' : usr.firstName} }) }}
+    </div>
+    <div class="form-group">
+        {{ form_row(form4.lastName, { 'attr': {'class': 'form-control', 'value': usr.lastName} }) }}
+    </div>
+    <div class="form-group">
+        {{ form_row(form4.username, { 'attr': {'class': 'form-control', 'value': usr.username} }) }}
+    </div>
+    <div class="form-group">
+        {{ form_row(form4.email, { 'attr': {'class': 'form-control', 'value': usr.email} }) }}
+    </div>
+    <div class="form-group">
+        {{ form_row(form4.plainPassword.first, {label: 'Password', 'attr': {'class': 'form-control'} }) }}
+    </div>
+    <div class="form-group">
+        {{ form_row(form4.plainPassword.second, {label: 'Repeat Password', 'attr': {'class': 'form-control'} }) }}
+    </div>
+    <div class="form-group">
+        {{ form_row(form4.image, { 'attr': {'type': 'file'} }) }}
+    </div>
+    <div class="form-group">
+        {{ form_row(form4.roles) }}
+    </div>
+    {{ form_widget(form4.Submit, { 'attr': {'class': 'btn btn-default pull-right'} }) }}
+    {{ form_end(form4) }}
+{% endblock %}

@@ -1,24 +1,27 @@
-# To get started with security, check out the documentation:
-# http://symfony.com/doc/current/security.html
 security:
     firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
+            pattern:                    ^/(_(profiler|wdt)|css|images|js)/
+            security:                   false
         main:
-            pattern:            ^/
+            pattern:                    ^/
+            anonymous:                  true
             form_login:
-                provider: fos_userbundle
-                csrf_token_generator: security.csrf.token_manager
-                login_path:   fos_user_security_login
-                check_path:   fos_user_security_check
-#                remember_me:  true
+                login_path:             fos_user_security_login
+                check_path:             fos_user_security_check
+                provider:               fos_userbundle
+                use_forward:            false
+                failure_path:           null
+                default_target_path:    /
+                remember_me:            true
+                csrf_token_generator:   security.csrf.token_manager
             logout:
-                path:         fos_user_security_logout
-                target:       fos_user_security_login
-            anonymous:        ~
-            switch_user:      ~
+                path:                   fos_user_security_logout
+                target:                 /login
+            remember_me:
+                key:                    %secret%
+                lifetime:               3000000000
+                path:                   /
 
     encoders:
         FOS\UserBundle\Model\UserInterface: bcrypt
@@ -29,12 +32,17 @@ security:
 
     providers:
         fos_userbundle:
-            id: fos_user.user_provider.username
+            id: fos_user.user_provider.username_email
 
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-#        - { path: ^/admin_profile/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/create/, role: ROLE_USER }
+        - { path: ^/leave/, role: ROLE_USER }
+        - { path: ^/app_change_size/, role: ROLE_USER }
+        - { path: ^/user_profile/, role: ROLE_USER }
+        - { path: ^/dashboard/, role: ROLE_USER }
+        - { path: ^/components/, role: ROLE_USER }
+        - { path: ^/admin_profile/, role: ROLE_ADMIN }
         - { path: ^/admin/, role: ROLE_ADMIN }
-

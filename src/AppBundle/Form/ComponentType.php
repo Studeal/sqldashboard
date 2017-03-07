@@ -16,8 +16,6 @@ class ComponentType extends AbstractType
         $builder
             ->add('name','text')
             ->add('requestSQL','textarea')
-            ->add('typeGraph','text')
-            ->add('sizeComponent','text')
             ->add('legend','text')
             ->add('xAxis','text')
             ->add('yAxis','text')
@@ -26,7 +24,7 @@ class ComponentType extends AbstractType
             ->add('area',       'submit')
             ->add('linechart',  'submit')
             ->add('bar',        'submit');
-        ;
+    ;
     }
     
     /**

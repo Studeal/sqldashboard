@@ -60,9 +60,31 @@ box-sizing: border-box;
     height:100vh;
 }
 .dropdown-menu{
-    min-width: 65px;
+    min-width: 85px;
+    font:normal normal normal 14px/1 FontAwesome;
+}
+
+.dropdown-menu li:hover{
+    background-color: #F5F5F5;
 }
 
 .dropdown-menu li a{
     padding: 3px 8px;
+}
+
+.formButton{
+    background-color: transparent !important;
+    border: none !important;
+}
+
+.buttonTop{
+    box-shadow:2px 2px 2px gray;
+}
+
+.changeColor{
+    color:#149bdf;
+}
+
+.addPad{
+    padding-bottom: 5px;
 }

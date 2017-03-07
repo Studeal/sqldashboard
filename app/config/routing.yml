@@ -1,45 +1,96 @@
-app:
-    resource: "@AppBundle/Resources/config/routing.yml"
-    prefix:   /
-
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 
-fos_user:
-    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+app_home:
+    path:     /
+    defaults: { _controller: AppBundle:Dashboard:index}
 
-#fos_user_security:
-#    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
-#    prefix: /
+fos_user_security:
+    path:     /login
+    defaults: {_controller: FOSUserBundle:Security:login }
 
-#fos_user_profile:
-#    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
-#    prefix: /profile
-#
-#fos_user_register:
-#    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
-#    prefix: /register
-#
-#fos_user_resetting:
-#    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
-#    prefix: /resetting
-#
-#fos_user_change_password:
-#    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
-#    prefix: /profile
+fos_user_security_check:
+    path:     /login_check
+    defaults: {_controller: FOSUserBundle:Security:check }
 
-#fos_user_profile:
-#    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
-#    prefix: /profile
 
-#fos_user_register:
-#    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
-#    prefix: /register/1
+app_admin_profile:
+    path:     /admin_profile/{id}
+    defaults: { _controller: AppBundle:User:adminProfile }
 
-#fos_user_resetting:
-#    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
-#    prefix: /resetting
-#
-#fos_user_change_password:
-#    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
-#    prefix: /profile
+app_user_profile:
+    path:     /user_profile/{id}
+    defaults: { _controller: AppBundle:User:userProfile }
+
+app_delete_user:
+    path:     /admin_profile/delete/{id}
+    defaults: { _controller: AppBundle:User:deleteUser }
+
+app_edit_user:
+    path:     /admin_profile/edit/{id}
+    defaults: { _controller: AppBundle:User:editUser }
+
+app_edit_users:
+    path:     /admin_profile/edit/users/{id}
+    defaults: { _controller: AppBundle:User:editUsers }
+
+
+
+#Dashboard actions
+
+app_dashboard:
+    path:     /dashboard/{id}
+    defaults: { _controller: AppBundle:Dashboard:view }
+
+app_share_dashboard:
+    path:     /dashboard/share/{id}
+    defaults: { _controller: AppBundle:Dashboard:share }
+
+app_name_dashboard:
+    path:     /create/createDash
+    defaults: { _controller: AppBundle:Navbar:NameDashboard }
+
+app_leave_dashboard:
+    path:     /leave/{id}
+    defaults: { _controller: AppBundle:Dashboard:leaveDash }
+
+app_delete_dashboard:
+    path:     /dashboard/delete/{id}
+    defaults: { _controller: AppBundle:Dashboard:deleteDash }
+
+app_delete_component:
+    path:     /dashboard/deleteC/{id}/{componentId}
+    defaults: { _controller: AppBundle:Dashboard:deleteComponent }
+
+app_copy_component:
+    path:     /dashboard/copy/{id}/{componentId}
+    defaults: { _controller: AppBundle:Dashboard:copyComponent }
+
+app_paste_component:
+    path:     /dashboard/paste/{id}
+    defaults: { _controller: AppBundle:Dashboard:pasteComponent }
+
+app_change_size:
+    path:     /app_change_size/{componentId}/{size}/{id}
+    defaults: { _controller: AppBundle:Dashboard:changeSize }
+
+app_admin_profile:
+    path:     /admin_profile/{id}
+    defaults: { _controller: AppBundle:User:adminProfile }
+
+app_user_profile:
+    path:     /user_profile/{id}
+    defaults: { _controller: AppBundle:User:userProfile }
+
+app_add_component:
+    path:     /components/{dashboardId}/add
+    defaults: { _controller: AppBundle:Component:addComponent }
+    requirements:
+        componentId: \d+
+
+app_edit_component:
+    path:     /components/{componentId}/edit
+    defaults: { _controller: AppBundle:Component:editComponent }
+    requirements:
+        componentId: \d+
+

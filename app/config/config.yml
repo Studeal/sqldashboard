@@ -8,11 +8,11 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    img_directory: '%kernel.root_dir%/../web/assets/img'
+    img_directory: "%kernel.root_dir%/../web/assets/img"
 
 framework:
     #esi:             ~
-    translator:      ~
+    translator:       ~
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -47,7 +47,6 @@ doctrine:
         user:     "%database_user%"
         password: "%database_password%"
         charset:  UTF8
-        server_version: '5.5' # in case you are using mysql 5.5
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
         #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
@@ -73,18 +72,15 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: AppBundle\Entity\User
-    registration:
-        form:
-            type: AppBundle\Form\UserType
 
-#KNP Pagination Configuration
+
 knp_paginator:
-   page_range: 5                      # default page range used in pagination control
-   default_options:
-       page_name: page                # page query parameter name
-       sort_field_name: sort          # sort field query parameter name
-       sort_direction_name: direction # sort direction query parameter name
-       distinct: true                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
-   template:
-       pagination: KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig     # sliding pagination controls template
-       sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # sort link template
+    page_range: 5                      # default page range used in pagination control
+    default_options:
+        page_name: page                # page query parameter name
+        sort_field_name: sort          # sort field query parameter name
+        sort_direction_name: direction # sort direction query parameter name
+        distinct: true                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
+    template:
+        pagination: KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig     # sliding pagination controls template
+        sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # sort link template
