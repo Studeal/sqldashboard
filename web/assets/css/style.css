@@ -72,3 +72,27 @@
     top: 50px;
     overflow: auto;
 }
+
+/*********************** Panels ***********************/
+.panelStyle {
+
+    margin: 30px;
+    width: 900px;
+}
+
+/*********************** Quotes ***********************/
+blockquote {
+    font-size: 16px;
+    background: #f9f9f9;
+    border-left: 10px solid #ccc;
+    margin: 1.5em 10px;
+    padding: 0.5em 10px;
+}
+
+.blockquote2 {
+    font-size: 16px;
+    background: #f9f9f9;
+    border-right: 10px solid #ccc;
+    margin: 1.5em 10px;
+    padding: 0.5em 10px;
+}
