@@ -179,7 +179,7 @@
                                     <tr>
                                         <td>{{ dsh.name }}</td>
                                         <td>{{ dsh.creator }}</td>
-                                        <td><a data-toggle="modal" data-target="#delDash">Delete</a></td>
+                                        <td><a href="{{ path('app_delete_dashboard',{'id': dsh.id}) }}">Delete</a></td>
                                     </tr>
                                 {% endfor %}
                             </table>
