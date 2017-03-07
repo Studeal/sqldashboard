@@ -40,6 +40,7 @@ twig:
 # Doctrine Configuration
 doctrine:
     dbal:
+        server_version: '5.5' # in case you are using mysql 5.5
         driver:   pdo_mysql
         host:     "%database_host%"
         port:     "%database_port%"
