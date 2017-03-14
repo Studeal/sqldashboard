@@ -265,8 +265,6 @@ class UserController extends Controller
 
         $usr = $em->getRepository('AppBundle:User')->find($id);
         $usrs = $em->getRepository('AppBundle:User')->findAll();
-        $em->flush();
-
 
         // START EDIT USER //
         $form3 = $this->get('form.factory')->create(new UserType(), $usr);
