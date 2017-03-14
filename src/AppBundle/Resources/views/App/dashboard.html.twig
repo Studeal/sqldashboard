@@ -1,5 +1,10 @@
 {% extends 'AppBundle::layout.html.twig' %}
 
+{% block meta %}
+{{ parent() }}
+<meta http-equiv="refresh" content="3000">
+{% endblock %}
+
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}"/>

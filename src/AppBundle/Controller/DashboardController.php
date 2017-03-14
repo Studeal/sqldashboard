@@ -78,7 +78,7 @@ class DashboardController extends Controller
             $creator = $dashboard->getCreator();
 
             //.......Generate form for "Edit Dashboard"
-            $form = $this->get('form.factory')->create(new DashboardType(), $dashboard);
+            $form = $this->createForm(new DashboardType(), $dashboard);
             $form->handleRequest($request);
 
             //.......Check if the method is POST and which form component is submitted
@@ -218,6 +218,8 @@ class DashboardController extends Controller
      */
     public function deleteDashAction(Dashboard $dashboard)
     {
+
+        $user = $this->container->get('security.context')->getToken()->getUser();
         //.......Get current dashboard
         $em = $this->getDoctrine()->getManager();
         $id = $dashboard->getId();
@@ -227,7 +229,8 @@ class DashboardController extends Controller
 
         //.......delete the components
         //.......delete the dashboard and update database
-        if ($dashboard != null) {
+
+        if ($dashboard != null && ($dashboard->getCreator()== $user || $user->getRoles()->contains(0)) ) {
             foreach ($components as $component) {
                 $em->remove($component);
             }
