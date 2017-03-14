@@ -86,23 +86,6 @@ class UserController extends Controller
         ));
     }
 
-    public function deleteDashboardAction($usrid, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $usr = $this->container->get('security.context')->getToken()->getUser();
-        $usrid = $usr->getId();
-        $dashboard = $em->getRepository('AppBundle:Dashboard')->find($id);
-        if ($dashboard != null) {
-            $em->remove($dashboard);
-            $em->flush();
-        }
-        return $this->redirectToRoute('app_admin_profile', array(
-            'id' => $id,
-            'dashboard' => $dashboard,
-            'usrid' => $usrid
-        ));
-    }
-
     // START EDIT OWN USER INFO //
     public function editUserAction(Request $request, $id)
     {
