@@ -1,0 +1,30 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block title %}Delete User {% endblock %}
+
+{% block app_body %}
+
+    <div class="modal-dialog">
+        <!-- Delete user-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Delete User</h4>
+            </div>
+            <div class="modal-body">
+                <p>Do you want to delete the user ?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"
+                        onclick="window.location='{{ path('app_admin_profile',{'id': id}) }}'">
+                    {#{{ path('app_delete_user', {'id': usr.id}) }}#}
+                    Yes
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

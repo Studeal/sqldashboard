@@ -4,6 +4,16 @@ parameters:
 #    parameter_name: value
 
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    
+    app.charts:
+        class: AppBundle\Charts\Charts
+        arguments: [@app.SQLRequest]
+
+    app.SQLRequest:
+        class: AppBundle\SQLRequest\SQLRequest
+        arguments: [@doctrine.orm.entity_manager]
+
+    app.form.add.user:
+         class: AppBundle\Form\UserType
+         tags:
+              - { name: form.type, alias: app_form_add_user }

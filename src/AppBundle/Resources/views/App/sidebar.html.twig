@@ -1,0 +1,83 @@
+
+<!-- SideBar  -->
+
+<div id="sidebar" class="col-xs-2 sidebar changePadding">
+
+    <!-- DASHBOARD LIST --- COLLAPSE -->
+
+    <div class="list-group spacelistdashboard scroll stylesscrollbar">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse3">My Dashboards</a>
+                    </h4>
+                </div>
+                <div id="collapse3" class="panel-collapse collapse stylecollapse">
+                    {% for key, myDashboard in myDashboards %}
+                        <div class="panel-body"><a href="{{ path('app_dashboard', {'id': myDashboard.id}) }}">{{ myDashboard.name }}</a></div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse2">Shared Dashboards</a>
+                    </h4>
+                </div>
+                <div id="collapse2" class="panel-collapse collapse">
+                    {% for key, sharedDashboard in sharedDashboards %}
+                        <div class="panel-body"><a href="{{ path('app_dashboard', {'id': sharedDashboard.id}) }}">{{ sharedDashboard.name }}</a></div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BUTTON CREATE DASHBOARD --- Large modal -->
+
+    <button type="button" class="btn block panel-title col-xs-12 createdashboard" data-toggle="modal" data-target=".bs-example-modal-lg" >Create Dashboard</button>
+    <!-- PopUp - Modal Create Dashboard Button -->
+    <div class="modal fade bs-example-modal-lg popup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header ">
+                    <button type="button" class="close"
+                            data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title">
+                        Create Dashboard
+                    </h4>
+
+                </div>
+                <div class="modal-main well">
+                    {{ form_start(form,{'action':path('app_name_dashboard'),'method':'POST','attr': {'class': 'form-horizontal', 'role':'form'}}) }}                        {#Les erreurs générales du formulaire.#}
+                    {{ form_errors(form) }}
+                    <div class="form-group">
+                        {#Generate label.#}
+                        {{ form_label(form.name, "Name", {'label_attr': {'class':'col-sm3 control-label', 'value':''}}) }}
+                        <div>
+                            {#Generate input#}
+                            {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                    <div style="display: none">
+                        {{ form_widget(form.UpdateName, {'attr': {'class':'btn btn-primary '}}) }}
+                    </div>
+                    {#Generate button#}
+                    <div class="modal-footer">
+                        {{ form_widget(form.AddYourDashboard, {'attr': {'class': 'btn btn-primary pull-right ' }}) }}
+                    </div>
+                </div>
+
+                {{ form_rest(form) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>
