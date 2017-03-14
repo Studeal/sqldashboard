@@ -16,7 +16,7 @@
         "symfony/symfony": "2.8.*",
         "doctrine/orm": "^2.4.8",
         "doctrine/doctrine-bundle": "~1.4",
-        "symfony/swiftmai0ler-bundle": "~2.3,>=2.3.10",
+        "symfony/swiftmailer-bundle": "~2.3,>=2.3.10",
         "symfony/monolog-bundle": "^3.0.2",
         "sensio/distribution-bundle": "~5.0",
         "sensio/framework-extra-bundle": "^3.0.2",
@@ -24,10 +24,16 @@
         "ob/highcharts-bundle": "^1.5",
         "knplabs/knp-paginator-bundle": "^2.5",
         "friendsofsymfony/user-bundle": "~2.0@dev"
+
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",
-        "symfony/phpunit-bridge": "~2.7"
+        "symfony/phpunit-bridge": "~2.7",
+        "phpunit/phpunit": "3.7.*",
+        "doctrine/doctrine-fixtures-bundle": "~2.3",
+        "phpunit/phpunit": "3.7.*"
+
+
     },
     "scripts": {
         "symfony-scripts": [

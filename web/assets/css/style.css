@@ -1,4 +1,19 @@
-/*********************** SideBar & NavBar ***********************/
+/*********************** NavBar ***********************/
+
+.disconnect{
+    right: 17px;
+}
+.profil{
+    right: 17px;
+}
+.logo{
+    height: auto;
+    width: 120px;
+    margin: -7px;
+}
+
+/*********************** SideBar ***********************/
+
 #sidebar{/*SideBar position*/
     position: fixed;
     top:50px;
@@ -6,20 +21,38 @@
     height:100vh;
     height: calc(100vh - 50px);
     z-index: 99999;
+    background-color: #222222;
 }
-
 .createdashboard{ /*button create dashboard position*/
     position: absolute;
     top:95%;
-    left: 0px;
+    background-color: rgba(245,245, 245, 0.5);
+    border-color: transparent;
 }
-
+.changePadding{
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.stylecollapse{
+    background-color: rgba(245,245, 245, 0.5);
+}
 .popup{
     z-index: 9999;
 }
 
+/*********************** Login ***********************/
+
+#login{
+    height: 100vh;
+    background-color: #F1F2F7;
+    text-align: center;
+}
+
+
+/*********************** Contenu ***********************/
+
 .contenu{ /*Work space*/
     float: right;
-    border-left: solid 1px grey;
     height: 100vh;
+    top: 50px;
 }
